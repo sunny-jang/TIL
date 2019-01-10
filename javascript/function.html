@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+</head>
+<body>
+
+</body>
+<script async>
+
+	/*함수 function*/
+
+    // 함수 선언문
+    function square(number) {
+    	return number * number;
+    }
+
+    // 함수 표현식
+    var square =  function(number) {
+    	return number * number;
+    }
+
+    // 기명 함수 표현식 (named function expression)
+    var foo = function multiply(a, b) {
+    	return a * b;
+    }
+
+    // 익명 함수 표현식 (anonymous function expression)
+    var bar =  function(a, b) {
+    	return a * b;
+    }
+
+    foo = bar;
+
+    console.log(foo(10, 5)); //50
+    console.log(bar(10, 5)); //50
+    //console.log(multiply(10, 5)); // error
+
+    /* 생성자 함수 */
+
+    //new Function(arg1, arg2,..., functionBody)
+    var square = new Function('number','return number * number');
+    console.log(square(10));
+
+    /* First-class-object (일급 객체) */
+
+    // 1. 무명의 리터럴로 표현이 가능하다.
+    // 2. 변수나 자료 구조에 저장할 수 있다.
+
+    var increase = function(num) {
+    	return ++num;
+    }
+
+    var decrease = function(num) {
+    	return --num;
+    }
+
+    var predicates = { increase, decrease };
+
+    // 3. 함수의 매개변수에 전달할 수 있다.
+    // 4. 반환값으로 사용할 수 있다.
+
+    function makeCounter (predicate) {
+    	var num = 0;
+
+    	return function() {
+    		num = predicate(num);
+    		return num;
+    	}
+    }
+
+    var increaser = makeCounter(predicates.increase);
+    console.log(increaser()); //1
+    console.log(increaser()); //2
+
+    var decreaser = makeCounter(predicates.decrease);
+    console.log(decreaser()); //-1
+    console.log(decreaser()); //-2
+
+    var foo = function (p1, p2) {
+    	console.log(p1, p2);
+    };
+
+    foo(1); // 1 undefined;
+
+    /* Call-by-value */
+
+    function foo1(primitive) {
+    	primitive +=1;
+    	return primitive;
+    }
+
+    var x = 0;
+
+    console.log(foo1(x)); //1
+    console.log(x); //0
+
+    /* Call-by-reference */
+
+    function changeVal(primitive, obj) {
+    	primitive += 100;
+    	obj.name = 'Kim';
+    	obj.gender = 'female';
+    }
+
+    var num = 100;
+    var obj = {
+    	name: 'Lee',
+    	gender: 'maile'
+    }
+
+    console.log(num); //100
+    console.log(obj); // name: 'Lee', gender: 'maile'
+
+    changeVal(num, obj);
+
+    console.log(num); //100
+    console.log(obj); // name: 'Kim', gender: 'femaile'
+
+
+    /* 반환값 return */
+
+    function calculateArea(width, height) {
+    	var area = width * height;
+        return area; // 단일값의 반환.
+    }
+
+    console.log(calculateArea(3, 5)) // 15
+    console.log(calculateArea(8, 5)) // 15
+
+    function getSize(width, height, depth) {
+    	var area = width * height;
+    	var volume = width * height * depth;
+        return [area, volume]; // 복수 값의 반환.
+    }
+
+    console.log('area is' + getSize(3, 2, 3) [0]);
+    console.log('area is' + getSize(3, 2, 3) [1]);
+
+    function square1(number) {
+    	return number * number;
+    }
+
+    square1.x = 10;
+    square1.y = 20;
+
+    console.log(square1.x, square1.y);
+    console.dir(square1);
+
+    function multiply1(x, y) {
+    	console.log(arguments);
+    	return x * y;
+    }
+
+    multiply1(); //{}
+    multiply1(1); //{'0': 1}
+    multiply1(1, 2); //{'0': 1, '1': 2}
+    multiply1(1, 2, 3); //{'0': 1, '1': 2, '2': 3}
+
+    function sum() {
+    	var res = 0;
+
+    	for (var i = 0; i < arguments.length; i++) {
+    		res += arguments[i];
+    	}
+
+    	return res;
+    }
+
+    console.log(sum()); //0
+    console.log(sum(1,2)); //0
+
+
+    function sum2() {
+    	if(!arguments.length) return 0;
+
+        //arguments 객체를 배열로 변환
+        var array = Array.prototype.slice.call(arguments);
+        return array.reduce(function(pre, cur) {
+        	return pre + cur;
+        });
+    }
+
+    console.log(sum(1, 2, 3, 4, 5)); // 15
+
+    /* Caller 프로퍼티 */
+
+    function foo2(func) {
+    	var res =  func();
+    	return res;
+    }
+
+    function bar2() {
+    	return 'caller : '+ bar2.caller;
+    }
+
+    console.log(foo2(bar2)); // function foo(func {...})
+    console.log(bar2()); // null
+
+</script>
+</html>

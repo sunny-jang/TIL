@@ -198,5 +198,147 @@
     console.log(foo2(bar2)); // function foo(func {...})
     console.log(bar2()); // null
 
+    /* Length 프로퍼티 */
+
+   	function foo5() {}
+    console.log(foo5.length); //0
+
+
+   	function bar5(x) {
+   		return x;
+   	}
+   	console.log(bar5.length); //1
+
+   	function baz(x,y) {
+   		return x * y;
+   	}
+   	console.log(baz.length); //2
+
+   	/* name 프로퍼티 */
+   	//기명 함수 표현식 (named function expression)
+   	var namedFunc = function multiply2 (a,b) {
+   		return a * b;
+   	}
+
+   	//익명 함수 표현식 (anonymous function expression)
+   	var anonymousFunc = function(a, b) {
+   		return a * b;
+   	}
+
+   	console.log(namedFunc.name); // nultiply
+   	console.log(anonymousFunc.name); // '' >> 예제에는 ''라고 되어있는데 anonymousFunc 라고 나옴.
+
+   	/* __proto__ */
+
+   	//__proto__ 접근자 프로퍼티를 통해 자신의 프로토타입 객체에 접근할 수 있다.
+   	// 객체 리터럴로 생성한 객체의 프로토타입 객체는 Object.prototype이다.
+   	console.log({}.__proto__ === Object.prototype); // true
+
+   	//객체는 __proto__ 프로퍼티를 소유하지 않는다.
+   	console.log(Object.getOwnPropertyDescriptor({}, '__proto__')) //undefined
+
+   	// __proto__ 프로로퍼티는 모든 객체의 프로토타입 객체인 Object.prototype의 접근자 프로퍼티이다.
+   	console.log(Object.getOwnPropertyDescriptor(Object.prototype, '__proto__'))
+
+   	//모든 객체는 Object.prototype의 접근자 프로퍼티 __proto__를 상속받아 사용 할 수 있다.
+   	console.log({}.__proto__ === Object.prototype) // true
+
+   	//함수 객체의 프로토타입 객체는 Function.prototype이다.
+   	console.log((function(){}).__proto__ === Function.prototype); // true
+
+   	/*prototype 프로퍼티*/
+
+   	//함수 객체는 prototype 프로퍼티를 소유한다.
+   	console.log(Object.getOwnPropertyDescriptor(function(){},'prototype'));
+   	//{value: {...}, writable: true....}
+
+   	//일반 객체는 prototype 프로퍼티를 소유하지 않는다.
+   	console.log(Object.getOwnPropertyDescriptor({}, 'prototype'));
+   	//undefined
+
+
+   	/* 함수의 다양한 형태 */
+
+   	//기명 즉시 실행 함수 (named immediately-invoked function expression)
+   	(function myFunction() {
+   		var a = 3;
+   		var b = 5;
+   		return a * b;
+   	}());
+
+   	//익명 즉시 실행 함수 (immediately-invoked function expression)
+   	(function() {
+   		var a = 3;
+   		var b = 5;
+   		return a * b;
+   	}());
+
+   	//SyntaxError: Unexpected toke(
+   	//함수 선언문은 자바스크립트 엔진에 의해 함수 몸체가 닫는 중괄호 뒤에 ;가 자동 추가된다.
+   //	function() {
+   	//	//...
+   //	}(); //=> };();
+
+   	//따라서 즉시 실행함수는 소괄호로 감싸준다.
+
+   	/* 내부 함수 Inner function */
+
+   	function parent(param) {
+   		var parentVar = param;
+   		function child() {
+   			var childVar = 'Lee';
+   			console.log(parentVar + ' ' +childVar); //Hellow Lee
+   		}
+   		child();
+   		//console.log(parentVar + '' +childVar);
+   	}
+
+   	parent('Hello');
+
+   	function sayHello(name) {
+   		var text = 'Hello' + name;
+   		var logHello = function() { console.log(text)};
+   	}
+
+   	sayHello('Lee') // Hello Lee
+   	//logHello('Lee') // logHello is not efined
+
+   	/* 재귀 함수 Recusive function */
+
+   	//피보나치 수열
+   	//피보나치 수는 0과 1로 시작하며, 다음 피보나치 수는 바로 앞의 두 피보나치 수의 합이 된다.
+
+   	function fibonacci(n) {
+   		if(n < 2) return n;
+
+   		return fibonacci(n-1) + fibonacci(n-2)
+   	}
+
+   	console.log(fibonacci(0)); //0
+   	console.log(fibonacci(1)); //1
+   	console.log(fibonacci(2)); //1
+   	console.log(fibonacci(3)); //2
+   	console.log(fibonacci(4)); //3
+   	console.log(fibonacci(5)); //5
+
+   	//팩토리얼
+   	//팩토리얼(계승)은 1부터 자신까지의 모든 양의 정수의 곱이다.
+
+   	function factorial(n) {
+   		if(n < 2) return 1;
+   		return factorial(n-1) * n;
+   	}
+
+   	console.log(factorial(0)); // 1
+		console.log(factorial(1)); // 1
+		console.log(factorial(2)); // 2
+		console.log(factorial(3)); // 6
+		console.log(factorial(4)); // 24
+		console.log(factorial(5)); // 120
+		console.log(factorial(6)); // 720
+
+		
+
+
 </script>
 </html>

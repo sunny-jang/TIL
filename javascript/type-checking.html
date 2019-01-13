@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+  </head>
+  <body>
+   <p>Hellow</p>
+
+   <ul>
+     <li></li>
+     <li></li>
+     <li></li>
+     <li></li>
+   </ul>
+
+  </body>
+  <script async>
+
+    // type 체크 함수
+    function getType(target) {
+      return Object.prototype.toString.call(target).slice(8, -1);
+    }
+
+    Object.prototype.toString.call('new String()'); 
+
+    getType('');
+    getType('hi');
+    getType(1);
+
+    // 콘솔에서 실행해 확인해 보았음.
+
+    //sum이라는 함수의 타입 체크 기능을 추가해 보자.
+
+    function sum(a, b) {
+      if(getType(a) !== 'Number' || getType(b) !== 'Number' ) {
+        throw new TypeError ('파라미터에 number 타입이 아닌 값이 할당되었습니다.');
+      }
+
+      return a + b;
+    }
+
+    console.log(sum(10, 20));   // 30
+   // console.log(sum('10', 20)); // TypeError
+
+    function isString(target) {
+      return getType(target) === 'String';
+    }
+
+    function isNumber(target) {
+      return getType(target) === 'Number';
+    }
+
+    function isBoolean(target) {
+      return getType(target) === 'Boolean';
+    }
+
+    function isElement(target) {
+      return !!(target && target instanceof HTMLElement);
+
+      //또는 'nodeType'을 사용할 수도 있다.
+      //return !!(target && target.nodeType === 1);
+    }
+
+    //HTMLElement를 상속받은 모든 DOM 요소에 css 프로퍼티를 추가하고 값을 할당한다.
+
+    function css(elem, prop, val) {
+      //type checking...
+      if(!(isElement(elem) && isString(prop) && isString(val))) {
+        throw new TypeError('매개변수의 타입이 맞지 않습니다.');
+      }
+      elem.style[prop] = val;
+    }
+
+   // css({}, 'color','red');
+    css(document.querySelector('p'),'color','red');
+
+    function Person() {}
+    const person = new Person();
+
+    console.log(person instanceof Person); //true
+    console.log(person instanceof Object); //true
+
+    //유사 배열 객체
+    console.log(Array.isArray([])); //true
+    console.log(Array.isArray({})); //false
+    console.log(Array.isArray('123')); //false
+
+    console.log(undefined == null)
+
+    const isArrayLike = function(collection) {
+      // 배열 인덱스: 32bit 정수 (2의 32제곱 -1)
+      // 유사 배열 인덱스: 자바스크립트로 표현할 수 있는 양의 정수(2의 53제곱 - 1)
+      const Max_Array_Index = Math.pow(2, 53) - 1;
+      //빈문자열은 유사배열이다. undefined == null => true
+      const length = collection == null ? undefined : collection.length;
+
+      return typeof length === 'number' && length >= 0 && length <= Max_Array_Index;
+    }
+
+    console.log(isArrayLike([]));
+    console.log(isArrayLike('abc'));
+    console.log(isArrayLike(document.querySelectorAll('li')));
+    console.log(isArrayLike({ length: 0 }));
+
+    //false 
+    console.log(isArrayLike(123));
+    console.log(isArrayLike(document.querySelector('li')));
+    console.log(isArrayLike({ foo: 1 }));
+    console.log(isArrayLike(null));
+
+
+  </script>
+</html>

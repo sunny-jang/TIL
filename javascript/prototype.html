@@ -115,5 +115,57 @@
       console.dir(String.prototype);
 
       console.log(str.__proto__ === String.prototype);
+
+      /* 프로토타입 객체의 변경 */
+      //> 프로토타입 객체 변경 시점에 이전에 생선된 객체
+      // 기존 프로토 타입 객체를  [[Prototype]]에 바인딩한다.
+
+      //> 프로토타입 객체 변경 시점 이후에 생성된 객체
+      // 변경된 프로토타입 객체를 [[Prototype]]에 바인딩 한다.
+
+      function Person2(name) {
+        this.name = name;
+      }
+
+      var foo3 = new Person2('Lee');
+
+      //프로토타입 객체의 변경
+
+      Person2.prototype = {
+        gender: 'male'
+      }
+
+      var bar = new Person2('Kim');
+
+      console.log(foo3.gender); // undefined
+      console.log(bar.gender); // male
+
+      console.log(foo3.constructor); //Person(name)
+      console.log(bar.constructor); //Object();
+      console.dir(foo3);
+      console.dir(bar);
+
+      /* 프로토타입 체인 동작 조건 */
+      function Person3(name) {
+        this.name = name;
+      }
+
+      Person3.prototype.gender = 'male'; //1
+
+      var foo4 = new Person3('Lee');
+      var bar4 = new Person3('Kim');
+
+      console.log(foo4.gender); // 1. male
+      console.log(bar4.gender); // 1. male
+
+      //1. foo 객체에 gender 프로퍼티가 없으면 프로퍼티 동적 추가
+      //2. foo 객체에 gender 프로퍼티가 있으면 해당 프로퍼티에 값 할당.
+
+      foo4.gender = 'female'; // 2
+
+      console.log(foo4.gender); //2. female
+      console.log(bar4.gender); //2. male
+
+
   </script>
 </html>

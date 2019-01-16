@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+  </head>
+  <body>
+   
+  </body>
+  <script async>
+    var x = 'global';
+
+    function foo () {
+      var x = 'function scope';
+      console.log(x); // function scope
+    }
+
+    foo();
+    console.log(x); // global
+
+    /* 자바스크립트 스코프의 특징 */
+
+    var x1 = 0;
+
+    {
+      var x1 = 1;
+      console.log(x1); //1
+    }
+
+    console.log(x1);
+
+    let y = 0;
+    {
+      let y = 1;
+      console.log(y); //1
+    }
+
+    console.log(y); //0
+
+    /* 전역 스코프 */
+
+    var global = 'global';
+
+    function foo() {
+      var local = 'local';
+      console.log(global);
+      console.log(local);
+    }
+    foo();
+
+    /* 비 블록 레벨 스코프 (Non block-level scope) */
+
+    if(true) {
+      var x2 = 5;
+    }
+
+    console.log(x2)
+
+    /* 함수 레벨 스코프 (Function-level scope) */
+
+    var a = 10; // 전역변수
+
+    (function() {
+      var b = 20; // 지역변수
+    })();
+
+    console.log(a); //10;
+    //console.log(b); // "b" is not defined
+
+    var x = 'global';
+
+    function foo() {
+      var x = 'local';
+      console.log(x); //local
+
+      function bar() { //내부함수
+        console.log(x); // local
+      }
+
+      bar();
+    }
+    foo();
+
+    console.log(x);// global
+
+    var x4 = 10;
+    function foo4() {
+      x4 = 100;
+      console.log(x4);
+
+      function bar4() {
+        x4 = 1000;
+        console.log(x4); //1000
+      }
+      bar4();
+    }
+    foo4();
+    console.log(x4); //1000
+
+
+    var foo5 = function() {
+      var a = 3, b = 5;
+
+      var bar = function() {
+        var b = 7, c = 11;
+
+        // 이 시점에서 a = 3, b = 7, c = 11
+
+        a += b + c;
+
+        // 이 시점에서 a = 21, b = 7, c = 11
+      };
+
+      // 이 시점에서 a = 3, b = 5, c = undefined
+
+       bar ();
+
+       // 이 시점에서 a = 21, b = 5;
+    }
+
+    /* 렉시컬 스코프 */
+
+    //렉시컬 스코프는 어디서 호출하였느냐가 아닌 어디에 선언하였는지에 따라 결정!
+    // 많은 프로그래밍 언어가 렉시컬 스코프(Lexical scope & Static scope)
+
+    var x6 = 1;
+    function foo6() {
+      var x6 = 10;
+      bar6();
+    }
+
+    function bar6() {
+      console.log(x6);
+    }
+
+    foo6(); // 1 
+    bar6(); // 1 
+
+    /* 암묵적 전역 변수 */
+    function foo7() {
+      x7 = 10;
+    }
+
+    foo7();
+    console.log(x7);
+
+    //x.js
+    function foo8() {
+      // var i = 0;
+      i = 0;
+      //.....
+    }
+
+    //y.js
+     for (var i = 0; i < 5; i++) {
+     // foo8();
+      console.log(i);
+     }
+
+     /* 최소한이 전역변수 사용 */
+     var MYAPP = {};
+
+     MYAPP.student = {
+      name: 'Lee',
+      gender: 'male'
+     }
+
+     console.log(MYAPP.student.name);
+
+     /* 즉시실행함수를 이용한 전역변수 사용 억제 */
+
+     (function() {
+      var MYAPP = {};
+
+      MYAPP.student = {
+        name: 'Jang',
+        gender: 'female'
+      };
+
+      console.log(MYAPP.student.name);
+     })();
+
+     console.log(MYAPP.student.name);
+
+
+  </script>
+</html>

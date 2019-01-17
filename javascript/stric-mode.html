@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+ 
+</body>
+<script async>
+ /* stric mode */
+
+   //전역에 strict mode를 적용하는 것은 바람직하지 않다!
+   //'use strict'
+
+   function foo() {
+     'use strict';
+     x = 10; 
+   }
+   foo();
+
+   console.log(x); // error
+ </script> 
+
+ <script>
+  x = 1;
+  console.log(x);
+</script>
+<script>
+  'use strict'
+
+    y = 1; //error
+
+    console.log(y);
+  </script>
+  <script>
+    (function() {
+      'use strict'
+
+      //do somthing;
+    })();
+
+    (function() {
+      //non-strict mode
+      var let = 10;
+
+      function foo() {
+        'use strict';
+        // strict mode
+        //let = 20; // unexpected .... error
+      }
+    })();
+
+    /* 암묵적 전역 변수 */
+    (function() {
+      'use strict';
+
+      x = 1;
+      console.log(x); // referenceError: x is not defined
+    })();
+
+    /* 변수, 함수, 매개변수의 삭제 */
+    (function() {
+      'use statict';
+
+      var x = 1;
+      delete x; // ? 에러가 안남
+
+      function foo(a) {
+        delete a;
+      }
+
+      delete foo;
+    })();
+
+  </script>
+  <script>
+    /* 같은 매개변수를 넣을 수 없음 */
+    'use strict'
+
+    function foo1(x,x) {
+      return x + x;
+    }
+
+    console.log(foo1(1,2))
+  </script>
+  <script>
+    /*with을 포함하면 에러*/
+
+    (function() {
+      'use strict'
+
+      with({ x:1 }) {
+        console.log(x);
+      }
+    })();
+  </script>
+  <script>
+    // 일반 함수 내에서 this를 사용할 필요가 없기 때문에 undefined 가 바인딩됨.
+    (function() {
+      'use strict';
+
+      function foo() {
+        console.log(this); // undefined
+      }
+
+      foo();
+
+      function Foo() {
+        console.log(this); // Foo
+      }
+
+      new Foo();
+    })();
+  </script>
+  </html>

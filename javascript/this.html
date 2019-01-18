@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+
+</body>
+<script async>
+  function square(number) {
+    console.log(arguments);
+    console.log(this);
+
+    return number * number;
+  }
+
+  square(2);
+
+  /* 함수 호출 방식과 this 바인딩 */
+
+  var foo = function() {
+    console.log(this);
+  }
+
+  // 1. 함수 호출
+  foo(); // window
+
+  // window.foo();
+
+  //2. 메소드 호출
+  var obj = { foo: foo };
+  obj.foo(); // obj
+
+  // >> foo()이 나오는데 예제에서는 obj이 나온다고 되어있음.
+
+  //3. 생성자 함수 호출
+  var instance = new foo(); //instance
+  console.log(instance);
+  // >> foo()이 나오는데 예제에서는 instance가 나온다고 되어있음.
+
+  //4. apply/call/bind 호출
+  var bar = { name: 'bar'};
+  foo.call(bar); //bar
+  foo.apply(bar); //bar
+  foo.bind(bar)(); //bar
+
+  /* 함수 호출 */
+  // in browser console
+  console.log(this === window);
+
+  var ga = 'Global variable';
+  console.log(ga);
+  console.log(window.ga);
+
+  function foo1() {
+    console.log('invoked!');
+  }
+
+  window.foo1();
+
+  function foo2() {
+    console.log("foo2's this: ", this); //window
+
+    function bar2() {
+      console.log("bar2's this", this)
+    }
+
+    bar2();
+  }
+
+  foo2();
+
+  var value = 1;
+  var obj = {
+    value: 100,
+    foo: function() {
+      console.log("foo's this: ", this); //obj
+      console.log("foo's this.value: ",this.value); // 100
+
+      function bar() {
+        console.log("bar's this: ",this); //window
+        console.log("bar's this.value: ", this.value); //1
+      }
+      bar();
+    }
+  }
+
+  obj.foo();
+
+
+  var value = 1;
+
+  var obj = {
+    value: 100,
+    foo: function() {
+      setTimeout(function() {
+        console.log("callback is this: ",this); // window
+        console.log("callback's this.value: ",this.value);
+      },100);
+    }
+  };
+
+  obj.foo();
+
+  /* 내부함수가 전역객체를 참조하는 것을 회피하는 방법 */
+  console.log('회피방법');
+
+  var value = 1;
+
+  var obj = {
+    value: 100,
+    foo: function() {
+      var that = this; // workaround : this === obj
+
+      console.log("foo's this: ", this); //obj
+      console.log("foo's this.value: ", this.value); //100
+      function bar() {
+        console.log("bar's this: ",this);
+        console.log("bar's this.value: ", this.value);
+
+        console.log("bar's that: ", that); //obj
+        console.log("bar's that.value: ", that.value);
+      }
+      bar();
+    }
+  }
+
+  obj.foo();
+
+  console.log('call, apply, bind를 이용')
+
+  var value = 1;
+
+  var obj = {
+    value: 100,
+    foo: function() {
+      console.log("foo's this: ", this); // obj
+      console.log("foo's this.value: ", this.value); //100
+
+      function bar(a, b) {
+        console.log("bar's this: ", this); // obj
+        console.log("bar's this.value: ", this.value); //100
+        console.log("bar's arguments: ", arguments);
+      }
+
+      bar.apply(obj, [1, 2]);
+      bar.call(obj, 1, 2);
+      bar.bind(obj)(1,2);
+    }
+  }
+
+  obj.foo();
+
+  /* 메소드 호출 */
+  console.log('메소드 호출');
+
+  var obj1 = {
+    name: 'Lee',
+    sayName: function() {
+      console.log(this.name);
+    }
+  }
+
+  var obj2 = {
+    name: 'Kim',
+  }
+
+  obj2.sayName = obj1.sayName;
+
+  obj1.sayName();
+  obj2.sayName();
+
+  function Person(name) {
+    this.name = name;
+  }
+
+  Person.prototype.getName =  function() {
+    return this.name;
+  }
+
+  var me = new Person('Lee');
+  console.log(me.getName());
+
+  Person.prototype.name = 'Kim';
+  console.log(Person.prototype.getName());
+
+  //생성자 함수
+
+  function Person() {
+    this.name = name;
+  }
+
+  var me = new Person('Lee');
+  console.log(me); 
+  var you = Person('Kim');
+  console.log(you);
+
+  /* 객체 리터럴 방식과 생성자 함수 방식의 차이 */
+
+  console.log('객체 리터럴 방식과 생성자 함수 방식의 차이 ')
+
+  //객체 리터럴 방식
+  var foo3 = {
+    name: 'foo',
+    gender: 'male',
+  }
+
+  console.dir(foo3);
+
+  //생성자 함수 방식
+  function Person1(name, gender) {
+    this.name = name;
+    this.gender = gender;
+  }
+
+  var me = new Person1('Lee', 'Male');
+  console.dir(me);
+
+  var you = new Person1('Kim', 'Female');
+  console.dir(you);
+
+  /* 생성자 함수에 new 연산자를 붙이지 않고 호출할 경우*/
+  console.log('생성자 함수에 new 연산자를 붙이지 않고 호출할 경우');
+
+  function Perosn2(name) {
+    // new없이 호출하는 경우, 전역객체에 name 프로퍼티를 추가.
+    this.name = name;
+  }
+
+  //일반 함수로서 호출되었기 때문에 객체를 암묵적으로 생성하여 반환하지 않는다.
+  //일반 함수의 this는 전역객체를 가리킨다.
+
+  var me2 = Perosn2('Lee');
+
+  console.log(me2); // undefined
+  console.log(window.name); // Lee
+
+  /* Scope-safe Constructor Patten */
+  function A(arg) {
+    // 생성자 하수가 new 연산자와 함께 호출되면 함수의 선두에서 빈객체를 생성하고 this에 바인딩한다.
+
+    if (!(this instanceof arguments.callee)) {
+       /*this가 호출된 함수 (arguments.callee, 본 예제의 경우A)의 인스턴스가 아니면 mew연산자를 사용하지 않은 것이므로 이 경우 new와 함께 생성자 함수를 호출하여 인스턴스를 반환한다.
+       arguments.callee는 호출된 함수의 이름을 나타낸다. 이 예제의 경우 A로 표기하여도 문제없이 작동하지만 특정함수의 이름과 의존성을 없애기 위해서 arguments.callee를 사용하는것이 좋다. */
+       return new arguments.callee(arg);
+     }
+
+  // 프로퍼티 생성과 값의 할당
+
+  this.value = arg ? arg : 0;
+}
+
+var a = new A(100);
+var b = A(10);
+
+console.log(a.value, 'a.value');
+console.log(b.value, 'b.value');
+
+
+
+
+
+
+</script>
+</html>

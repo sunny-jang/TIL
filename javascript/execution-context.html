@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+  </head>
+  <body>
+   
+  </body>
+  <script async>
+  /* 실행 컨텍스트 */
+  /*
+    - 전역 코드 : 전역 영역에 존재하는 코드
+    - Eval 코드 : eval 함수로 실행되는 코드
+    - 함수 코드 : 함수 내에 존재하는 코드
+
+    ** 실행에 필요한 정보들
+
+        - 변수 : 전역변수, 지역변수, 매개변수, 객체의 프로퍼티
+        - 함수 선언
+        - 변수의 유효범위(Scope)
+        - this
+  */
+
+  var x = 'xxx'; //global EC
+
+  function foo() { //foo() EC
+    var y = 'yyy';
+
+    function bar() { //bar() EC
+        var z = 'zzz';
+        console.log(x + y + z);
+    }
+    bar(); // bar done
+  }
+
+  foo(); // foo done
+
+  //global done
+
+  /*
+    Variable Object (VO / 변수객체)
+        - 변수
+        - 매개변수(parameter)와 인수 정보(arguments)
+        - 함수 선언(함수 표현식은 제외)
+
+    Scope Chain (SC)
+        - 변수를 검색하는 매커니즘
+        - 현재 스코프에서 검색 후 없으면 부모 스코프로 이동하여 검색
+
+    this value
+        - this 프로퍼티에는 this 값이 할당된다. this에 할당되는 값은 함수 호출 패턴에 의해 결정된다.
+
+    ** 실행 컨텍스트의 생성 과정
+        
+        1. Global Object가 새성된다.
+        2. 전역 객체가 생성된 이후, 전역 코드로 컨트롤 진입하면 전역 실행 컨텍스트가 생성
+        3. 실행 컨텍스트 스택에 쌓임.
+        4. 
+            -1. 스코프 체인의 생성과 초기화
+            -2. Variable Instantiation(변수 객체화)실행
+            -3. this value 결정
+
+
+
+    > 스코프 체인의 생성과 초기화
+        - 실행 컨텍스트 생성 이후 가장 먼저 스코프 체인의 생성과 초기화가 실행.
+        - 스코프 체인은 전역 객체의 레퍼런스를 포함하는 리스트가 된다.
+
+    > Variable Instantiation(변수 객체화) 실행
+        - 스코프 체인의 생성과 초기화가 종료하면 변수 객체화가 실행된다.
+        - Variable Instantiation은 Variable Object에 프로퍼티와 값을 추가하는 것을 의미.
+        - 변수, 매개변수, 인수정보, 함수 선언을 Variable Object에 추가.
+
+    > 함수 foo의 선언 처리
+        - 생성된 함수 객체는 [[Scopes]]프로퍼티를 가지게 된다.
+        - [[Scopes]]는 함수 객체가 실행되는 환경을 가리킨다.
+        - 내부 함수의 [[Scopes]] 프로퍼티는 자신을 포함하는 외부 함수의 실행 컨텍스트가 소멸하여도 [[Scopes]]프로퍼티가 가리키는 외부함수 실행환경은 소멸하지 않고 참조할 수 있다. 이것이 클로저이다.
+
+    > 변수 x의 선언 처리
+        선언 단계(Declaration phase)
+        -> 변수 객체(Variable Object)에 변수를 등록한다.
+
+        초기화 단계(Initaliztion phase)
+        -> undefined로 초기화
+
+        할당 단계(Assignment phase)
+        -> 실제값을 할당
+
+
+    > this value 결정
+        -> this value 가 결정되기 이전에 this는 전역 객체를 가리키고 있다가 함수 호출 패턴에 의해 this에 할당되는 값이 결정된다.
+  */
+  </script>
+</html>

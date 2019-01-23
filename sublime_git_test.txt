@@ -1,1 +1,1 @@
-sublime text 와 git 연동하는 파일 입니다.
+sublime text 와 git 연동하는 파일 입니다.2

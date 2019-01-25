@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+</head>
+<body>
+	<button class="toggle">toggle</button>
+	<div class="box" style="width: 100px; height: 100px; background: red"></div>
+
+
+	<p>전역 변수를 사용한 Counting</p>
+	<button id="inclease"> + </button>
+	<p id="count">0</p>
+</body>
+<script async>
+	function outerFunc() {
+		var x =10;
+		var innerFunc = function() {
+			console.log(x);
+		}
+		return innerFunc;
+	}
+
+	var inner = outerFunc();
+	inner();
+
+
+	var box = document.querySelector('.box');
+	var toggleBtn = document.querySelector('.toggle');
+
+	var toggle = (function() {
+		var isShow = false;
+
+    //1. 클로저를 반환
+    return function() {
+    	box.style.display = isShow ? 'block' : 'none';
+
+      //3. 상태변경
+      isShow = !isShow;
+    }
+  })();
+
+   // 2. 이벤트 프로퍼티에 클로저를 할당.
+   toggleBtn.onclick = toggle;
+
+
+   var incleaseBtn = document.getElementById('inclease');
+   var count = document.getElementById('count');
+
+   //카운트 상태를 유지하기 위한 전역 변수
+   var counter = 0;
+
+   function increase() {
+   	return ++counter;
+   }
+
+   incleaseBtn.onclick = function() {
+   	count.innerHTML = increase();
+   }
+
+   //^ 위의 예제는 전역변수를 쓰기 때문에 오류의 위험이 있음.
+
+   var increase2 = (function() {
+   	var counter = 0;
+
+   	return function() {
+   		console.log(counter);
+   		return ++counter;
+   	};
+   })();
+
+
+
+   incleaseBtn.onclick = function () {
+   	console.log(increase2)
+   	count.innerHTML = increase2();
+   }
+
+   //^ 전역변수 사용을 방지한 코드.
+
+   var module = function() {
+   	var _privateVar = "은닉변수";
+   	var publicVar = "공개변수";
+
+   	var _privateFunc = function(arg) {
+   		return "은닉함수 >> " + arg;
+   	}
+   	var publicFunc = function(arg) {
+   		return "공개함수 >> " + arg;
+   	}
+
+   	var main = function() {
+   		console.log("_privateFunc(_privateVar): " + _privateFunc(_privateVar));
+   		console.log("publicFunc(publicVar): " + publicFunc(publicVar));
+   	}
+
+   	main();
+
+   	return {
+   		"publicVar"     : publicVar,
+   		"publicFunc"    : publicFunc,
+   	}
+   };
+
+   var module1 = module();
+   var module2 = module();
+   var module3 = module();
+
+   //함수를 인자로 전달받고 함수를 반환하는 고차 함수.
+
+   //이 함수가 반환하는 함수는 클로저로서 카운트 상태를 유지하기 위한 자유변수 counter을 기억한다.
+   function makeCounter(predicate) {
+   	//카운트 상태를 유지하기 위한 자유 변수
+   	var counter = 0;
+   	//클로저 반환
+   	return function() {
+   		counter = predicate(counter);
+   		return counter;
+   	};
+   }
+
+   //보조 함수
+   function increase(n) {
+   	return ++n;
+   }
+
+  	//보조 함수
+  	function decrease(n) {
+  		return --n;
+  	}
+
+  	//함수로 함수를 생성한다.
+  	//makeCounter 함수는 보조 함수를 인자로 전달받아 함수로 반환한다.
+  	const increaser = makeCounter(increase);
+  	console.log(increaser()); //1
+  	console.log(increaser()); //2
+
+
+  	/* 정보의 은닉 */
+
+  	function Counter() {
+  		//카운트를 유지하기 위한 자유 변수
+  		var counter = 0;
+
+  		// 클로저
+  		this.increase1 = function() {
+  			return ++counter;
+  		};
+
+  		// 클로저
+  		this.decrease1 = function() {
+  			return --counter;
+  		};
+  	}
+
+  	const counter2 = new Counter();
+  	console.log(counter2.increase1()); //1
+  	console.log(counter2.decrease1()); //0;
+
+  	/* 클로저를 사용할 때 자주 발생할 수 있는 실수 */
+  	var arr = [];
+  	for(var i = 0; i<5; i++) {
+  		arr[i] = function() {
+  			return i;
+  		}
+  	}
+
+  	for(var j = 0; j < arr.length; j++){
+  		console.log(arr[j]());
+  	}
+  	// 5 5 5 5 5 > i = 5이기 때문.
+
+  	var arr = [];
+
+  	for (var i = 0; i < 5; i++) {
+  		arr[i] = (function(id) {
+  			return function() {
+  				return id;
+  			}
+  		})(i);
+  	}
+
+  	for (var j = 0; j < arr.length; j++) {
+  		console.log(arr[j]());
+  	}
+
+  	const arr1 = [];
+  	for(let i = 0; i < 5; i++) {
+  		arr[i] = function() {
+  			return i;
+  		};
+  	}
+
+  	for(let i = 0; i< arr.length; i++) {
+  		console.log(arr[i]());
+  	}
+
+  	//고차함수 이용
+  	const arr3 = new Array(5)j.fill();
+
+  	arr3.forEach((v, i, array) => array[i] = () => i);
+
+  	arr3.forEach(f => console.log(f()));
+
+  	//>>>ES6 문법을 몰라서 모르겠음 ㅠㅠ
+
+
+  </script>
+  </html>

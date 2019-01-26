@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+
+</body>
+<script async>
+  /* 프로토타입 기반 언어
+      
+      - 객체 리터럴
+      - Object() 생성자 함수
+      - 생성자 함수
+      */
+
+  //객체 리터럴
+  var obj1 = {};
+  obj1.name = 'Lee';
+
+  //Object() 생성자 함수
+  var obj2 = new Object();
+
+  //생성자 함수
+  function F() {}
+  var obj3 = new F();
+  obj3.name = 'Lee';
+
+  /* 생성자 함수와 인스턴스의 생성 */
+  //생성자 함수 (Constructor)
+  function Person(name) {
+    //프로퍼티
+    this.name = name;
+
+    //메소드
+    this.setName = function (name) {
+      this.name = name;
+    };
+
+    this.getName = function (name) {
+      return this.name;
+    };
+  }
+
+  var me = new Person('Lee');
+  //console.log(me.getName()); //Lee
+
+  //me.setName('Kim');
+ // console.log(me.getName());
+
+ var me = new Person('Lee');
+ var you = new Person('Kim');
+ var him = new Person('Choi');
+
+  console.log(me); //Person { name :'Lee', setName: [func], getName: [func]};
+  console.log(you); //Person { name :'kim', setName: [func], getName: [func]};
+  console.log(him); //Person { name :'Choi', setName: [func], getName: [func]};
+
+
+  //위의 코드의 문제점  = function이 반복적으로 같은 코드가 들어감. 메모리 낭비.
+
+  //prototype을 써서 개편
+  function Person(name) {
+    this.name = name;
+  }
+
+  //prototype 객체에 메소드 정의
+  Person.prototype.getName = function(name) {
+    return this.name;
+  };
+
+  var me = new Person('Lee');
+
+  console.log(Person.prototype);
+
+  console.log(me);
+
+  /* 프로토타입 객체에 메소드를 추가하는 방식 */
+  /**
+  * 모든 생성자 함수의 프로토타입은 Function.prototype이다. 따라서 모든 생성자 함수는 Function.prototype.method()에 접근할 수 있다.
+  * @method Function.prototype.method
+  * @param ({string}) (name) - (메소드 이름)
+  * @param ({function}) (func) - (추가할 메소드 본체)
+  */
+
+  Function.prototype.method = function(name, func) {
+    //생성자 함수의 프로토타입에 동일한 이름의 메소드가 없으면 생성자 함수의 프로토타입에 메소드를 추가
+
+    //this: 생성자함수
+    if(!this.prototype[name]) {
+      this.prototype[name] = func;
+    }
+  };
+
+  function Person1(name) {
+    this.name = name;
+  }
+
+  /*
+    생성자함수 Person의 프로토타입에 메소드 setName을 추가.
+    */
+
+    Person1.method('setName', function(name) {
+      this.name = name;
+    });
+
+  /*
+  생성자함수 Person의 프로토타입에 메소드 getName을 추가.
+  */
+
+  Person1.method('getName', function(name) {
+    return this.name;
+  })
+
+  var me1 = new Person1('lee');
+  var you1 = new Person1('kum');
+  var him1 = new Person1('choi');
+
+  console.log(Person1.prototype);
+  //person1 {setName: [func], getName: [func]}
+
+  console.log(me);  // Person { name: 'Lee' }
+  console.log(you); // Person { name: 'Kim' }
+  console.log(him); // Person { name: 'choi' }
+
+  /*의사 클래스 패턴 상속 (Pseudo-classical Inheritance)*/
+
+  //부모 생성자 함수
+  var Parent = (function() {
+    //Constructor
+    function Parent (name) {
+      this.name = name;
+    }
+
+    // method
+    Parent.prototype.sayHi = function() {
+      console.log('Hi' + this.name);
+    }
+
+    return Parent;
+  });
+
+
+  //자식 생성자 함수
+  var Child = (function() {
+    //Constructor
+    function Child(name) {
+      this.name = name;
+    }
+
+    //자식 생성자 함수의 프로토타입 객체를 보무 생성자 함수의 인스턴스로 교체.
+
+    Child.prototype = new Parent();//2
+
+    //메소드 오버라이드
+    Child.prototype.sayHi = function() {
+      console.log('안녕하세요!' + this.name);
+    }
+
+    //sayBye 메소드는 PArent 생성자함수의 인스턴스에 위치된다.
+    Child.prototype.sayBye = function() {
+      console.log('안녕히가세요!' + this.name);
+    };
+
+    return Child;
+  })();
+
+  var child = new Child('child'); //1
+  console.log(child); //// Parent { name: 'child' } 예제에는 이렇게 적혀있는데 'Child{}이렇게 나오고 prototype안의 Parent의 name은 parent로 나옴.. 왜지..?'
+  console.log(Child.prototype);
+
+  child.sayHi(); //안녕하세요! child
+
+  console.log(child instanceof Parent);
+  console.log(child instanceof Child);
+  console.log(child.Constructor); //[Function: parent] 이 나와야 하는데 undefined가 나옴.?~?
+</script>
+</html>

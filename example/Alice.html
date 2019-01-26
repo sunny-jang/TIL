@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+</head>
+<body>
+	1. 객체는 하나씩만 존재한다고 가정한다. (생성자+상속을 구현할 필요가 없다는 얘기, {} 리턴해서 만드세요. 접때 보내드린 모듈패턴 코드 복사해서 쓰세요.)
+	2. 객체의 모든 속성(프로퍼티)은 은닉시킨다. (객체 내부에서만 접근할 수 있다. 클로저를 쓰세요.)
+	3. 객체의 모든 함수(메소드)는 공개한다. (다른 객체에서도 자유롭게 쓸 수 있다.)
+	4. 단위는 무시하세요. 앨리스.키="130cm" 가 아니라 앨리스.키=130 입니다. (Number)
+	5. 속성이 _로 시작하면 프라이빗(은닉)이라는 뜻입니다.
+
+	앨리스
+	_키 = 130cm
+	_위치 = 통로
+	먹다()
+	들어가다()
+
+	var alice = function() {
+		var _height = 130;
+		var _loc = passage;
+
+		var eat = function(what) {
+			return _height
+		};
+
+		var enter = function(door) {
+			return _loc;
+		};
+	}
+
+	1. 앨리스가 먹다(음료) 또는 먹다(버섯)하면, 키가 바뀐다. (_키 = 리턴값)
+	2. 앨리스가 들어가다(입구)하면, 위치가 바뀐다. (_위치 = 리턴값)
+
+	입구
+	_높이 = 40cm
+	_탁자높이 = 140
+	_열림 = false
+	열리다()
+	통과되다()
+
+	var door = function() {
+		var _height = 40;
+		var _tbHeight =: 140;
+		var _isOpened = false;
+
+		var open = function(aliceHeight) {
+			return aliceHeight > tbHeight ? true : false; 
+		}
+
+		var isPassed = function(aliceHeight) {
+			return _isOpened == true && _height > aliceHeight ? true : false;
+		}
+	}
+
+
+
+	1. 입구.열리다(앨리스.키)하면, 앨리스의 키가 탁자높이 보다 클 때만 열 수 있다. (도로 잠기진 않는다)
+	2. 탁자 위에 열쇠가 있다는 설정인데, 일단 지금은 무시한다.
+	3. 입구.통과되다(앨리스.키)하면, 문이 열려있고, 앨리스의 키가 입구의 높이 이하일 때만 지나갈 수 이다.
+	4. 입구를 통과하면 정원이고, 통과하지 못하면 통로이다. (한 번 정원으로 가면 도로 나오진 않는다)
+
+	음료
+	_양 = 500mL
+	먹히다()
+
+	var drink = function() {
+		var _quantity = 500;
+
+		var isEaten = function(aliceHeight) {
+			_quantity = 0;
+			aliceHeight = 24cm;
+
+			return {
+				'quantity' : _quantity;
+				'aliceHeight' : aliceHeight;
+			}
+			
+		}
+	}
+
+	1. 음료.먹히다(앨리스.키)하면, 음료.양이 0mL로 줄고, 앨리스의 키를 24cm로 바꾼다.
+
+	버섯
+	_좌측 = 50g
+	_우측 = 50g
+	먹히다()
+
+	var mushroom = function(){
+		var _left = 50;
+		var _right = 50;
+
+		var isEaten = function(aliceHeight) {
+			var which = Math.floor(Math.random()*2) ? right : left;
+			if(which == left) {
+				aliceHeight += 10;
+				_left -= 10;
+			}else {
+				aliceHeight -= 10;
+				_left -= 10;
+			}
+		}
+	}
+
+	1. 버섯.먹히다(앨리스.키)하면, 버섯.좌측 또는 버섯.우측을 먹는다.
+	-> Math.floor(Math.random()*2) 사용해서, 0이면 좌측 먹고, 1이면 우측 먹으세요.
+	2. 좌측 먹으면 키를 -10cm 하고, 우측 먹으면 키를 +10cm 한다. 먹히면 10g씩 줄어든다.
+</body>
+<script async>
+
+	var module = function() {
+		var publicVar = "공개변수";
+
+		var setPublicVar = function(val) {
+			publicVar = val;
+		}
+
+		var getPublicVar = function() {
+			return publicVar;
+		}
+
+		return {
+			"setPublicVar"  : setPublicVar,
+			"getPublicVar"  : getPublicVar,
+		}
+	};
+
+    // 모듈 3개 만든다
+    var module1 = module();
+    var module2 = module();
+    var module3 = module();
+
+    // 각 모듈 스코프의 공개속성 값 재할당
+    module1.setPublicVar("모듈1");
+    module2.setPublicVar("모듈2");
+    module3.setPublicVar("모듈3");
+
+    // 각 모듈의 공개메소드를 통해 클로저 확인
+    console.dir(module1.setPublicVar);
+    console.dir(module2.setPublicVar);
+    console.dir(module3.setPublicVar);
+
+    // 클로저에 묶인 지역변수를 출력
+    console.log(module1.getPublicVar());
+    console.log(module2.getPublicVar());
+    console.log(module3.getPublicVar());
+
+
+//////////////////////////////////
+
+    var Alice = function() {
+    	var _height = 130;
+    	var _loc = 'passage';
+
+    	var eat = function(what) {
+    			_height = what.isEaten(_height);
+    			
+    		return _height
+    	};
+
+    	var enter = function(door) {
+    		door.open(_height);    		
+    		
+    		_loc = door.isPassed(_height);
+    	
+    		return _loc;
+    	};
+
+    	return {
+    		'eat' : eat,
+    		'enter' : enter,
+    	}
+    }
+
+    var Door = function() {
+    	var _height = 40;
+    	var _tbHeight = 140;
+    	var _isOpened = false;
+
+    	var open = function(aliceHeight) {
+    		_isOpened = aliceHeight < _tbHeight ? true : false;
+    		console.log(aliceHeight)
+    		console.log(_isOpened)
+    		return _isOpened; 
+    	}
+
+    	var isPassed = function(aliceHeight) {
+    		console.log(_isOpened == true && _height > aliceHeight);
+    		return (_isOpened == true && _height > aliceHeight) ? 'garden' : 'passage';
+    	}
+
+    	return {
+    		'open': open,
+    		'isPassed': isPassed,
+    	}
+    }
+
+    var Drink = function() {
+    	var _quantity = 500;
+
+    	var isEaten = function(aliceHeight) {
+    		_quantity = 0;
+    		aliceHeight = 24;
+    		return aliceHeight;
+    	}
+
+    	return {
+    			'isEaten' : isEaten,
+    		}
+    }
+
+    var Mushroom = function(){
+    	var _left = 50;
+    	var _right = 50;
+
+    	var isEaten = function(aliceHeight) {
+    		var which = Math.floor(Math.random()*2) ? 'right' : 'left';
+    		if(which == 'left') {
+    			aliceHeight += 10;
+    			_left -= 10;
+    		}else {
+    			aliceHeight -= 10;
+    			_left -= 10;
+    		}
+
+    		return aliceHeight;
+    	}
+
+    	return {
+    		'isEaten': isEaten
+    	}
+    }
+
+    var alice = Alice();
+    var door = Door();
+    var drink = Drink();
+    var mushroom = Mushroom();
+    console.log(drink)
+
+
+   	alice.eat(mushroom);
+   	alice.enter(door);
+   	console.log(alice);
+   	console.dir(alice.eat);
+   	console.dir(alice.enter);
+    
+</script>
+</html>

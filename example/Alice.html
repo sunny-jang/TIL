@@ -17,19 +17,6 @@
 	먹다()
 	들어가다()
 
-	var alice = function() {
-		var _height = 130;
-		var _loc = passage;
-
-		var eat = function(what) {
-			return _height
-		};
-
-		var enter = function(door) {
-			return _loc;
-		};
-	}
-
 	1. 앨리스가 먹다(음료) 또는 먹다(버섯)하면, 키가 바뀐다. (_키 = 리턴값)
 	2. 앨리스가 들어가다(입구)하면, 위치가 바뀐다. (_위치 = 리턴값)
 
@@ -39,21 +26,6 @@
 	_열림 = false
 	열리다()
 	통과되다()
-
-	var door = function() {
-		var _height = 40;
-		var _tbHeight =: 140;
-		var _isOpened = false;
-
-		var open = function(aliceHeight) {
-			return aliceHeight > tbHeight ? true : false; 
-		}
-
-		var isPassed = function(aliceHeight) {
-			return _isOpened == true && _height > aliceHeight ? true : false;
-		}
-	}
-
 
 
 	1. 입구.열리다(앨리스.키)하면, 앨리스의 키가 탁자높이 보다 클 때만 열 수 있다. (도로 잠기진 않는다)
@@ -65,20 +37,6 @@
 	_양 = 500mL
 	먹히다()
 
-	var drink = function() {
-		var _quantity = 500;
-
-		var isEaten = function(aliceHeight) {
-			_quantity = 0;
-			aliceHeight = 24cm;
-
-			return {
-				'quantity' : _quantity;
-				'aliceHeight' : aliceHeight;
-			}
-			
-		}
-	}
 
 	1. 음료.먹히다(앨리스.키)하면, 음료.양이 0mL로 줄고, 앨리스의 키를 24cm로 바꾼다.
 
@@ -86,22 +44,6 @@
 	_좌측 = 50g
 	_우측 = 50g
 	먹히다()
-
-	var mushroom = function(){
-		var _left = 50;
-		var _right = 50;
-
-		var isEaten = function(aliceHeight) {
-			var which = Math.floor(Math.random()*2) ? right : left;
-			if(which == left) {
-				aliceHeight += 10;
-				_left -= 10;
-			}else {
-				aliceHeight -= 10;
-				_left -= 10;
-			}
-		}
-	}
 
 	1. 버섯.먹히다(앨리스.키)하면, 버섯.좌측 또는 버섯.우측을 먹는다.
 	-> Math.floor(Math.random()*2) 사용해서, 0이면 좌측 먹고, 1이면 우측 먹으세요.
@@ -152,16 +94,17 @@
     var Alice = function() {
     	var _height = 130;
     	var _loc = 'passage';
+    	var 아무변수 = "test";
 
     	var eat = function(what) {
-    			_height = what.isEaten(_height);
+    		_height = what.isEaten(_height);
     			
-    		return _height
+    		return _height;
     	};
 
     	var enter = function(door) {
-    		door.open(_height);    		
-    		
+    		door.open(_height);
+
     		_loc = door.isPassed(_height);
     	
     		return _loc;
@@ -179,15 +122,15 @@
     	var _isOpened = false;
 
     	var open = function(aliceHeight) {
-    		_isOpened = aliceHeight < _tbHeight ? true : false;
-    		console.log(aliceHeight)
-    		console.log(_isOpened)
+    		if(aliceHeight >= _tbHeight) _isOpened = true;
+    		console.log("aliceHeight: " + aliceHeight)
+    		console.log("_isOpened: " + _isOpened)
     		return _isOpened; 
     	}
 
     	var isPassed = function(aliceHeight) {
-    		console.log(_isOpened == true && _height > aliceHeight);
-    		return (_isOpened == true && _height > aliceHeight) ? 'garden' : 'passage';
+    		console.log("_isOpened == true && _height > aliceHeight: " + _isOpened == true && _height > aliceHeight);
+    		return (_isOpened == true && _height >= aliceHeight) ? 'garden' : 'passage';
     	}
 
     	return {
@@ -239,11 +182,11 @@
     console.log(drink)
 
 
-   	alice.eat(mushroom);
-   	alice.enter(door);
-   	console.log(alice);
-   	console.dir(alice.eat);
-   	console.dir(alice.enter);
+   	// alice.eat(mushroom);
+   	// alice.enter(door);
+   	// console.log(alice);
+   	// console.dir(alice.eat);
+   	// console.dir(alice.enter);
     
 </script>
 </html>

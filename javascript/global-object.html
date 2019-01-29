@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+
+</body>
+<script async>
+  /* 전역 객체 */
+  //window.document 이지만 전역객체의 기술은 생략함.
+  //document.getElementById('foo').style.display = '';
+  //window.document.getElementById('foo').style.display = '';
+
+  console.log(location)
+
+  function moveTo(url) {
+    var location = {'href':'move to '};
+    alert(location.href + url);
+    // location.href = url;
+    window.location.href = url;
+  }
+
+  //moveTo('http://www.google.com');
+
+  var ga = 'Global variable';
+  console.log(ga);
+  console.log(window.ga);
+
+  function foo() {
+    console.log('invoked!');
+  }
+
+  window.foo();
+
+  //Standard Built-in Object(표준 빌트인 객체)
+  //alert('Hello World');
+
+  /* 전역 프로퍼티(Global property) */
+  console.log(window.Infinity); //infinity
+
+  console.log(3/0); //Infinity
+  console.log(-3/0); //Infinity
+  console.log(Number.MAX_VALUE * 2); // 1.7976931348623157e+308 * 2
+  console.log(typeof Infinity) //number
+
+  /*NaN*/ 
+  console.log(window.NaN); //NaN
+
+  console.log(Number('xyz')); //NaN
+  console.log(1*'string'); //NaN
+  console.log(typeof NaN); //number
+
+  /* undefined */
+  console.log(window.undefined);
+
+  var foo1;
+  console.log(foo1); //undefined
+  console.log(typeof undefined)// undefined;
+
+  /*Global function*/
+  //eval()
+
+  var foo = eval('2+2');
+  console.log(foo)//4
+
+  var x = 5;
+  var y = 4;
+  console.log(eval('x*y')); //20
+
+  //isFinite() >  정상적인 유한수 인지 검사.
+  //isFinite(tstValue) // testValue :  검사 대상 값.
+  console.log(isFinite(Infinity)); //false
+  console.log(isFinite(NaN)); //false
+  console.log(isFinite('Hello')); //false
+
+  console.log(isFinite(0)); //true
+  console.log(isFinite(2e64)); //true
+  console.log(isFinite('10')); //true
+
+  //parseFloat 문자열을 부동소수점 숫자로 변화나여 반환
+  console.log(parseFloat('3.14'));
+  console.log(parseFloat('10.00'));
+  console.log(parseFloat('34 45 65')); // 맨 앞의 숫자만 변환.
+
+  //parseInt 문자열을 정수형 숫자로 반환.
+  console.log(parseInt(10)); //10
+  console.log(parseInt(10.123)); //10
+
+  console.log(parseInt('10')); //10
+  console.log(parseInt('10.123')); //10
+
+  //encodeURL , decodeURL
+  var uri = 'http://example.com?name=이웅모&job=programmer&teacher';
+  var enc = encodeURI(uri);
+  var dec = decodeURI(enc);
+  console.log(enc);
+  console.log(dec);
+
+</script>
+</html>

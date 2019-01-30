@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+
+</body>
+<script async>
+  /* Math Property */
+  //Math.PI
+  Math.PI; // pi 값을 반환.
+
+  //Math.Method //절댓값 반환.
+  Math.abs(-1); //1
+  Math.abs('-1'); //1
+  Math.abs(''); //0
+  Math.abs([]); //0
+  Math.abs(null); //0
+  Math.abs(undefined); //NaN
+  Math.abs({}); //NaN
+
+  //Math.round() //숫자를 가장 인접한 정수로 올림, 내림한다.
+  console.log(Math.round(10.49)); //11
+  console.log(Math.round(10.5)); //11
+  console.log(Math.round(-10.5)); //-10
+  console.log(Math.round(-10.51)); //-11
+
+  //Math.sqrt() 양의 제곱근을 반환.
+  console.log(Math.sqrt(9)); //3
+  console.log(Math.sqrt(-9)); //NaN
+  console.log(Math.sqrt(2)); //1.4142356...
+  console.log(Math.sqrt(1)); //1
+  console.log(Math.sqrt(0)); //0
+
+  //Math.ceil() 지정된 숫자를 자신보다 큰, 가장 가까운 정수로 올림한다.
+  Math.ceil(1.4); // 2
+  Math.ceil(-1.4); // 1
+
+  //Math.floor() 소숫점 이하의 값을 제거한 정수를 취득.
+  console.log(Math.floor(1.9)); // 1
+  console.log(Math.floor(9.1)); // 9
+  console.log(Math.floor(-1.9)); //-2
+  console.log(Math.floor(-9.1)); //10
+
+  //Math.random() 0과1사이의 임의의 숫자를 반환한다. 이때 0은 포함, 1은 포함되지 않는다.
+  console.log(Math.random()); //0 ~ 1 미만의 소수
+
+  //1 ~ 10의 랜덤 정수 취득
+  var random = Math.floor((Math.random() * 10) + 1);
+  console.log(random);
+
+  //Math.pow();
+  console.log(Math.pow(2,8));
+  console.log(2 ** 8);
+
+  //Math.max() 인수 중 가장 큰 수를 반환.
+  var arr = [1, 2, 3];
+
+  //배열 요소 중에서 최대값 취득
+  var arr = [1, 2, 3];
+  var max = Math.max.apply(null, arr); //3
+  console.log(max);
+
+  //ES6 Spread operator
+  var max = Math.max(...arr); //3
+  console.log(max);
+
+  //Math.min() 이수 중 가장 작은 수를 반환.
+  var arr = [1, 2, 3];
+  var min = Math.min.apply(null, arr); //1
+  console.log(min);
+
+  //ES6 Spread operator
+  var min = Math.min(...arr);
+  console.log(min);
+
+</script>
+</html>

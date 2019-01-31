@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+
+</body>
+<script async>
+  new Date();
+  var date = new Date();
+  console.log(date);
+  console.log(typeof date);
+
+  date = Date();
+  console.log(typeof date, date);
+
+  console.dir(Date);
+
+  //new Date(milliseconds) >  밀리초 만큼 경과한 날짜와 시간을 가지는 인스턴스를 반환
+
+  var d = new Date(0);
+  console.log(d); 
+
+  var d = new Date(8337337);
+  console.log(d);
+
+  //new Date(dateString) 지정된 날짜와 시간을 가지는 인스턴스를 반환.
+  var d = new Date('May 12, 2016 12:13:00');
+  console.log(d);
+
+  //new Date(year, month[, day, hour, minute, second]);
+  var d = new Date(1999);
+  console.log(d); // Thu Jan 01 1999 09:00:01 GMT+0900 
+
+  var d = new Date(1999, 1, 3, 11, 33, 30, 0);
+  console.log(d);
+
+  //Date.now() 1970 1월1일 이후로 현재시간까지 경과한 밀리초 숫자.
+  var n = Date.now();
+  console.log(n);
+
+  //Date.parse()
+  var d = Date.parse('Jan 2, 1970 00:00:00');
+  console.log(d);
+
+  //Date.prototype.getFullYear() 해당연도를 나타내는 4자리숫자를 반환
+  var today = new Date();
+  var year = today.getFullYear();
+
+  console.log(today);
+  console.log(year);
+
+  //Date.setFullYear()
+  var today = new Date();
+  today.setFullYear(2000);
+  var year = today.getFullYear();
+
+  console.log(today);
+  console.log(year);
+
+  //Date.prototype.getMonth() 해당월을 0~11 의 정수를 반환.
+  var month = today.getMonth();
+  console.log(month + 1);
+
+  //Date.prototype.setMonth();
+  today.setMonth(1);
+  var month = today.getMonth();
+
+  console.log(month);
+
+  //Date.prototype.getDate(); 해당 날짜 (1~31)를 나타내는 정수를 반환.
+  var date = today.getDate();
+
+  console.log(today);
+  console.log(date);
+
+  //Date.prototype.setDate()
+  today.setDate(1);
+  var date = today.getDate();
+  console.log(date);
+
+
+  //Date Example 현재 날짜와 시간을 초 단위로 반복 출력하는 예제
+  (function printNow() {
+    var today = new Date();
+
+    var dayNames = ['(일요일)', '(월요일)', '(화요일)', '(수요일)', '(목요일)', '(금요일)', '(토요일)',];
+
+  var day = dayNames[today.getDay()];
+  var year = today.getFullYear(),
+      month = today.getMonth(),
+      date = today.getDate();
+      hour = today.getHours();
+      minute = today.getMinutes();
+      second = today.getSeconds();
+      ampm = hour > 12 ? 'PM' : 'AM';
+
+      //12시간제로 변경
+      hour = hour % 12;
+      hour = hour ? hour : 12; // 0 => 12
+
+      //10미만인 분과 초를 2자리로 변경
+      minute = minute < 10 ? '0' + minute : minute;
+      second = second < 10 ? '0' + second : second;
+
+      var now = year + '년' + month + '월' + date + '일' + day + ' ' + hour + ':' + minute + ':' + second + ' ' + ampm;
+
+      console.log(now);
+      setTimeout(printNow, 1000);
+  })();
+
+
+</script>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+</head>
+<body>
+	1. 객체리터럴 리턴하는 모듈패턴을 -> 생성자 기반으로 리팩토링 하고
+	2. 객체에 직접 가질 속성/메소드랑 프로토타입에 붙일 속성/메소드 구분
+	3. 생성자 이름은 집합이름 같이
+	4. 버섯, 음료 -> 음식 이라는 거 하나 만들고, 각각 상속받게 설계
+
+
+</body>
+<script async>
+    /*
+        1. 객체리터럴 리턴하는 모듈패턴을 -> 생성자 기반으로 리팩토링 하고
+
+        2. 객체에 직접 가질 속성/메소드랑 프로토타입에 붙일 속성/메소드 구분
+
+        3. 생성자 이름은 집합이름 같이
+
+        4. 버섯, 음료 -> 음식 이라는 거 하나 만들고, 각각 상속받게 설계
+        */
+
+        var module = function() {
+        	var publicVar = "공개변수";
+
+        	var setPublicVar = function(val) {
+        		publicVar = val;
+        	}
+
+        	var getPublicVar = function() {
+        		return publicVar;
+        	}
+
+        	return {
+        		"setPublicVar"  : setPublicVar,
+        		"getPublicVar"  : getPublicVar,
+        	}
+        };
+
+    // 모듈 3개 만든다
+    var module1 = module();
+    var module2 = module();
+    var module3 = module();
+
+    // 각 모듈 스코프의 공개속성 값 재할당
+    module1.setPublicVar("모듈1");
+    module2.setPublicVar("모듈2");
+    module3.setPublicVar("모듈3");
+
+    // 각 모듈의 공개메소드를 통해 클로저 확인
+    console.dir(module1.setPublicVar);
+    console.dir(module2.setPublicVar);
+    console.dir(module3.setPublicVar);
+
+    // 클로저에 묶인 지역변수를 출력
+    console.log(module1.getPublicVar());
+    console.log(module2.getPublicVar());
+    console.log(module3.getPublicVar());
+
+
+//////////////////////////////////
+
+function Person(height) {
+	var _height = height;
+	var _loc = 'passage';
+
+	return {
+		'eat' : function(what) {
+			_height = what.isEaten(_height);
+
+			return _height;
+		},
+		'enter' : function(what) {
+			_height = what.isEaten(_height);
+
+			return _height;
+		}
+	}
+}
+
+function Door() {
+	var _height = 40;
+	var _tbHeight = 140;
+	var _isOpened = false;
+
+	return {
+		'open' : function(aliceHeight) {
+			if(aliceHeight >= _tbHeight) _isOpened = true;
+			console.log("aliceHeight: " + aliceHeight)
+			console.log("_isOpened: " + _isOpened)
+			return _isOpened; 
+		},
+		'isPassed' : function(aliceHeight) {
+			console.log("_isOpened == true && _height > aliceHeight: " + _isOpened == true && _height > aliceHeight);
+			return (_isOpened == true && _height >= aliceHeight) ? 'garden' : 'passage';
+		}
+
+	}
+}
+
+function Food(quantity) {
+	var _quantity = quantity;
+	var _left = quantity/2;
+	var _right = quantity/2;
+	
+	return {
+		'isEaten' : function(aliceHeight) {
+			_left = _left;
+			_right = right;
+		},
+	}
+}
+
+var alice = new Person(130);
+var door = new Door();
+var drink = new Food(500);
+var mushroom = new Food(500);
+
+
+drink.isEaten = function(aliceHeight) {
+	_quantity = 0;
+	aliceHeight = 24;
+	return aliceHeight;
+}
+
+mushroom.isEaten = function(aliceHeight) {
+	var which = Math.floor(Math.random()*2) ? 'right' : 'left';
+	if(which == 'left') {
+		aliceHeight += 10;
+		_left -= 10;
+	}else {
+		aliceHeight -= 10;
+		_left -= 10;
+	}
+	return aliceHeight;
+}
+
+
+   	// alice.eat(mushroom);
+   	// alice.enter(door);
+   	// console.log(alice);
+   	console.dir(alice.eat);
+   	console.dir(alice.enter);
+
+   </script>
+   </html>

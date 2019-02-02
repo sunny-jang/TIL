@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>React.js</title>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+<div id="app">
+
+</div>
+
+<script type="text/babel">
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: 'Hello React.js!'
+    };
+  }
+  reverse() {
+    this.setState({
+      text: this.state.text.split('').reverse().join('')
+    });
+  }
+  render() {
+    return (
+      <div>
+        <p>{ this.state.text }</p>
+        <button onClick={() => this.reverse()}>
+          Reverse
+        </button>
+      </div>
+    )
+  }
+}
+ReactDOM.render(<App name="app" />, document.getElementById('app'));
+</script>
+</body>
+
+</html>

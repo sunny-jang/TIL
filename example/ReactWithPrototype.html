@@ -37,7 +37,7 @@ var App = (function() {
         return (
             <div>
                 <p>{ this.state.text }</p>
-                <button onClick={() => this.reverse()}>
+                <button onClick={ function() { return this.reverse(); }.bind(this) }>
                     Reverse
                 </button>
             </div>

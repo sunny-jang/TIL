@@ -13,19 +13,27 @@
 </div>
 
 <script type="text/babel">
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+// 지금 시점에 React.Component 내부를 자세히 까볼 필요는 없어요 -> 느슨하게 이해
+var App = (function() {
+    function App(props) {
+        React.Component.call(this, props); // 까보면 이거랑 같은 거예요 -> this.props = props;
         this.state = {
             text: 'Hello React.js!'
         };
     }
-    reverse() {
+
+    App.prototype = Object.create(React.Component.prototype);
+    App.prototype.constructor = App;
+
+    App.prototype.reverse = function() {
+        // 이 메소드 부르는 거예요 -> React.Component.prototype.setState();
         this.setState({
             text: this.state.text.split('').reverse().join('')
         });
     }
-    render() {
+
+    App.prototype.render = function() {
+        // ()안에 HTML 같은 건 JSX라고 별도 문법인데, HTML이랑 거의 똑같아요
         return (
             <div>
                 <p>{ this.state.text }</p>
@@ -35,7 +43,11 @@ class App extends React.Component {
             </div>
         )
     }
-}
+
+    return App;
+}());
+
+// 지금 시점에 ReactDOM 내부를 자세히 까볼 필요는 없어요 -> 느슨하게 이해
 ReactDOM.render(<App name="app" />, document.getElementById('app'));
 </script>
 </body>

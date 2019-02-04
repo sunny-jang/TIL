@@ -8,25 +8,31 @@
 
 </body>
 <script async>
+	var builtInObject = {};
 	
 	/* Object */
-	var o =  new Object();
-	console.log(typeof o + ' : ', o);
+	(function() {
+		var o =  new Object();
+		console.log(typeof o + ' : ', o);
 
-	o = new Object(undefined);
-	console.log(typeof o + ' : ', o);
+		o = new Object(undefined);
+		console.log(typeof o + ' : ', o);
 
-	o = new Object(null);
-	console.log(typeof o + ' : ', o);
+		o = new Object(null);
+		console.log(typeof o + ' : ', o);
+	}());
 
-	// String 객체를 반환한다.
-	// var obj = new String('String'); 과 동치이다.
-	var obj = new Object('String');
-	console.log(typeof obj + ': ', obj);
-	console.dir(obj);
+	builtInObject.test = function() {
+		// String 객체를 반환한다.
+		// var obj = new String('String'); 과 동치이다.
+		var obj = new Object('String');
+		console.log(typeof obj + ': ', obj);
+		console.dir(obj);
 
-	var strObj = new String('String');
-	console.log(typeof strObj + ': ',strObj)
+		var strObj = new String('String');
+		console.log(typeof strObj + ': ',strObj)
+	};
+	builtInObject.test();
 
 	//Number 객체를 반환한다.
 	//var obj = new Number(123);과 동치이다.
@@ -39,7 +45,7 @@
 	// Boolean 객체를 반환한다.
 	// var obj = new Boolean(true);과 동치이다
 	var obj = new Object(true);
-	console.log(typeof obj + ': ', obj); 
+	console.log(typeof obj + ': ', obj);
 
 	var boolObj = new Boolean(123);
 	console.log(typeof boolObj + ': ', boolObj);

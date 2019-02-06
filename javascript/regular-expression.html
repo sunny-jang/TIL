@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+
+</body>
+<script async>
+  var Rep = {};
+
+  Rep.tel = function(){
+    var tel = '0101234567팔';
+    var myRegExp = /^[0-9]+$/;
+
+    console.log(myRegExp.test(tel)); //false
+  }
+
+  Rep.is = function() {
+    var targetStr = 'This is a pen.';
+    var regexr = /is/ig;
+
+    //RegExp.prototype.exec()
+    //Regex.prototype.test()
+    //String.prototype.match()
+    //String.prototype.replace()
+    //String.prototype.search()
+    //String.prototype.split()
+
+    //RegExp 객체의 메소드
+    console.log(regexr.exec(targetStr)); //['is', index: 2, input: 'This is a pen']
+    console.log(regexr.test(targetStr)); //true
+
+    //String 객체의 메소드
+    console.log(targetStr.match(regexr)); //['is','is']
+    console.log(targetStr.replace(regexr,'IS')); //ThIS IS a pen.
+    console.log(targetStr.search(regexr)); //2 <- index
+    console.log(targetStr.split(regexr)); // ['Th', ' ', ' a pen.']
+  }
+
+  Rep.flag = function() {
+    // i = ignore case = 대소문자 구벼하지 않고 검색.
+    // g = global = 문자열 내의 모든 패턴을 검색.
+    // m = multi line = 문자열의 행이 바뀌더라도 검색을 계속.
+
+    var targetStr = 'Is this all there is?';
+    var regexr = /is/;
+
+    console.log(targetStr.match(regexr)); // ['is', index: 5, input: 'Is this all there is?']
+
+    regexr = /is/ig;
+
+    console.log(targetStr.match(regexr));// ['Is', 'is', 'is']
+  }
+
+  Rep.pattern = function() {
+    var targetStr = 'AA BB Aa Bb';
+    //임의의 문자 3개
+    var regexr = /.../;
+    //. =  임의의 문자 한 개
+    console.log(targetStr.match(regexr)); // ['AA ', index:0, inpt: 'AA BB Aa Bb']
+  }
+
+  Rep.patternG = function() {
+    var targetStr = 'AA BB Aa Bb';
+    //임의의 문자 3개를 반복하여 검색
+    var regexr = /.../g;
+
+    console.log(targetStr.match(regexr)); //["AA ", "BB ", "Aa "]
+  }
+
+  Rep.patternAll = function() {
+    var targetStr = 'AA BB Aa Bb';
+    var regexr = /./g;
+
+    console.log(targetStr.match(regexr)); //["A", "A", " ", "B", "B", " ", "A", "a", " ", "B", "b"]
+  }
+
+  Rep.searchString = function() {
+    var targetStr = 'AA BB Aa Bb';
+
+    // 'A'를 검색
+    var regexr = /A/;
+    console.log(targetStr.match(regexr)); // ["A", index: 0, input: "AA BB Aa Bb", groups: undefined]
+  }
+
+  Rep.ignoreGlobal = function() {
+    var targetStr = 'AA BB Aa Bb';
+    
+    // 'A'를 검색
+    var regexr = /A/ig;
+    console.log(targetStr.match(regexr)); // ["A", "A", "A", "a"]
+  }
+
+  Rep.repeatGlobal = function() {
+    var targetStr = 'AA AAA BB Aa Bb';
+    //'A'가 한번이상 반복되는 문자열을 반복 검색
+    var regexr = /A+/g;
+
+    console.log(targetStr.match(regexr)); //["AA", "AAA", "A"]
+  }
+
+  Rep.or = function() {
+    var targetStr = 'AA BB Aa Bb';
+    //'A' 또는 'B'를 반복 검색
+
+    var regexr = /A|B/g;
+    console.log(targetStr.match(regexr)); //["A", "A", "B", "B", "A", "B"]
+  }
+
+  Rep.orRepeat = function() {
+    var targetStr = 'AA BB Aa Bb';
+    //'A' 또는 'B'를 반복 검색
+
+    var regexr = /A+|B+/g;
+    console.log(targetStr.match(regexr)); //["AA", "BB", "A", "B"]
+  }
+
+
+  Rep.orRepeat2 = function() {
+    var targetStr = 'AA BB Aa Bb';
+    //'A' 또는 'B'를 반복 검색
+
+    var regexr = /[AB]+/g;
+    console.log(targetStr.match(regexr)); //["AA", "BB", "A", "B"]
+  }
+
+  Rep.range = function() {
+    var targetStr = 'AA BB Aa Bb';
+    // 'A' ~ 'Z' 가 한번 이상 반복되는 문자열을 반복 검색
+    var regexr = /[A-Z]+/g;
+
+    //var regexr = /[A-Za=z]+/g; 대소문자 구별없이.
+    console.log(targetStr.match(regexr)); //["AA", "BB", "A", "B"]
+  }
+
+  Rep.number = function() {
+    var targetStr = 'AA BB Aa Bb 24,000';
+    // '0' ~ '9'가 한번 이상 반복되는 문자열을 반복 검색
+    var regexr = /[0-9]+/g; 
+
+    console.log(targetStr.match(regexr)); //["24", "000"]
+  }
+
+  Rep.number2 = function() {
+    var targetStr = 'AA BB Aa Bb 24,000';
+    // '0' ~ '9' 또는 ',' 가 한 번 이상 반복되는 문자열을 반복 검색
+    var regexr = /[0-9,]+/g; 
+
+    console.log(targetStr.match(regexr)); //["24,000"]
+  }
+
+  Rep.number3 = function() {
+    var targetStr = 'AA BB Aa Bb 24,000';
+    //0 ~ 9 또는 ,가 한 번 이상 반복되는 문자열
+    var regexr = /[\d]+/g;
+    console.log(targetStr.match(regexr)); //["24", "000"]
+
+    //숫자가 아닌 문자 또는 , 가 한 번 이상 반복되는 문자열
+    var regexr = /[\D,]+/g;
+    console.log(targetStr.match(regexr)); //["AA BB Aa Bb ", ","]
+  }
+
+  Rep.word = function() {
+    var targetStr = 'AA BB Aa Bb 24,000';
+    // 알파벳과 숫자 도는 ','가 한 번 이상 반복되는 문자열을 반복 검색
+    var regexr = /[\w,]+/g;
+    console.log(targetStr.match(regexr)); 
+
+    // 알파벳과 숫자가 아닌 문자 또는 ',' 가 한 번 이상 반복되는 문자열을 반복 검색.
+    var regexr = /[\W,]+/g;
+    console.log(targetStr.match(regexr));
+  }
+
+  Rep.특정단어시작 = function() {
+    var url = 'http://example.com';
+    //'http'로 시작하는지 검사
+    var regexr = /^http/;
+    console.log(regexr.test(url)); //true
+  }
+
+  Rep.특정단어끝 = function() {
+    var fileName = 'index.html';
+    //'http'로 끝나는지 검사
+    var regexr = /html$/;
+    console.log(regexr.test(fileName)); //true
+  }
+
+  Rep.숫자인지검사 = function() {
+    var targetStr = '12345';
+    // 모두 숫자인지 검사
+    var regexr = /^\d+$/;
+    console.log(regexr.test(targetStr));
+  }
+
+  Rep.하나이상의공백 = function() {
+    var targetStr = ' Hi';
+
+    // 1개 이상의 공백으로 시작하는지 검사
+    var regexr = /^[\s]+/;
+    console.log(regexr.test(targetStr));
+  }
+
+  Rep.아이디사용여부 = function() {
+    var id = 'abc123';
+    //알파벳 대소문자 또는 숫자로 시작하며 4 ~ 10자리인지 검사
+    var regexr = /^[A-Za-z0-9]{4,10}$/
+    console.log(regexr.test(id));
+  }
+
+  Rep.메일주소형식 = function() {
+    var email = 'esunbest@naver.com';
+    var regexr = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
+
+    console.log(regexr.test(email)); // true
+  }
+
+  Rep.휴대폰번호형식 = function() {
+    var cellphone = '010-1234-5678';
+    var regexr = /^\d{3}-\d{3,4}-\d{4}$/;
+
+    console.log(regexr.test(cellphone)); // true
+  }
+
+  Rep.특수문자포함 = function() {
+    var targetStr = 'abc#123';
+
+    // A-Zz-z0-9 이외의 문자가 있는지 검사
+    var regexr = /[^A-Za-z0-9]/gi;
+    console.log(regexr.test(targetStr)); // true
+
+    // 아래 방식도 동작한다. 이 방식의 장점은 특수 문자를 선택적으로 검사할 수 있다.
+    regexr = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+
+    console.log(regexr.test(targetStr)); //true
+
+    // 특수 문자 제거
+    console.log(targetStr.replace(regexr, '')); // abc123
+  }
+
+  //정규식 리터럴
+  (function() {
+    var myRegExp = /ab+c/i;
+
+    var myRegExp = new RegExp('ab+c', 'i');
+    var myRegExp = new RegExp(/ab+c/, 'i');
+    var myRegExp = new RegExp(/ab+c/i); //ES6
+  }());
+
+  //RegExp.prototype.exec(string);
+  (function(){
+    var target = 'Is this all there is?';
+    var regExp = /is/;
+
+    var res = regExp.exec(target);
+    console.log(res); //['is', index: 5, input: 'Is this all there is?']
+  }());
+
+  //RegExp.prototype.test(string);
+  (function() {
+    var target = 'Is this all there is?';
+    var regExp = /is/g;
+
+    var res = regExp.exec(target);
+    console.log(res); //['is', index: 5, input: 'Is this all there is?']
+  }());
+
+  //RegExp.prototype.test(string);
+  (function() {
+    var target = 'Is this all there is?';
+    var regExp = /is/;
+
+    var res = regExp.test(target);
+    console.log(res);
+  }());
+
+
+  Rep.tel();
+  Rep.is();
+  Rep.flag();
+  Rep.pattern();
+  Rep.patternG();
+  Rep.patternAll();
+  Rep.searchString();
+  Rep.ignoreGlobal();
+  Rep.repeatGlobal();
+  Rep.or();
+  Rep.orRepeat();
+  Rep.range();
+  Rep.number();
+  Rep.number2();
+  Rep.number3();
+  Rep.word();
+
+  Rep.특정단어시작();
+  Rep.특정단어끝();
+  Rep.숫자인지검사();
+  Rep.하나이상의공백();
+  Rep.아이디사용여부();
+  Rep.메일주소형식();
+  Rep.휴대폰번호형식();
+  //Rep.특수문자포함();
+
+
+
+
+</script>
+</html>

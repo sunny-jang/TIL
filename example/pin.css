@@ -1,0 +1,12 @@
+* { padding: 0px; margin: 0px; text-align: center; }
+
+.pin { border-radius: 6px; }
+
+.layer { width: 234px; display: inline-block; padding: 10px 10px 30px 10px; position: relative; vertical-align: top; }
+.layer:hover { background-color: #F2F2F2; }
+
+.banner { width: 234px; height: 167px; object-fit: cover; }
+
+.title { font-family: 'Apple SD Gothic Neo', AppleGothic, '돋움', Dotum, Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif; overflow:  hidden; font-weight: normal; font-style: normal; text-align: left; }
+.titleMain { line-height: 22px; max-height: 22px; color: #222; margin: 5px 6px; font-size: 19px; }
+.titleSub { line-height: 17px; color: #888; margin: 0 6px; font-size: 13px; }

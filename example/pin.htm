@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Vanilla.js</title>
-<link rel="stylesheet" type="text/css" href="./pin.css">
-<script type="text/javascript" src="./pin.js"></script>
+	<title>Vanilla.js</title>
+	<link rel="stylesheet" type="text/css" href="./pin.css">
+	<script type="text/javascript" src="./pin.js"></script>
 </head>
 
 <body>
-<div id="app">
+	<div id="app">
 
-</div>
+	</div>
 
-<script>
-var callback = function(res) {
-    (res.data.eventList)
-/*
-    .함수명(function(event, index, eventList) {
-        return 리턴값;
-    })
-*/
-    .forEach(function(event, index, eventList) {
-        SimplePin.render(event, index, "#app");
-    });
-}
+	<script>
+		var callback = function(res) {
+			var 원본데이터 = (res.data.eventList);
 
-var xhr = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();
-xhr.open("POST", "https://m.apps.ssg.com/api/eventcoupon/main/datas.ssg", true);
-xhr.onreadystatechange = function() {
-    if(xhr.readyState != 4 || xhr.status != 200 ) { return; }
-    callback(JSON.parse(xhr.responseText));
-}
-xhr.send(JSON.stringify({"common":{"apl_ver":"2.4.5","os_cd":"20","ts":"20171121144621","mobil_app_no":"12"},"params":{"itemImgSize":"500","siteNo":"6005","type":"osmu"}}));
-</script>
+			var 이벤트Gbn40 = 원본데이터.filter(function(event, index, eventList) {
+				return parseInt(event.evntGbn) === 40;
+			}).filter(function(event, index, eventList) {
+				return index < 10;
+			}).forEach(function(event, index, eventList) {
+				SimplePin.render(event, index, "#app");
+			});
+		};
+
+		var xhr = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();
+		xhr.open("POST", "https://m.apps.ssg.com/api/eventcoupon/main/datas.ssg", true);
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState != 4 || xhr.status != 200 ) { return; }
+			callback(JSON.parse(xhr.responseText));
+		}
+		xhr.send(JSON.stringify({"common":{"apl_ver":"2.4.5","os_cd":"20","ts":"20171121144621","mobil_app_no":"12"},"params":{"itemImgSize":"500","siteNo":"6005","type":"osmu"}}));
+	</script>
 </body>
 
 </html>

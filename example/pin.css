@@ -10,3 +10,8 @@
 .title { font-family: 'Apple SD Gothic Neo', AppleGothic, '돋움', Dotum, Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif; overflow:  hidden; font-weight: normal; font-style: normal; text-align: left; }
 .titleMain { line-height: 22px; max-height: 22px; color: #222; margin: 5px 6px; font-size: 19px; }
 .titleSub { line-height: 17px; color: #888; margin: 0 6px; font-size: 13px; }
+
+/*
+	title 에만 Apple SD Gothic Neo을 적용하고 싶은 거면 title에 font-family:Apple SD Gothic Neo ...~~ 주시고!
+	전체적으로 주실 거면 body에 넣어주세요^___^! html 전체적으로 특정 스타일 태그(h1,h2.., i, u, strong, b..등등)가 아닌 보통 글자들은 기본 설정이 font-weight: normal; font-style: normal; text-align: left; 로 되어있기 때문에 기존 스타일을 없애려고 하시는 게 아니면	굳이 안 넣어주셔도 됩니다!
+*/

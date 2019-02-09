@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+  <script src="./caller.js"></script>
+</head>
+<body>
+
+</body>
+<script async>
+  var heighFuncs = {};
+
+  heighFuncs.고차함수 = function() {
+   makeCounter = function (predicate) {
+    //함수를 인자로 전달받고 함수를 반환하는 고차 함수
+
+    //자유 변수
+    var num = 0;
+    return function() {
+      num = predicate(num);
+      return num;
+    };
+  }
+
+  function increase(n) {
+    return ++n;
+  }
+
+  function decrease(n) {
+    return --n;
+  }
+
+  const increaser = makeCounter(increase);
+  console.log(increaser());
+  console.log(increaser());
+}
+
+heighFuncs.스트링정렬 = function() {
+  var fruits = ['Banana', 'Orange', 'Apple'];
+
+  //ascending(오름차순)
+  fruits.sort();
+  console.log(fruits); //['Apple', 'Banana', 'Orange']
+
+  //descending(내림차순)
+  fruits.reverse();
+  console.log(fruits); //["Orange", "Banana", "Apple"]
+}
+
+heighFuncs.숫자정렬 = function() {
+  var points = [40,100,1,5,2,25,10];
+
+  //숫자 배열 오름차순 정렬
+  //비교 함수의 반환값이 0보다 작은 경우, a를 우선하여 정렬한다.
+  points.sort(function(a,b) {return a - b}); //a, b에 들어가는 값이 무엇인지 모르겠음.
+
+  console.log(points);
+
+  //숫자 배열 내림차순 정렬
+  //비교 함수의 반환값이 0보다 큰 경우, b를 우선하여 정렬한다.
+  points.sort(function(a,b) {return a - b});
+  console.log(points);
+}
+
+heighFuncs.배열정렬 = function() {
+  var todos = [
+    { id:4, content: 'Javascript'},
+    { id:1, content: 'HTML'},
+    { id:2, content: 'CSS'},
+  ];
+
+  // 비교 함수
+  function compare(key) {
+    return function(a, b) {
+      //프로퍼티 값이 문자열열인 경우 - 산술 연산으로 비교하면 NaN이 나오므로 비교 연산을 사용한다.
+      return a[key] > b[key] ? 1: a[key] <b[key] ? -1 : 0;
+    };
+  }
+}
+
+heighFuncs.forEach = function() {
+  var total = 0;
+  var testArray = [1, 3, 4, 5, 7, 9];
+
+  //forEach 메소드는 원본 배열을 변경하지 않는다.
+  testArray.forEach(function(item, index, array) {
+    console.log(item, index, array);
+    console.log('[' + index + '] = ' + item );
+
+    total += item;
+  });
+
+  console.log(total);
+  console.log(testArray);
+
+  testArray = [1, 2, 3, 4];
+
+  //원본 배열을 변경하려면 콜백함수의 3번째 인자를 사용한다.
+  testArray.forEach(function(item, index, array) {
+    array[index] = Math.pow(item, 2);
+  });
+
+  console.log(testArray)
+}
+
+heighFuncs.this인자전달 = function() {
+  function Counter() {
+    this.sum = 0;
+    this.count = 0;
+  }
+
+  Counter.prototype.add = function(array) {
+    // entry는 array의 배열 요소의 값.
+    array.forEach(function(entry) {
+      this.sum += entry; // 2번째 인자 this를 전달하지 않으면 this === window 
+      this.count ++;
+    }, this);
+  };
+
+  var counter = new Counter();
+  counter.add([2,5,9]);
+  console.log(counter.count);
+  console.log(counter.sum);
+}
+
+heighFuncs.map = function() {
+  var numbers = [1, 4, 9];
+
+  //배열을 순회하며 각 요소에 대하여 인자로 주어진 콜백함수를 실행.
+  var roots = numbers.map(function(item) {
+    return Math.sqrt(item);
+  });
+
+  //위 코드의 축약표현
+  //var roots = numbers.map(Math.sqrt);
+
+  //map 메소드는 새로운 배열을 반환
+  console.log(roots);
+  //원본배열을 변경하지 않음.
+  console.log(numbers);
+
+  roots = numbers.map(function(item){
+    return ++item; //return하지 않으면 새로운 배열에 반영되지 않음.
+  });
+
+  //map 메소드는 새로운 배열을 반환한다.
+  console.log(roots); //[2, 5, 10]
+
+  function Prefixer(prefix) {
+    this.prefix = prefix;
+  }
+
+  Prefixer.prototype.preFixArray = function(arr) {
+    // 콜백함수의 인자로 배열 요소의 값, 요소 인덱스, 순회할 배열을 전달할 수 있다.
+    return arr.map(function(x) {
+      //x는 배열 요소값이다.
+
+      return this.prefix + x; //2번째 인자 this를 전달하지 않으면 this === window
+    },this); 
+  };
+
+  var pre = new Prefixer('-webkit-');
+  var preArr = pre.preFixArray(['linear-gradient','border-radius']);
+  console.log(preArr);
+}
+
+heighFuncs.map2 = function() {
+  Array.prototype.myMap = function(iteratee) {
+    if(!iteratee || {}.toString.call(iteratee) !== '[object Function]') {
+      throw new TypeError(iteratee + ' is not a function');
+    }
+
+    console.log(this);
+
+    var result = [];
+    for(var i = 0, len = this.length; i < len; i++) {
+      result.push(iteratee(this[i], i, this));
+    }
+
+    return result;
+  }
+
+  var result = [1,4,9].myMap(function(item, index, array){
+    console.log(`[${index}] : ${item} of [${array}]`);
+    return Math.sqrt(item);
+  });
+
+  console.log(result);
+}
+
+heighFuncs.filter = function() {
+  var result = [1,2,3,4,5].filter(function(item, index, array){
+    console.log('['+index+'] = ' + item);
+    return item % 2; //홀수만을 필터링한다 (1은 true로 평가)
+  });
+
+  console.log(result);
+}
+
+heighFuncs.filter1 = function() {
+  Array.prototype.myfilter = function(predicate) {
+    //첫번째 매개변수에 함수가 전돨되었는지 확인
+    if(!predicate || {}.toString.call(predicate) !== '[object Function]') {
+      throw new TypeError(predicate + 'is not function');
+    }
+    console.log(this);
+
+    var result = [];
+    for (var i = 0, len = this.length; i < len; i++) {
+      if(predicate(this[i], i, this)) {
+       result.push(this[i]);
+      } 
+    }
+
+    console.log(result);
+
+    return result;
+  };
+
+  var result = [1, 2, 3, 4, 5].myfilter(function(item, index, array){
+    console.log(`${index}: ${item} of [${array}] `);
+
+
+    return item % 2;
+  });
+
+  console.log(result);
+}
+
+heighFuncs.reduce = function() {
+  var arr = [1,2,3,4,5];
+
+  /*
+    previousValue: 이전 콜백의 반환값
+    currentValue : 배열 요소의 값
+    currentIndex : 인덱스
+    array        : 순회할 배열
+  */
+
+  var sum = arr.reduce(function(previousValue, currentValue, currentIndex, array) {
+    console.log(previousValue + ' + '+ currentValue + ' = ' + (previousValue + currentValue));
+    return previousValue + currentValue;
+  });
+
+  console.log(sum); // 15 : 1~5까지의 합
+
+  var max = arr.reduce(function(pre, cur) {
+    return pre > cur ? pre : cur;
+  }) 
+
+  console.log(max);
+}
+
+
+heighFuncs.some = function() {
+  //배열 내 한개라도 있는지 확인
+  //boolean값으로 반환
+
+  var res = [2, 5, 8, 1, 4].some(function(item) {
+    return item > 10;
+  });
+  console.log(res); //false
+
+  var res = [12, 5, 8, 1, 4].some(function(item) {
+    return item > 10;
+  });
+  console.log(res);//true
+
+  //배열 내 요소 중 특정 값이 1개 이상 존재하는지 확인
+  var res = ['apple', 'banana', 'mango'].some(function(item) {
+    return item === 'banana';
+  });
+
+  console.log(res); //true
+}
+
+heighFuncs.every = function() {
+  //모든 배열 요소가 테스트를 통과하는지 확인.
+
+  var res = [21, 15, 89, 1, 44].every(function(item) {
+    return item > 10;
+  });
+
+  console.log(res); //false
+
+  var res = [21, 15, 89, 100, 44].every(function(item){
+    return item > 10;
+  })
+
+  console.log(res); // true
+}
+
+heighFuncs.find = function() {
+  //그 결과가 참인 첫번째 요소 반환.
+
+  var users = [
+    { id : 1, name : 'Lee'},
+    { id : 2, name : 'Kim'},
+    { id : 2, name : 'Choi'},
+    { id : 3, name : 'Park'},
+  ];
+
+  //콜백함수를 실행하여 그 결과가 참인 첫번째 요소를 반환한다.
+  var result = users.find(function(item) {
+    return item.id === 2;
+  });
+
+  console.log(result);
+
+  //ES6 
+  //const result = users.find(item => item.id === 2;);
+
+  //필터는 실행결과가 true인 배열요소의 값만을 추출한 새로운 배열을 반환.
+  result = users.filter(function(item) {
+    return item.id === 2;
+  });
+
+  console.log(result);
+}
+
+heighFuncs.find2 = function() {
+  var users = [
+    { id : 1, name : 'Lee'},
+    { id : 2, name : 'Kim'},
+    { id : 2, name : 'Choi'},
+    { id : 3, name : 'Park'},
+  ];
+
+  Array.prototype.myFind = function(predicate) {
+    if(!predicate || {}.toString.call(predicate) !== '[object Function]') {
+      throw new TypeError(predicate + 'is not a function');
+    }
+
+    for (var i = 0, len = this.length; i < len; i++) {
+      if(predicate(this[i], i, this)) return this[i];
+    }
+  };
+
+  const result = users.myFind(function(item, index, array) {
+    console.log(`[${index}] : ${JSON.stringify(item)} of [${JSON.stringify(array)}]`);
+
+    return item.id === 2;
+  })
+
+  console.log(result);
+}
+
+heighFuncs.findIndex = function() {
+ var users = [
+    { id : 1, name : 'Lee'},
+    { id : 2, name : 'Kim'},
+    { id : 2, name : 'Choi'},
+    { id : 3, name : 'Park'},
+  ];
+
+  function predicate (key, value) {
+      return function (item) {
+        return item[key] === value
+      };
+  }
+
+  // id가 2인 요소의 인덱스
+  var index = users.findIndex(predicate('id', 2));
+  console.log(index);// 1
+
+  index = users.findIndex(predicate('name', 'Park'));
+  console.log(index); //3
+}
+
+
+
+Caller.execute(heighFuncs); // 모든 메소드를 실행하는 모듈
+
+</script>
+</html>

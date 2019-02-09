@@ -17,9 +17,7 @@
 
 			var 이벤트Gbn40 = 원본데이터.filter(function(event, index, eventList) {
 				return parseInt(event.evntGbn) === 40;
-			}).filter(function(event, index, eventList) {
-				return index < 10;
-			}).forEach(function(event, index, eventList) {
+			}).slice(0,10).forEach(function(event, index, eventList) {
 				SimplePin.render(event, index, "#app");
 			});
 		};

@@ -1,12 +1,12 @@
 // 서비스용으로 사용가능한 모듈이 아닙니다. 실습용으로만 사용하세요!
 // 레거시 JS 기준으로 작성 되었습니다. 나중에 ES6으로 리팩토링 해봐요 ^_^
 var SimplePin = (function() {
-    var render = function(event, index, selector) {
+    var render = function(event, selector) {
         var parent, pin, anchor, box, img, title, textMain, sub1, textSub1, sub2, textSub2;
 
         box             = document.createElement('div');
         box.className   = 'pin layer';
-        box.id          = 'pin' + index;
+        box.id          = 'pin' + event.index;
         
         anchor          = document.createElement('a');
         anchor.href     = event.lnkdUrl;

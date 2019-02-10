@@ -12,14 +12,41 @@
 	</div>
 
 	<script>
-		var callback = function(res) {
-			var 원본데이터 = (res.data.eventList);
+        var List = [];
 
-			var 이벤트Gbn40 = 원본데이터.filter(function(event, index, eventList) {
-				return parseInt(event.evntGbn) === 40;
-			}).slice(0,10).forEach(function(event, index, eventList) {
-				SimplePin.render(event, index, "#app");
-			});
+		var callback = function(res) {
+            // TODO 우선 배열에 직접 대입해서 설명해보자
+            List[0] = res.data.eventList;
+
+            List[1] = List[0].filter(function(event, index, eventList) {
+				return "40" === event.evntGbn;
+            });
+
+            List[2] = List[1].slice(0, 10);
+
+            List[3] = List[2].map(function(event, index, eventList) {
+                return Object.assign({}, event, {"index": index}); // event.index = index; return event;
+            });
+
+            List[4] = List[3].forEach(function(event, index, eventList) {
+                SimplePin.render(event, "#app");
+            });
+
+            // TODO 평가될 값 범위로 괄호를 쳐서 설명해보자
+            res.data.eventList
+                    .filter(event => "40" === event.evntGbn)
+                    .slice(0, 10)
+                    .map((event, index) => Object.assign({}, event, {"index": index}))
+                    .forEach(event => SimplePin.render(event, "#app"));
+
+            // // TODO 이건 그냥 위랑 컨벤션 차이
+            res.data.eventList.filter(function(event, index, eventList) {
+				return "40" === event.evntGbn;
+            }).slice(0, 10).map(function(event, index, eventList) {
+                return Object.assign({}, event, {"index": index}); // event.index = index; return event;
+            }).forEach(function(event, index, eventList) {
+                SimplePin.render(event, "#app");
+            });
 		};
 
 		var xhr = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();

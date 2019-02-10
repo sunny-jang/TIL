@@ -22,13 +22,20 @@
 				return "40" === event.evntGbn;
             });
 
-            List[2] = List[1].slice(0, 10);
+            List[2] = List[1].slice(0, 1);
 
             List[3] = List[2].map(function(event, index, eventList) {
                 return Object.assign({}, event, {"index": index}); // event.index = index; return event;
             });
 
             List[4] = List[3].forEach(function(event, index, eventList) {
+                // TODO setTimeout 벗기고 씌워 보면서 블럭/넌블럭 테스트
+                // setTimeout(function(){
+                    for(let i=0; i<1000000000; i++) {
+                        i=i;
+                        if(i==1000000000-1) {console.log("끝")}
+                    }
+                // },1000)
                 SimplePin.render(event, "#app");
             });
 

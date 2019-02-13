@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+	<script src="./caller.js"></script>
+	<style>
+	html { border:1px solid red; padding:30px; text-align: center; }
+	body { border:1px solid green; padding:30px; }
+	.top {
+		width: 300px; height: 300px;
+		background-color: red;
+		margin: auto;
+	}
+	.middle {
+		width: 200px; height: 200px;
+		background-color: blue;
+		position: relative; top: 34px; left: 50px;
+	}
+	.bottom {
+		width: 100px; height: 100px;
+		background-color: yellow;
+		position: relative; top: 34px; left: 50px;
+		line-height: 100px;
+	}
+</style>
+</head>
+<body>
+	<button id="myButton">하이</button>
+	<button id="이벤트헨들러this">버튼</button>
+	<button id="btn">btn</button>
+	<label for="username">이름</label>
+	<input type="text" id="username">
+	<em id="massage"></em>
+	body
+	<div class="top">top
+		<div class="middle">middle
+			<div class="bottom">bottom</div>
+		</div>
+	</div>
+</body>
+<script async>
+	var events = {};
+
+	events.이벤트헨들러 = function () {
+		var elem = document.getElementById('myButton');
+		elem.addEventListener('click', function() {
+			console.log('Clicked!');
+		});
+	};
+
+	events.콜스택예제 = function() {
+		function fun1() {
+			console.log('fun1');
+
+			fun2()
+		}
+
+		function fun2() {
+
+			setTimeout(function() {
+				console.log('func2')
+			},0);
+
+			fun3();
+		}
+
+		function fun3() {
+			console.log('fun3');
+		}
+
+		fun1();
+	}
+
+	events.인라인이벤트핸들러 = function() {
+		//<button onclick="myandler()"></button>
+		function myHandler() {
+			alert('Button clicked!');
+		}
+
+		//사용하지 않는 게 좋음.		
+	}
+
+	events.이벤트핸들러프로퍼티방식 = function() {
+		var btn = document.getElementById('btn');
+
+		// 전통적 DOM Event Handler 방식은 이벤트 핸들러에 하나의 함수만을 바인딩할 수 있다.
+		// 첫번째 바인딩된 이벤트 핸들러 => 실행되지 않는다.
+
+		btn.onclick = function() {
+			alert('Button clicked 1');
+		};
+
+		btn.onclick = function() {
+			alert('Button clicked 2');
+		};
+
+		//DOM Level 2 Event Listener
+		// 첫번째 바인된 이벤트 핸들러
+		btn.addEventListener('click', function() {
+			alert('Button clicked 3');
+		});
+
+		btn.addEventListener('click', function() {
+			alert('Button clicked 4');
+		});
+
+		//addEventListner
+		// 버블링과 캡처링을 지원 (캡처링은 무엇?)
+		// 버블링은 어떻게 차단 할 수 있을까
+	}
+
+	events.타겟지정하지않음 = function() {
+		addEventListener('click', function() {
+			// alert('Clicked!');
+		});
+
+		//window 가 잡히면서 어디를 클릭하든 작동함.
+	}
+
+	events.블러  = function() {
+		var elem = document.getElementById('username');
+		var msg = document.getElementById('massage');
+		elem.addEventListener('blur', function() {
+			if(elem.value.length < 2) {
+				msg.innerHTML = '이름은 2자 이상 입력해 주세요.'
+			} else {
+				msg.innerHTML = '';
+			}
+			alert('blur event occurred!');
+		});
+	}
+
+	events.함수에인수전달우회 = function() {
+		var MIN_LENGTH = 2; // 이름 최소 길이
+
+		var elem =  document.getElementById('username');
+		var msg = document.getElementById('massage');
+
+		function checkUserNameLength(n) {
+			if(elem.value.length < n) {
+				msg.innerHTML = '이름은' + n + '자 이상이어야 합니다.';
+			} else {
+				msg.innerHTML = '';
+			}
+		}
+
+		elem.addEventListener('blur', function() {
+			checkUserNameLength(MIN_LENGTH);
+		})
+	}
+
+	events.이벤트의this = function() {
+		function foo() {
+			console.log(this); //window
+			console.log(event.currentTarget); //button ...~
+		} 
+
+		//전역에 있어야 할 듯!
+	}
+
+	events.이베트핸들러의this = function() {
+		var btn = document.getElementById('이벤트헨들러this');
+
+		btn.onclick = function() {
+			console.log(this); // 버튼 엘리먼트
+			console.log(event.currentTarget); //버튼 엘리먼트(event라는 파라미터를 받지 않아도 이벤트 내부에서 event라는 것이 자동 생성?)
+			console.log(this === event.currentTarget); //true
+
+		}
+	}
+
+	events.이벤트리스너this = function() {
+		var btn = document.getElementById('이벤트헨들러this');
+
+		btn.addEventListener('click',function() {
+			console.log(this); // 버튼 엘리먼트
+			console.log(event.currentTarget); //버튼 엘리먼트(event라는 파라미터를 받지 않아도 이벤트 내부에서 event라는 것이 자동 생성?)
+			console.log(this === event.currentTarget); //true
+
+		});
+	}
+
+	// events.캡쳐링과버블링 = function() {
+	// 	//true :  capturing
+	// 	//false :  bubbling
+
+	// 	//캡쳐링 : 부모요소의 이벤트를 자식이 물려받는? 것
+	// 	//버블링 :  자식요소의 이벤트가 부모에게도 물려 있는 것.
+
+	// 	var useCapture = false;
+
+	// 	var Handler = function (event) {
+	// 		var phase = ['capturing', 'target', 'bubbling'];
+	// 		var node = this.nodeName + (this.className ? '.'+this.className : '');
+
+	// 		//eventPhase :  이벤트 흐름 상에서 어느 phase에 있는지를 반환.
+	// 		//0 : 이벤트 없음 / 1 : 캡쳐링 단계 / 2 : 타깃 / 3 :  버블링 단계
+
+	// 		console.log(node + ':' + phase[event.eventPhase - 1]);
+	// 	}
+
+	// 	document.querySelector('html').addEventListener('click', Handler, useCapture);
+	// 	document.querySelector('body').addEventListener('click', Handler, useCapture);
+	// 	document.querySelector('div.top').addEventListener('click', Handler, useCapture);
+	// 	document.querySelector('div.middle').addEventListener('click', Handler, useCapture);
+	// 	document.querySelector('div.bottom').addEventListener('click', Handler, useCapture);
+	// }
+
+	events.버블링이벤트 = function() {
+		var body = document.querySelector('body');
+		var para = document.querySelector('div.middle');
+		var button = document.querySelector('div.bottom');
+
+
+		//버블링
+		body.addEventListener('click', function() {
+			console.log('Handler for body');
+		},true);
+
+		para.addEventListener('click', function() {
+			console.log('Handler for paragraph');
+		},true);
+
+		button.addEventListener('click', function() {
+			console.log('Handler for button');
+		},true);
+
+		//오류가 나고 원하는 모양으로 나오지 않음.
+	}
+
+
+
+
+   Caller.execute(events); // 모든 메소드를 실행하는 모듈
+</script>
+</html>

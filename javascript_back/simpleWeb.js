@@ -19,5 +19,5 @@ require("http") // Node.js 내장모듈 중 웹서버 모듈 임포트
 	res.end(html);
 })
 .listen(80, "localhost", () => { // 서버 시작
-	console.log(">> SimpleServer is running!");
+	console.log(">> SimpleWeb is running!");
 });

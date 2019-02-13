@@ -13,8 +13,8 @@ var SimplePin = (function() {
         anchor.appendChild(box);
         pin             = anchor;
 
-        parent          = document.querySelectorAll(selector);
-        parent[0].appendChild(pin);
+        parent          = document.querySelector(selector);
+        parent.appendChild(pin);
 
         img             = document.createElement('img');
         img.className   = 'pin banner';

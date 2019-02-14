@@ -9,15 +9,62 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="calc_deposit">
+	<div class="calc_deposit1">
 		<div>
-			<input type="text" id="input_enter" placeholder="총 보험료">
-			<a href="#none" class="btn_calc">입력</a>
+			<input type="text" id="input" placeholder="총 보험료">
 		</div>
-		<input type="text" id="output" placeholder="입금액">
-	</div>
+		<input type="text" id="output" placeholder="입금액" readonly>
+    </div>
+    <div class="calc_deposit2">
+        <div>
+            <input type="text" id="input" placeholder="총 보험료">
+        </div>
+        <input type="text" id="output" placeholder="입금액" readonly>
+    </div>
 </body>
 <script async>
+var AmountCalculator = (function () {
+    function AmountCalculator(wrapperSelector, inputSelector, outputSelector, event, divisor) {
+        // public(공개속성)
+        this.divisor = divisor;
+
+        // private(은닉속성)
+        var _event = event;
+        var _inputEle = $(wrapperSelector + " " + inputSelector);
+        var _outputEle = $(wrapperSelector + " " + outputSelector);
+
+        // 이하 모두 private(은닉메소드)
+
+        var _renderAomunt = function() {
+            var amount = getAomunt(_inputEle.val(), this.divisor)
+            _outputEle.val(amount);
+        }.bind(this);
+
+        var _$init = function() {
+            _inputEle.on(_event, function() {
+                _renderAomunt();
+            })
+        }
+
+        _$init(); // 가독성을 위해서 함수로 분리했어요
+    }
+
+    // private(은닉메소드) - prototype 처럼 한 번만 생성된다 - 독립적인 블랙박스 함수!
+    function getAomunt(totalAmunt, divisor) {
+        if("string" === typeof totalAmunt) { totalAmunt = Number.parseInt(totalAmunt); }
+        if(!Number.isInteger(totalAmunt)) { return 0; }
+
+        var Aomunt = totalAmunt / divisor;
+        return Math.floor(Aomunt / 10) * 10; // 10원 단위 절사
+    }
+
+    return AmountCalculator;
+}());
+
+var amountCalculator1 = new AmountCalculator(".calc_deposit1", "#input", "#output", "keyup", 2);
+var amountCalculator2 = new AmountCalculator(".calc_deposit2", "#input", "#output", "keyup", 2);
+
+/*
 	//리팩토링 전
 
 	calcDeposit();
@@ -62,6 +109,6 @@
          	put_output();
          });
      }
-
+*/
  </script>
  </html>

@@ -11,10 +11,11 @@
 <body>
 	<div class="calc_deposit1">
 		<div>
-			<input type="text" id="input" placeholder="총 보험료">
+			<input type="text" id="input_enter" placeholder="총 보험료">
+			<a href="#none" class="btn_calc">입력</a>
 		</div>
-		<input type="text" id="output" placeholder="입금액" readonly>
-    </div>
+		<input type="text" id="output" placeholder="입금액">
+	</div>
     <div class="calc_deposit2">
         <div>
             <input type="text" id="input" placeholder="총 보험료">
@@ -24,25 +25,27 @@
 </body>
 <script async>
 var AmountCalculator = (function () {
-    function AmountCalculator(wrapperSelector, inputSelector, outputSelector, event, divisor, unitLevel) {
+    function AmountCalculator(param) {
+        param = param || {};
         // public(공개속성)
-        this.divisor = divisor || 1;
-        this.unitLevel = unitLevel || 1;
+        this.divisor = param.divisor || 1;
+        this.level = param.level || 1;
 
         // private(은닉속성)
-        var _event = event || "keyup";
-        var _inputEle = $(wrapperSelector + " " + inputSelector);
-        var _outputEle = $(wrapperSelector + " " + outputSelector);
+        var _type = param.type || "keyup";
+        var _eventEle = $(param.wrapper + " " + (param.event || param.input));
+        var _inputEle = $(param.wrapper + " " + param.input);
+        var _outputEle = $(param.wrapper + " " + param.output);
 
         // 이하 모두 private(은닉메소드)
 
         var _renderAomunt = function() {
-            var amount = _getAomunt(_inputEle.val(), this.divisor, this.unitLevel)
+            var amount = _getAomunt(_inputEle.val(), this.divisor, this.level)
             _outputEle.val(amount);
         }.bind(this);
 
         var _$init = function() {
-            _inputEle.on(_event, function() {
+            _eventEle.on(_type, function() {
                 _renderAomunt();
             })
         }
@@ -71,10 +74,12 @@ var AmountCalculator = (function () {
     return AmountCalculator;
 }());
 
-new AmountCalculator(".calc_deposit1", "#input", "#output", "keyup", 2, 10);
-var amountCalculator2 = new AmountCalculator(".calc_deposit2", "#input", "#output", "keyup");
+// 별도로 인스턴스를 안 받는 경우 -> 조작만 못 할 뿐이지 클로저로 생성되어 있다 -> Vue.html의 new Vue() 참고
+new AmountCalculator({wrapper: ".calc_deposit1", input: "#input_enter", output: "#output", event: "#input_enter", type: "keyup", divisor: 2, level: 10});
+// 별도로 인스턴스를 받는 경우 -> 모듈에서 열어놓은 API 조작 가능
+var amountCalculator2 = new AmountCalculator({wrapper: ".calc_deposit2", input: "#input", output: "#output"});
 amountCalculator2.divisor = 10; // 추후 변경가능
-amountCalculator2.unitLevel = 1000; // 추후 변경가능
+amountCalculator2.level = 1000; // 추후 변경가능
 
 /*
 	//리팩토링 전

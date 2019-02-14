@@ -38,13 +38,16 @@ var AmountCalculator = (function () {
         var _renderAomunt = function() {
             var amount = getAomunt(_inputEle.val(), this.divisor)
             _outputEle.val(amount);
-        }.bind(this);
+        }.bind(this);   
 
         var _$init = function() {
             _inputEle.on(_event, function() {
                 _renderAomunt();
             })
         }
+
+        // 생성자 내부에 (클로저)변수/함수 선언 -> 프라이빗 인스턴스 속성/메소드로 생성된다 - 해당 인스턴스만 접근 (메모리 별도할당)
+        // this 속성/메소드 선언 -> 퍼블릭 인스턴스 속성/메소드로 생성된다 - 해당 인스턴스만 접근 (메모리 별도할당)
 
         _$init(); // 가독성을 위해서 함수로 분리했어요
     }
@@ -57,6 +60,10 @@ var AmountCalculator = (function () {
         var Aomunt = totalAmunt / divisor;
         return Math.floor(Aomunt / 10) * 10; // 10원 단위 절사
     }
+
+    // TODO 상태관리에 유의 - 모든 인스턴스가 동일한 공간에 접근함 -> 인스턴스 레벨 값은 들고있지 않아야 함
+    // 생성자 외부에 (클로저)변수/함수 선언 -> 프라이빗 공유 속성/메소드로 생성된다 - 모든 인스턴스가 공유접근 (메모리도 공유)
+    // 프로토타입 속성/메소드 선언 -> 퍼블릭 공유 속성/메소드로 생성된다 - 모든 인스턴스가 공유접근 (메모리도 공유)
 
     return AmountCalculator;
 }());

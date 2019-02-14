@@ -24,21 +24,22 @@
 </body>
 <script async>
 var AmountCalculator = (function () {
-    function AmountCalculator(wrapperSelector, inputSelector, outputSelector, event, divisor) {
+    function AmountCalculator(wrapperSelector, inputSelector, outputSelector, event, divisor, unitLevel) {
         // public(공개속성)
-        this.divisor = divisor;
+        this.divisor = divisor || 1;
+        this.unitLevel = unitLevel || 1;
 
         // private(은닉속성)
-        var _event = event;
+        var _event = event || "keyup";
         var _inputEle = $(wrapperSelector + " " + inputSelector);
         var _outputEle = $(wrapperSelector + " " + outputSelector);
 
         // 이하 모두 private(은닉메소드)
 
         var _renderAomunt = function() {
-            var amount = getAomunt(_inputEle.val(), this.divisor)
+            var amount = _getAomunt(_inputEle.val(), this.divisor, this.unitLevel)
             _outputEle.val(amount);
-        }.bind(this);   
+        }.bind(this);
 
         var _$init = function() {
             _inputEle.on(_event, function() {
@@ -53,23 +54,27 @@ var AmountCalculator = (function () {
     }
 
     // private(은닉메소드) - prototype 처럼 한 번만 생성된다 - 독립적인 블랙박스 함수!
-    function getAomunt(totalAmunt, divisor) {
+    function _getAomunt(totalAmunt, divisor, unitLevel) {
         if("string" === typeof totalAmunt) { totalAmunt = Number.parseInt(totalAmunt); }
-        if(!Number.isInteger(totalAmunt)) { return 0; }
+        if(!Number.isInteger(totalAmunt)) { return ""; }
 
         var Aomunt = totalAmunt / divisor;
-        return Math.floor(Aomunt / 10) * 10; // 10원 단위 절사
+        return Math.floor(Aomunt / unitLevel) * unitLevel; // 원 단위 절사
     }
 
     // TODO 상태관리에 유의 - 모든 인스턴스가 동일한 공간에 접근함 -> 인스턴스 레벨 값은 들고있지 않아야 함
-    // 생성자 외부에 (클로저)변수/함수 선언 -> 프라이빗 공유 속성/메소드로 생성된다 - 모든 인스턴스가 공유접근 (메모리도 공유)
-    // 프로토타입 속성/메소드 선언 -> 퍼블릭 공유 속성/메소드로 생성된다 - 모든 인스턴스가 공유접근 (메모리도 공유)
+    // 생성자 외부에 (클로저)변수/함수 선언 -> 프라이빗 공유 속성/메소드로 생성된다
+    // -> 모든 인스턴스가 공유접근 (메모리도 공유) -> 단, 메소드 내부에서 인스턴스를 this로 접근할 수 없다
+    // 프로토타입 속성/메소드 선언 -> 퍼블릭 공유 속성/메소드로 생성된다
+    // -> 모든 인스턴스가 공유접근 (메모리도 공유) -> 메소드 내부에서 인스턴스를 this로 접근할 수 있다
 
     return AmountCalculator;
 }());
 
-var amountCalculator1 = new AmountCalculator(".calc_deposit1", "#input", "#output", "keyup", 2);
-var amountCalculator2 = new AmountCalculator(".calc_deposit2", "#input", "#output", "keyup", 2);
+new AmountCalculator(".calc_deposit1", "#input", "#output", "keyup", 2, 10);
+var amountCalculator2 = new AmountCalculator(".calc_deposit2", "#input", "#output", "keyup");
+amountCalculator2.divisor = 10; // 추후 변경가능
+amountCalculator2.unitLevel = 1000; // 추후 변경가능
 
 /*
 	//리팩토링 전

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+	<script src="./caller.js"></script>
+</head>
+<body>
+
+	<script async>
+
+		var device = {};
+
+		device.checkBrowser = function() {
+			if(window.DeviceOrientationEvent) {
+				console.log('our brower supports DeviceOrientation')
+			} else {
+				console.log('Sorry, your borwer doesnt supports Device Orientation');
+			}
+		}
+
+		device.DeviceOrientation = function() {
+			window.addEventListener('deviceorientation', handleOrientation, false);
+
+			function handleOrientation(event) {
+				var absolute = event.absolute;
+				var alpha = event.alpha;
+				var beta = event.beta;
+				var gamma = event.gamma;
+
+				// Do stuff with the new orientation data
+			}
+		}
+
+
+    Caller.execute(device); // 모든 메소드를 실행하는 모듈
+    
+  </script>
+</body>
+</html>

@@ -32,7 +32,7 @@ var AmountCalculator = (function () {
         this.level = param.level || 1;
 
         // private(은닉속성)
-        var _type = param.type || "keyup";
+        var _type = param.type || "click";
         var _eventEle = $(param.wrapper + " " + (param.event || param.input));
         var _inputEle = $(param.wrapper + " " + param.input);
         var _outputEle = $(param.wrapper + " " + param.output);
@@ -75,7 +75,7 @@ var AmountCalculator = (function () {
 }());
 
 // 별도로 인스턴스를 안 받는 경우 -> 조작만 못 할 뿐이지 클로저로 생성되어 있다 -> Vue.html의 new Vue() 참고
-new AmountCalculator({wrapper: ".calc_deposit1", input: "#input_enter", output: "#output", event: "#input_enter", type: "keyup", divisor: 2, level: 10});
+new AmountCalculator({wrapper: ".calc_deposit1", input: "#input_enter", output: "#output", event: ".btn_calc", type: "click", divisor: 2, level: 10});
 // 별도로 인스턴스를 받는 경우 -> 모듈에서 열어놓은 API 조작 가능
 var amountCalculator2 = new AmountCalculator({wrapper: ".calc_deposit2", input: "#input", output: "#output"});
 amountCalculator2.divisor = 10; // 추후 변경가능

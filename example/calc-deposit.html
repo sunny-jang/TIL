@@ -37,32 +37,63 @@ var AmountCalculator = (function () {
         var _inputEle = $(param.wrapper + " " + param.input);
         var _outputEle = $(param.wrapper + " " + param.output);
 
-        // 이하 모두 private(은닉메소드)
-
-        var _renderAomunt = function() {
+        // public(공개메소드)
+        this._renderAomunt = function() {
             var amount = _getAomunt(_inputEle.val(), this.divisor, this.level)
             _outputEle.val(amount);
-        }.bind(this);
+        };
 
+        // private(은닉메소드)
         var _$init = function() {
             _eventEle.on(_type, function() {
-                _renderAomunt();
-            })
-        }
+                this._renderAomunt();
+            }.bind(this))
+        }.bind(this)
 
-        // 생성자 내부에 (클로저)변수/함수 선언 -> 프라이빗 인스턴스 속성/메소드로 생성된다 - 해당 인스턴스만 접근 (메모리 별도할당)
-        // this 속성/메소드 선언 -> 퍼블릭 인스턴스 속성/메소드로 생성된다 - 해당 인스턴스만 접근 (메모리 별도할당)
+        // 생성자 내부에 (클로저)변수/함수 선언 -> 프라이빗 인스턴스 속성/메소드로 생성된다 - 해당 인스턴스만 접근 (메모리 개별할당)
+        // this 속성/메소드 선언 -> 퍼블릭 인스턴스 속성/메소드로 생성된다 - 해당 인스턴스만 접근 (메모리 개별할당)
 
         _$init(); // 가독성을 위해서 함수로 분리했어요
     }
 
     // private(은닉메소드) - prototype 처럼 한 번만 생성된다 - 독립적인 블랙박스 함수!
-    function _getAomunt(totalAmunt, divisor, unitLevel) {
+    var _getAomunt = function(totalAmunt, divisor, unitLevel) {
         if("string" === typeof totalAmunt) { totalAmunt = Number.parseInt(totalAmunt); }
         if(!Number.isInteger(totalAmunt)) { return ""; }
 
         var Aomunt = totalAmunt / divisor;
         return Math.floor(Aomunt / unitLevel) * unitLevel; // 원 단위 절사
+    }
+
+    // private(은닉속성) - (유사)프로토타입 레벨
+    var _test = "test((유사)프로토타입 레벨 은닉변수)";
+
+    // private(은닉메소드) - (유사)프로토타입 레벨
+    var _getTest = function() {
+        return _test + "!";
+    }
+
+    // private(은닉메소드) - (유사)프로토타입 레벨
+    var _setTest = function(test) {
+        _test = ">> " + test;
+    }
+
+    // 은닉메소드를 테스트하기 위한 공개메소드 - 프로토타입 레벨
+    AmountCalculator.prototype._getTest = function() {
+        return _getTest();
+    }
+
+    // 은닉메소드를 테스트하기 위한 공개메소드 - 프로토타입 레벨
+    AmountCalculator.prototype._setTest = function(test) {
+        return _setTest(test);
+    }
+
+    // public(공개속성) - 프로토타입 레벨
+    AmountCalculator.prototype.test = "test(프로토타입 레벨 공개변수)";
+
+    // public(공개메소드) - 프로토타입 레벨
+    AmountCalculator.prototype.getTest = function() {
+        return this.test;
     }
 
     // TODO 상태관리에 유의 - 모든 인스턴스가 동일한 공간에 접근함 -> 인스턴스 레벨 값은 들고있지 않아야 함
@@ -77,7 +108,7 @@ var AmountCalculator = (function () {
 // 별도로 인스턴스를 안 받는 경우 -> 조작만 못 할 뿐이지 클로저로 생성되어 있다 -> Vue.html의 new Vue() 참고
 new AmountCalculator({wrapper: ".calc_deposit1", input: "#input_enter", output: "#output", event: ".btn_calc", type: "click", divisor: 2, level: 10});
 // 별도로 인스턴스를 받는 경우 -> 모듈에서 열어놓은 API 조작 가능
-var amountCalculator2 = new AmountCalculator({wrapper: ".calc_deposit2", input: "#input", output: "#output"});
+var amountCalculator2 = new AmountCalculator({wrapper: ".calc_deposit2", input: "#input", output: "#output", type: "keyup"});
 amountCalculator2.divisor = 10; // 추후 변경가능
 amountCalculator2.level = 1000; // 추후 변경가능
 

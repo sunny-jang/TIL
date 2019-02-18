@@ -18,12 +18,7 @@
 <body>
   <div>
     <h1>Cities</h1>
-    <ul>
-      <li id="one" class="red">Seoul</li>
-      <li id="two" class="red">London</li>
-      <li id="three" class="red">Newyork</li>
-      <li id="four">Tokyo</li>
-    </ul>
+    <ul><li id="one" class="red">Seoul</li><li id="two" class="red">London</li><li id="three" class="red">Newyork</li><li id="four">Tokyo</li></ul>
   </div>
 
   <input id="password" type="password" value="123">
@@ -131,7 +126,7 @@
       var elem = document.querySelector('ul');
       console.log(elem.children); 
 
-      elem.firstChild.className = 'red';
+      elem.firstChild.className = 'green';
       elem.firstChild.nextSibling.className = 'red';
       elem.lastChild.previousSibling.className = 'red';
       elem.lastChild.className = 'red';
@@ -175,7 +170,7 @@
       if(!four.hasAttribute('class')) {
         four.setAttribute('class','blue');
       } else {
-        four.className += 'blue';
+        four.className += ' blue';
       }
 
       //class 어트리뷰트의 값을 취득
@@ -186,7 +181,7 @@
       four.removeAttribute('class');
 
       // class 어트리뷰트의 존재를 확인
-      console.log(four.hasAttribute('class')); //????? 제거를 해서 html에서도 없어졌는데 red의 스타일이 그대로 들어있음!?!
+      console.log(four.hasAttribute('class'));
     }
 
     dom.어트리뷰트지정ES6 = function() {

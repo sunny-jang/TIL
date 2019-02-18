@@ -120,7 +120,6 @@
 
 		//addEventListner
 		// 버블링과 캡처링을 지원 (캡처링은 무엇?)
-		// 버블링은 어떻게 차단 할 수 있을까
 	}
 
 	events.타겟지정하지않음 = function() {
@@ -286,7 +285,7 @@
 		
 		}
 
-		document.getElementsByTagName('html').addEventListener('click', bluify) // 왜 안 될까?
+		document.getElementsByTagName('html')[0].addEventListener('click', bluify) // 왜 안 될까?
 	}
 
 	events.type =  function() {

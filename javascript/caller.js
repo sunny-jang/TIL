@@ -33,6 +33,7 @@ var Caller = (function() {
                 obj[key]();
             } catch(e) { // 오류가 나면, 해당 메소드만 에러 출력하고 다음 계속 실행
                 console.error(key + " > " + e.name + " : " + e.message);
+                console.error(e.stack);
             }
             console.groupEnd();
         }

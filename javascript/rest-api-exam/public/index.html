@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+</head>
+<body>
+<script>
+
+	//GET
+	// var req = new XMLHttpRequest();
+	// req.open('post', 'http://localhost:5000/books');
+	// req.send();
+
+	// req.onreadystatechange = function (e) {
+	//   if (req.readyState === XMLHttpRequest.DONE) {
+	//     if(req.status === 200) {
+	//       console.log(req.responseText);
+	//     } else {
+	//       console.log("Error!");
+	//     }
+	//   }
+	//};
+
+	//POST
+	// var req = new XMLHttpRequest();
+	// req.open('post', 'http://localhost:5000/books');
+	// req.setRequestHeader('Content-type','application/json');
+	// req.send(JSON.stringify({
+	// 	title:'ES6',
+	// 	author:'choi'
+	// }));
+
+	// req.onreadystatechange = function (e) {
+	//   if (req.readyState === XMLHttpRequest.DONE) {
+	//     if(req.status === 201) {
+	//       console.log(req.responseText);
+	//     } else {
+	//       console.log("Error!");
+	//     }
+	//   }
+	//};
+
+	//PUT
+	// var req = new XMLHttpRequest();
+	// req.open('PUT', 'http://localhost:5000/books/5');
+	// req.setRequestHeader('Content-type','application/json');
+	// req.send(JSON.stringify({
+	// 	title:'ecmascript',
+	// 	author:'choi'
+	// }));
+
+	// req.onreadystatechange = function (e) {
+	//   if (req.readyState === XMLHttpRequest.DONE) {
+	//     if(req.status === 200) {
+	//       console.log(req.responseText);
+	//     } else {
+	//       console.log("Error!");
+	//     }
+	//   }
+	// };
+
+	//DELETE
+	var req = new XMLHttpRequest();
+	req.open('GET', 'http://localhost:5000/books');
+	req.send();
+
+	req.onreadystatechange = function (e) {
+	  if (req.readyState === XMLHttpRequest.DONE) {
+	    if(req.status === 200) {
+	      console.log(req.responseText);
+	    } else {
+	      console.log("Error!");
+	    }
+	  }
+	};
+
+
+	//PUT
+</script>
+</body>
+</html>

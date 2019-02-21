@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+	<script src="../caller.js"></script>
+</head>
+<body>
+
+	<script async>
+		let variable = {};
+
+		variable.var = function () {
+        var foo = 123; //전역변수
+
+        console.log(foo); //123
+
+        {
+        	foo = 456;
+        }
+
+        console.log(foo); //456
+      }
+
+      variable.let = function() {
+        let foo = 123; // 전역변수
+
+        {
+        	let foo = 456;
+        	let bar = 456;
+        }
+
+        console.log(foo); // uncaugt SyntaxError - 중복선언
+        console.log(bar); // bar is not defined
+      }
+
+      variable.중복선언금지 = function() {
+      	var foo = 123; 
+        var foo = 456; // 중복 선언 허용
+
+        let bar = 123;
+        let bar = 456; // SyntaxError
+      }
+
+      variable.호이스팅 = function() {
+        console.log(foo) // undefined
+
+        var foo;
+
+        console.log(bar1); //Error: Uncaught ReferenceError: bar is not defined
+
+        let bar1;
+      }
+
+      variable.var클로저 = function() {
+      	var funcs = [];
+        // 함수의 배열을 생성하는 for루프는 i는 전역 변수다.
+
+        for (var i = 0; i < 3; i++) {
+        	funcs.push(function() { console.log(i);})
+        }
+
+        for (var j = 0; j < 3; j++) {
+        	console.dir(funcs[j]);
+
+          funcs[j](); // 3 3 3 -> i가 전역변수이기 때문.
+        }
+
+      }
+
+      variable.let블록 = function() {
+      	var funcs = [];
+        // 함수의 배열을 생성하는 for루프는 i는 전역 변수다.
+
+        for (let i = 0; i < 3; i++) {
+        	funcs.push(function() { console.log(i);})
+        }
+
+        for (let j = 0; j < 3; j++) {
+        	console.dir(funcs[j]);
+          funcs[j](); // 3 3 3 -> i가 전역변수이기 때문.
+        }
+      }
+
+      variable.const = function() {
+      	const FOO = 123;
+        // FOO = 456; // 재할당 금지.
+
+        {
+        	const FOO1 = 10;
+        	console.log(FOO1);
+        }
+
+        console.log(FOO1); //FOO is not defined
+      }
+
+      variable.상수 = function() {
+      	let rows = 1
+      	if(rows > 10) {
+        //10의 의미를 알기 어렵기 때문에 가독성이 좋지 않다.
+      }
+
+      const MAXROWS = 10;
+      if(rows > MAXROWS) {
+        //값의 의미를 기술하여 가독성이 향상되었다.
+      }
+    }
+
+    variable.const의객체 = function() {
+      // 재할당은 불가지만 객체의 프로퍼티는 변경가능
+      const users = { name : 'Lee' };
+
+      // const 변수는 재할당이 금지된다.
+      // users = {}; // TypeError:  Assigment to constant variable
+
+      //객체의 내용은 변경할 수 있다.
+      user.name = 'Kim';
+
+      console.log(user); // {name: 'Kim'} 객체가 아닌 경우에만 유지보수성 향상?
+    }
+
+    /*
+
+    var와 let, 그리고 const는 다음처럼 사용하는 것을 추천한다.
+
+    ES6를 사용한다면 var 키워드는 사용하지 않는다.
+
+    재할당이 필요한 변수에는 let을 사용한다.
+
+    변경이 발생하지 않는(재할당이 필요 없는) 원시 타입과 객체 타입에는 const를 사용한다.
+
+    */
+
+    Caller.execute(variable); // 모든 메소드를 실행하는 모듈
+  </script>
+</body>
+</html>

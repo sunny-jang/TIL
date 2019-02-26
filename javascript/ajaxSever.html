@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+</head>
+<body>
+
+	<script async>
+		var xhr = new XMLHttpRequest();
+		// json으로 전송하는 경우
+		xhr.open('get', './ajax.html');
+
+		// 클라이언트가 서버로 전송할 데이터의 MIME-type 지정: json
+		xhr.setRequestHeader('Content-type', 'text/html');
+
+		var data = { id: 3, title: 'JavaScript', author: 'Park', price: 5000};
+
+		xhr.send(JSON.stringify(data));
+</script>
+</body>

@@ -150,8 +150,116 @@
       var arr1 = [1,2,3];
       var arr2 = [4,5,6];
 
-      // apply 메소드의 2번째 인자는 배열. 개별 이자로 push 메소드에 전달된다.
+      // apply 메소드의 2번째 인자는 배열. 개별 인자로 push 메소드에 전달된다.
+      Array.prototype.push.apply(arr1, arr2); //apply에 대해 잘 모르겠음! 정확히 무슨 동작을 하는 아이인지? 언제 쓰는지?      
+
+      console.log(arr1); // [1,2,3,4,5,6]
+
+      //ES6
+      const arr3 = [1,2,3];
+      const arr4 = [4,5,6];
+
+      // ...arr4 는 [4,5,6] 을 개별 요소로 분리한다. spread
+      arr3.push(...arr4); // == arr.push(4,5,6);
+
+      console.log(arr3); // [1,2,3,4,5,6]
     }
+
+    parameter.splice = function() {
+      //ES5
+      var arr1 = [1,2,3,6];
+      var arr2 = [4,5];
+
+      /*
+        apply 메소드의 2번째 인자느 배열. 이것은 개별 인자로 push 메소드에 전달된다.
+        [3, 0].concat(arr2) = [3,0,4,5]
+
+        arr1.splice(3,0,4,5) -> arr1[3]부터 0개의 요소를 제거하고 그자리(arr[3])에 새로운 요소 (4,5)를 추가한다.
+      */
+
+      Array.prototype.splice.apply(arr1,[3,0].concat(arr2));
+      console.log(arr1); //[1, 2, 3, 4, 5, 6]
+
+      //ES6 spread 연산자
+      const arr3 = [1,2,3,6];
+      const arr4 = [4,5];
+
+      arr3.splice(3,0,...arr4);
+
+      console.log(arr3); //[1, 2, 3, 4, 5, 6]
+    }
+
+    parameter.copy = function() {
+      //ES5
+      var arr = [1,2,3];
+      var copy = arr.slice();
+
+      console.log(copy); // [1,2,3]
+
+      //copy를 변경한다.
+      copy.push(4);
+
+      console.log(copy); // [1,2,3,4]
+      //원본은 변경되지 않는다.
+      console.log(arr); // [1,2,3]
+
+      //ES6
+      const arr1 = [1,2,3];
+      //...arr [1,2,3]은 개별 요소로 분리
+      const copy1 = [...arr1];
+
+      console.log(copy1); //[1,2,3]
+
+      //copy를 변경한다
+
+      copy1.push(4);
+
+      console.log(copy1);
+      //원본은 변경되지 않음.
+      console.log(arr1);
+    }
+
+    parameter.rest와spred = function() {
+      //객체 리터럴 Rest/Spread 프로퍼티
+      //Spread 프로퍼티
+
+      const n = {x:1, y:2, ...{a: 3, b:4}};
+      console.log(n); //{ x: 1, y: 2, a: 3, b: 4 }
+
+      const {x,y,...z} = n;
+      console.log(x,y,z) // 1 2 { a: 3, b: 4 }
+
+      //객체의 병합
+      const merged = {...{x:1, y:2}, ...{y:10, z: 3}};
+      console.log(merged);
+
+      //특정 프로퍼티 변경
+      const changed = {...{x:1, y:2}, y:100};
+      console.log(changed); //x:1, y:100
+
+      //프로퍼티 추가
+      const added = { ...{x:1, y:2}, z:0};
+
+      console.log(added);
+    }
+
+    //Object.assign을 이용해도 동일한 작업 가능
+
+    // 객체의 병함
+    const merged2 = Object.assign({},{x:1, y:2}, {y:10, z:3});
+    console.log(merged2);
+
+    // 특정 프로퍼티 변경
+    const changed = Object.assign({}, { x: 1, y: 2 }, { y: 100 });
+    console.log(changed); // { x: 1, y: 100 }
+
+    // 프로퍼티 추가
+    const added = Object.assign({}, { x: 1, y: 2 }, { z: 0 });
+    console.log(added); // { x: 1, y: 2, z: 0 }
+
+    //실무에서는 spread/rest를 많이 쓸까? Object.assign을 많이 쓸까?
+
+
 
     Caller.execute(parameter); // 모든 메소드를 실행하는 모듈
   </script>

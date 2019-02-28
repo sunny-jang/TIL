@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+	<script src="../caller.js"></script>
+</head>
+<body>
+
+	<script async>
+		let property = {};
+
+		property.프로퍼티축약표현 = function () {
+			//ES6
+			var x = 1, y = 2;
+
+			var obj = {
+				x: x,
+				y: y,
+			}
+
+			console.log(obj);// {x:1, y:2}
+
+			//ES6
+			let x1 = 1, x2 = 2;
+
+			const obj2 = {x, y};
+
+			console.log(obj) //{x1:1, y2:2}
+		}
+
+		property.프로퍼티키동적생성 = function() {
+			//ES5
+			var prefix = 'prop';
+			var i = 0;
+
+			var obj = {};
+
+			obj[prefix +'-'+ ++i] = i;
+			obj[prefix +'-'+ ++i] = i;
+			obj[prefix +'-'+ ++i] = i;
+
+			console.log(obj) //{prop-1: 1, prop-2: 2, prop-3: 3}
+
+			//ES6
+			const prefix2 = 'prop';
+
+			let i2 = 0;
+
+			const obj2 = {
+				[`${prefix2}-${++i2}`]: i2,
+				[`${prefix2}-${++i2}`]: i2,
+				[`${prefix2}-${++i2}`]: i2,
+			}
+
+			console.log(obj2)
+		}
+
+		property.메소드축약표현 = function() {
+			//ES5
+			var obj = {
+				name: 'Lee',
+				sayHi: function() {
+					console.log('hi!' + this.name);
+				}
+			}
+
+			obj.sayHi();
+
+			//ES6
+			const obj2 = {
+				name: 'Lee',
+				// 메소드 축약표현
+				sayHi() {
+					console.log(`Hi ${this.name}`);
+				}
+			}
+
+			obj2.sayHi();
+		}
+
+		property.프로토프로퍼티에의한상속 = function() {
+			//ES5
+			var parent = {
+				name: 'parent',
+				sayHi: function() {
+					console.log('hi!' + this.name);
+				}
+			}
+
+			//프로토타입 패턴 상속
+			var child = Object.create(parent);
+			child.name = 'child';
+
+			parent.sayHi();
+			child.sayHi();
+
+			//ES6
+			const parent1 = {
+				name: 'parent',
+				sayHi() {
+					console.log(`Hi ${this.name}`);
+				}
+			};
+
+			const child2 = {
+				//child 객체의 프로토타입 객체에 parent 객체를 바인딩하여 상속을 구현한다. 헐ㅓㅓㅓㅓㅓ
+
+				__proto__: parent,
+				name: 'child',
+			};
+
+			parent1.sayHi();
+			child2.sayHi();
+		}
+
+
+    Caller.execute(property); // 모든 메소드를 실행하는 모듈
+  </script>
+</body>
+</html>

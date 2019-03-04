@@ -8,6 +8,21 @@
 <body>
 
 <script>
+// axios.post('https://m.apps.ssg.com/api/happyvirus/datas.ssg',
+//     {
+//         "common":{"apl_ver":"","os_cd":"","ts":"","mobil_app_no":""},
+//         "params":{"siteNo":"6004","pagingYn":"Y","dataIndex":"","sortCd":"recommend","dispCtgId":"","page":"1","pageSize":"100","itemImgSize":"500"},
+//     },
+//     {
+//         "headers": {'Content-Type':'text/plain','accept':'application/json'}
+//     },
+// )
+// .then(function(response) {
+//     if(response.data.data.happyVirusItemList.length > 0) {
+//         console.log(response.data.data.happyVirusItemList);
+//     }
+// })
+
 axios.post('https://m.apps.ssg.com/api/happyvirus/datas.ssg',
     {
         "common":{"apl_ver":"","os_cd":"","ts":"","mobil_app_no":""},
@@ -17,9 +32,9 @@ axios.post('https://m.apps.ssg.com/api/happyvirus/datas.ssg',
         "headers": {'Content-Type':'text/plain','accept':'application/json'}
     },
 )
-.then(function(response) {
-    if(response.data.data.happyVirusItemList.length > 0) {
-        console.log(response.data.data.happyVirusItemList);
+.then(({data: {data: {happyVirusItemList: itemList}}}) => {
+    if(itemList.length > 0) {
+        console.log(itemList);
     }
 })
 </script>

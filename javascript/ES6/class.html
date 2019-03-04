@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hello World</title>
+	<script src="../caller.js"></script>
+</head>
+<body>
+	<script async>
+    let Class = {
+      클래스정의() {
+        class Person {
+          constructor(name) {
+            this._name = name;
+          }
+
+          sayHi() {
+            console.log(`Hi ${this._name}`);
+          }
+        }
+
+        const me = new Person('Lee');
+        console.log(me);
+        me.sayHi(); //Hi Lee
+
+        console.log(me instanceof Person); //true
+      },
+
+
+      인스턴스의생성 () {
+        // 클래스의 인스턴스를 생성하려면 new 연산자와 함께 constructor(생성자)를 호출한다.
+        class Foo{};
+
+        const foo = new Foo();
+        //new연산자와 함께 호출한 Foo는 클래스네임이 아니라 constructor이다. 
+        //표현식이 아닌 선언식으로 정의한 클래서의 이름은 constructor와 동일하다.
+
+        console.log(Foo === Foo.prototype.constructor); //true
+
+        const foo1 = Foo(); // Type error class constructor Foo cant be invoke without 'new'
+      },
+
+      constructor() {
+        class Foo{};
+
+        const foo = new Foo();
+        console.log(foo);
+
+        //클래스 프로퍼티의 동적 할당 및 초기화
+        foo.num = 1;
+        console.log(foo);
+
+        //constructor는 인스턴스의 생성과 동시에 클래스 프로퍼티의 생성과 초기화를 실행한다.
+        class Foo1 {
+          constructor(num) {
+            this.num = num;
+          }
+        }
+
+        const foo1 = new Foo1(1);
+
+        console.log(foo);
+      },
+
+      클래스프로퍼티 () {
+        class Foo{
+          //속성을 바디에 선언할 수 없음.
+
+          constructor(name = '') {
+            this.name = name; //클래스 프로퍼티의 선언과 초기화
+            //public 클래스 프로퍼티
+          }
+        }
+
+        const foo = new Foo('Lee');
+        console.log(foo);// Foo {name: 'Lee'}
+      },
+
+      호이스팅() {
+        //호이스팅 되지 않는 것처럼 동작.
+        const foo = new Foo(); //ReferenceError: Foo is not defined
+        class Foo{};
+      }
+    }
+
+    Caller.execute(Class); // 모든 메소드를 실행하는 모듈
+		
+  </script>
+</body>
+</html>

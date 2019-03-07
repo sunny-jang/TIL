@@ -81,9 +81,9 @@
 
       console.log(firstName1, lastName2); // 할당 기준은 프로퍼티 이름이다.
 
-      // const {prop1: p1, prop2: 2} = {prop1: 'a', prop2: 'b'};
-      //invaild Error 뜸..
-      // console.log(p1, p2);
+      const {prop1: p1, prop2: p2} = {prop1: 'a', prop2: 'b'};
+      // invaild Error 뜸..
+      console.log(p1, p2);
 
       //위의 축약형
       const {prop1, prop2} = {prop1: 'a', prop2: 'b'};
@@ -113,10 +113,6 @@
           city: 'Seoul',
         }
       };
-
-      // const { address: {
-      //   city: 'incoen',
-      // }}
 
       const {address: {city}} = person;
       console.log(city); //seoul ?? ㅜㅜ 좀 이해가 안 감.

@@ -11,7 +11,7 @@ class Person {
 }
 
 // 변수, 함수 클래스를 하나의 객체로 구성하여 공개
-export {pi, square, Person}
+export {pi, square, Person};
 
 
 //모듈에서 하나만을 export 할 때는 default 키워드를 사용할 수 있다.

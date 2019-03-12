@@ -1,0 +1,26 @@
+<script>
+const simpleArray = function(...arr) {
+  let index = 0;
+  const array = [...arr];
+
+  return {
+    [Symbol.iterator]() {
+      return {
+        next() {
+          return {
+            value: array[index],
+            done: ++index > array.length
+          };
+        }
+      };
+    }
+  };
+};
+
+const iterable = simpleArray(1, 2, 3);
+const iterator = iterable[Symbol.iterator]();
+
+const iterableArr = [1, 2, 3];
+const iteratorArr = iterableArr[Symbol.iterator]();
+
+</script>

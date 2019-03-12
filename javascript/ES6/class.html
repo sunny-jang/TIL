@@ -221,7 +221,7 @@
           //원통의 넓이: 부모 클래스의 getArea 메소드를 오버라이딩하였다.
           getArea() {
             //(원통의 높이 * 원의 둘레) + (2 * 원의 넓이)
-            return (this.height * super.getPerimeter() + (2 * super.getArea()));
+            return (this.height * this.getPerimeter() + (2 * super.getArea()));
           }
 
           //원통의 부피
@@ -319,7 +319,7 @@
           }
 
           prototypeMethod() {
-            return `${super.stticMethod()} World`;
+            return `${super.staticMethod()} World`;
           }
         }
 

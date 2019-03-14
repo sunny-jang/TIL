@@ -1,10 +1,10 @@
 <script>
 const simpleArray = function(...arr) {
-    let index = 0;
     const array = [...arr];
 
     return {
         [Symbol.iterator]() {
+            let index = 0;
             return {
                 next() {
                     return {

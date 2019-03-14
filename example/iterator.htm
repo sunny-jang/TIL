@@ -25,12 +25,24 @@ const iteratorArr = iterableArr[Symbol.iterator]();
 
 const simpleForOf = function(iterable, callback) {
     const iterator = iterable[Symbol.iterator]();
-    for(let next = iterator.next(); false === next.done; next = iterator.next()) {
+    
+    for(let next = iterator.next(); !next.done; next = iterator.next()) {
         callback(next.value);
     }
 }
 
+const simpleWhileOf = function(iterable, callback) {
+    const iterator = iterable[Symbol.iterator]();
+
+    let next = iterator.next();
+    while(!next.done) {
+        callback(next.value);
+        next = iterator.next();
+    }
+}
+
 simpleForOf(iterableArr, value => console.log(value));
+simpleWhileOf(iterableArr, value => console.log(value));
 for(let value of iterable) { console.log(value); }
 
 </script>

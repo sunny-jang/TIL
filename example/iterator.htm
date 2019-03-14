@@ -23,4 +23,14 @@ const iterator = iterable[Symbol.iterator]();
 const iterableArr = [1, 2, 3];
 const iteratorArr = iterableArr[Symbol.iterator]();
 
+const simpleForOf = function(iterable, callback) {
+    const iterator = iterable[Symbol.iterator]();
+    for(let next = iterator.next(); false === next.done; next = iterator.next()) {
+        callback(next.value);
+    }
+}
+
+simpleForOf(iterableArr, value => console.log(value));
+for(let value of iterable) { console.log(value); }
+
 </script>

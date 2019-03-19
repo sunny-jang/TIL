@@ -2,7 +2,7 @@
   "name": "es6-project",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack -w"
+    "build": "babel src/js -w -d dist/js"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

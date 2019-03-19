@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>Hello World</title>
 	<script src="../caller.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
@@ -235,12 +236,9 @@
 		}
 
 		generator.비동기처리 = function() {
-			const fetch = require('node-fetch');
-
 			function getUser(genObj, username) {
-				return fetch(`https://api.github.com/users/${username}`)
-			    .then(res => res.json())
-			    .then(user => user.name);
+				axios.get(`https://api.github.com/users/${username}`)
+			    .then(res => genObj.next(res.data.name));
 			}
 
 			// 제너레이터 객체 생성
@@ -260,6 +258,27 @@
 
 			//제너레이터 함수 시작
 			g.next();
+		}
+
+		generator.AsyncAwait = function() {
+			async function getUser(username) {
+				let res = await axios.get(`https://api.github.com/users/${username}`);
+				return res.data.name;
+			}
+
+			async function getUserAll() {
+			  let user;
+			  user = await getUser('jeresig');
+			  console.log(user);
+
+			  user = await getUser('ahejlsberg');
+			  console.log(user);
+
+			  user = await getUser('ungmo2');
+			  console.log(user);
+			}
+
+			getUserAll();
 		}
 		Caller.execute(generator); // 모든 메소드를 실행하는 모듈
 </script>

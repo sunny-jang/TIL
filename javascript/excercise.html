@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+
+</body>
+<script async>
+  (function (params) {
+    var testA = "함수스코프_지역변수"
+  }());
+
+  {
+    let testB = "블록스코프_지역변수";
+  }
+
+  {
+    const testC = "블록스코프_지역상수";
+  }
+
+var func = function() {};
+var arrow = () => {};
+var obj = {
+    method() { /* 메소드 */ }
+};
+
+
+///2
+
+var test = ["A", "B", "C", "D", "E"];
+for (var i = 0; i < test.length; i++) {
+    if(-1 < ["B", "D"].indexOf(test[i])) {
+       test[i] = test[i].toUpperCase().slice(0);
+    }
+    if(i > (test.length / 2)) {
+      test[i] = test[i].toUpperCase().slice(0);
+    }
+    test[i] = test[i].repeat(2).toLowerCase();
+    console.log(test);
+}
+console.log(test); // ["Aa", "B", "Cc", "D", "E"]
+
+///3
+
+(function(){
+  function Test() {
+      this.test = "test";
+  }
+  var testA = new Test() || {};
+  var testB = Test() || {};
+  console.log(testA.test); // test
+  console.log(test); //undefind
+  console.log(testB.test); // undefind
+})();
+
+
+console.log('4444')
+///4
+function Test() {
+    var test = "test";
+
+    return {
+        testA: test,
+        testB: function(testB) {
+            return testB || test;
+        },
+        testC: function(testC) {
+            return test = testC || test;
+        }
+    }
+}
+var test = new Test();
+console.log(test.testA); // test
+console.log(test.testB()); // test
+console.log(test.testC()); // test
+test.testA = "testA";
+test.testB("testB");
+test.testC("testC");
+console.log(test.testA); // testA
+console.log(test.testB()); // testC
+console.log(test.testC()); // testC
+
+///5
+(function() {
+  console.log('5555555-----------');
+  var testA = [];
+  testA.push({ key: "C", value: "testC" });
+  testA.push({ key: "A", value: "testA" });
+  testA.push({ key: "B", value: "testB" });
+  testA.push({ key: "D", value: "testD" });
+  testA.push({ key: "E", value: "testE" });
+  var testB = testA.slice();
+  var testC = testB;
+  testC.sort(function(x, y) {
+      return x.key < y.key ? -1 : (x.key > y.key ? 1 : 0);
+  }).filter(function(test) {
+      return -1 === ["B", "D"].indexOf(test.key);
+  }).forEach(function(test) {
+      var key = test.key;
+      key = key.toLowerCase();
+      test.value = test.value.toUpperCase();
+  });
+  console.log(testA[1].value); // ----- 1 testA
+  console.log(testA[2].value); // ----- 2 testB
+  console.log(testB[1].value); // ----- 3 TESTC
+  console.log(testB[2].value); // ----- 4 TESTE
+  console.log(testC[1].key); // ----- 5 C
+  console.log(testC[2].key); // ----- 6 E
+})();
+
+///6
+(function() {
+
+  // console.log("----------------------"); 
+
+  // console.log("A"); // ----- 1
+  // setTimeout(function() {
+  //     console.log("B"); // ----- 2
+  // }, 200); // 0.2초
+  // setTimeout(function() {
+  //     console.log("C"); // ----- 3
+  // }, 100); // 0.1초
+  // console.log("D"); // ----- 4
+  // for(var i = 0; i < 10000; i++) {
+  //     console.log(i);
+  // } // 수행시간 1초 이상
+  // console.log("E"); // ----- 5
+
+  // // a d e c b 
+})();
+
+// 7
+(function() {
+
+  console.log('-------------') // ----- 1
+  console.log(test) // ----- 1
+  var test = "A";
+  function testA() {
+      console.log(test); // ----- 2
+      (function() {
+          test = "B";
+          console.log(test); // ----- 3
+          test = "C";
+      }());
+      console.log(test) // ----- 4
+      var test;
+  }
+  function testB() {
+      console.log(test); // ----- 5
+      test = "D";
+      console.log(test); // ----- 6
+  }
+  testA();
+  test = "E";
+  testB();
+//undefined A B A E D
+})();
+
+
+
+(function() {
+  var test = {
+    test: "test",
+    testA: this,
+    testB: function() {
+        return (function() {
+            return this;
+        }());
+    },
+    testC: function() {
+        return this;
+    },
+    testD: function() {
+        return {
+            test: this.test
+        };
+    }
+}
+console.log(test.testA.test); // ----- 1 // 'test'
+console.log(test.testB().test); // ----- 2 'test{}'
+console.log(test.testC().test); // ----- 3 'test'
+console.log(test.testD().test); // ----- 4 'test'
+})();
+
+
+(function() {
+  var testA = {};
+  var testB = Object.create(testA);
+  var testC = Object.create(testB);
+  var testD = Object.create(testA);
+  testA.test = { key: "A" };
+  console.log(testB.test.key); // ----- 1 A
+  console.log(testC.test.key); // ----- 2 A
+  console.log(testD.test.key); // ----- 3 A
+  console.log(testA.test == testB.test); // ----- 4  true
+  console.log(testC.test == testD.test); // ----- 5  true
+  testB.test = { key: "B" };  
+  console.log(testA.test.key); // ----- 6  A
+  console.log(testC.test.key); // ----- 7  B
+  console.log(testD.test.key); // ----- 8  A
+  console.log(testA.test == testB.test); // ----- 9  false
+  console.log(testC.test == testD.test); // ----- 10  false
+})();
+
+(function() {
+  function SuperSet() {
+  }
+  function SubSet() {
+  }
+  SubSet.prototype = Object.create(SuperSet.prototype);
+  SubSet.prototype.constructor = SubSet.constructor;
+  var superEle = new SuperSet();
+  var subEle = new SubSet();
+  var B = { key: "B" };
+  SuperSet.prototype.test = B;
+  console.log(subEle.test.key); // ----- 1 B
+  console.log(superEle.test.key); // ----- 2 B
+  console.log(subEle.test == superEle.test); // ----- 3 true
+  console.log(subEle.test.key == superEle.test.key); // ----- 4 
+  var A = { key: "A" };
+  SubSet.prototype.test = A;
+  console.log(subEle.test.key); // ----- 5
+  console.log(superEle.test.key); // ----- 6
+  console.log(subEle.test == superEle.test); // ----- 7
+  console.log(subEle.test.key == superEle.test.key); // ----- 8
+  subEle.test.key = "C";
+  B.key = "C";
+  console.log(subEle.test.key); // ----- 9
+  console.log(superEle.test.key); // ----- 10
+  console.log(subEle.test == superEle.test); // ----- 11
+  console.log(subEle.test.key == superEle.test.key); // ----- 12
+})();
+
+
+console.log('gk')
+</script>
+</html>

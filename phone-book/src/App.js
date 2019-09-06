@@ -34,6 +34,17 @@ class App extends Component {
     })
   }
 
+  handleUpdate = (id, data) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.map(
+        info => id === info.id
+        ? { ...info, ...data} // make a new object and overwrite the data which we got.
+        : info // maintain previous value.
+      )
+    })
+  }
+
   render() {
     const { information } = this.state;
     return (
@@ -44,6 +55,7 @@ class App extends Component {
         <PhoneInfoList
          data={this.state.information}
          onRemove={this.handleRemove}
+         onUpdate={this.handleUpdate}
          />
       </div>
     );

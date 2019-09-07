@@ -63,6 +63,16 @@ class PhoneInfo extends Component {
       })
     }
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if(!this.state.editing
+      && !nextState.editing
+      && nextProps.info === this.props.info) {
+        return false;
+      }
+
+      return true;
+  }
   
   render() {
     const style = {
@@ -70,6 +80,9 @@ class PhoneInfo extends Component {
       padding: '8px',
       margin: '8px'
     }
+    
+    console.log(this.props.info.id);
+
     if(this.state.editing) {
       return(
         <div style={style}>
@@ -98,6 +111,8 @@ class PhoneInfo extends Component {
     const {
       name, phone, id
     } = this.props.info;
+
+
     return (
       <div style={style}>
         <div><b>{name}</b></div>

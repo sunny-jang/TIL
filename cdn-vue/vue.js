@@ -12,7 +12,16 @@ var app = new Vue({
       {text: 'Writing the Vue.js tutorial' },
       {text: 'Learning about Webpack2' },
       {text: 'Start a side project' },
-
-    ]
+    ],
+    number: 0,
+  },
+  methods: {
+    increment: function() {
+      // Use 'this' when you access the data model inside of instance.
+      this.number++;
+    },
+    decrement: function() {
+      this.number--;
+    }
   }
 })

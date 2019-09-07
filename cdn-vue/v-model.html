@@ -8,25 +8,9 @@
 </head>
 <body>
   <div id="app" v-cloak>
-    <h1 v-if="value > 5">value가 5보다 크군요.</h1>
-    <h1 v-else-if="value === 5">value가 5네요.</h1>
-    <h1 v-else>value가 5보다 작군요.</h1>
-    <h2 v-once>초기 값: {{value}}</h2>
-    <h2>현재 값: {{value}}</h2>
-    <div v-pre>{{ 이건 그대로 렌더링해줘요 }}</div>
-    
-    <div>
-      <div>Hellow, {{name}}</div>
-      <p>{{ Date() }}</p>
-      <img :src="smile ? feelsgood : feelsbad" alt="facial expression" width="100">
-    </div>
-
-    <div style="margin-top: 30px; border-top:1px solid">
-      <h2>Today's todo</h2>
-      <ul>
-        <li v-for="(todo, index) in todos">{{ index+1 }}. {{ todo.text }}</li>
-      </ul>
-    </div>
+    <h1>Hello, {{ name }}</h1>
+    <h2><input type="checkbox" v-model="smile" /> 웃어요 개구리</h2>
+    <img :src="smile ? feelsgood : feelsbad" width="100"/>
   </div>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="vue.js"></script>

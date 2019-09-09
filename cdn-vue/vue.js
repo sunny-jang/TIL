@@ -1,27 +1,59 @@
 // new Vue
+
+var localComponent = Vue.component('myComponent2', {
+  template: '<div>Local component</div>',
+})
+
+
+Vue.component('global-component1', {
+  template: '<div>globalComponent</div>',
+
+})
+
+Vue.component('global-component2', {
+  template: '<h1>globalComponent2</h1>'
+})
+
+
+Vue.component('child-component',{
+  props: ['propsdata'],
+  template: '<p>{{ propsdata }}</p>'
+})
+
+// var eventBus = new Vue();
+
+// eventBus.$emit('refresh', 10);
+
+// var eventBusTest = new Vue({
+//   methods: {
+//     callAnyMethod() {
+//       // ...
+//       console.log(`what's that? `)
+//     }
+//   },
+  
+//   created: function() {
+//     var vm = this;
+//     eventBus.$on('refresh', function(data) {
+//       console.log(data); //10
+//       vm.callAnyMethod() //vm 은 현재 인스턴스를 가리킴
+//     })
+//   },
+//   template: `<div>Test</div>`,
+// })
+
 var app = new Vue({
   el: '#app', // select Element
+  components: {
+    'my-component': {
+      template: `<div>A custom component!</div>`
+    },
+    'local-component': localComponent,
+    // 'event-bus-test': eventBusTest,
+  },
   //data has the information which we are going to use on view.
   data: {
-    name: 'Vue',
-    value: 0,
-    smile: true,
-    feelsgood: 'https://sites.psu.edu/siowfa16/files/2016/10/YeDYzSR-10apkm4.png',
-    feelsbad: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ2nJ20jBf_gzEzpGF1zo5zk-w4GyQihYKrobpJHieuGQb7qZnoQ',
-    todos: [
-      {text: 'Writing the Vue.js tutorial' },
-      {text: 'Learning about Webpack2' },
-      {text: 'Start a side project' },
-    ],
-    number: 0,
+   name: 'component example',
+   message: 'Hello Vue! from Parentcomponent',
   },
-  methods: {
-    increment: function() {
-      // Use 'this' when you access the data model inside of instance.
-      this.number++;
-    },
-    decrement: function() {
-      this.number--;
-    }
-  }
 })

@@ -1,2 +1,2 @@
 console.log('HELLO WORLD');
-console.log(process.argv)
+console.log(process.argv);

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS TEST</title>
+</head>
+<body>
+    <h1>JAVA SCTIPT TEST</h1>
+    <hr>
+    <button onclick="func1()">눌러보세요</button>
+    <hr>
+    <button id="btn2">버튼 2</button>
+    <hr>
+    <div id="d1"></div>
+    <button id="btn3" onclick="func3()">버튼3</button>
+
+    <a href="" class="testbtn">ㅁㅁㅁ</a>
+    <a href="" class="testbtn">ㄹㄹㄹㄹ</a>
+    <a href="" class="testbtn">ㄷㄷㄷ</a>
+
+    <hr>
+    <div id="d2">
+      <p class="pp">사과</p>
+      <p class="pp">딸기</p>
+      <p class="pp">오렌지</p>
+    </div>
+
+    <button onclick="func4()">버튼4</button>
+    <div id="d3"></div>
+    <script>
+      function func1() {
+        alert('안녕하세요');
+      }
+
+      //window.onload = 
+      // 브라우저가 로딩 완료 되었을 때를 기다린다.
+
+      window.onload = function func2() {
+        document.getElementById('btn2').onclick = function() {
+          alert('반갑습니다.');
+        }
+      }
+
+      function func3() {
+        document.getElementById('d1').innerHTML = "자바스크립트 공부합시다.";
+      }
+
+      window.onload = function func4() {
+        var arr =  document.getElementsByClassName('testbtn');
+        for (let i = 0; i < arr.length; i++) {
+          arr[i].onclick = function() {
+          alert("모든 testbtn클래스에 함수 실행되는 함수");
+          
+          }
+        }
+      }
+
+
+      // 엘리먼트 안에 입력 값이 들어있는지 찾기
+      function func4() {
+        var var1 = prompt("좋아하는 과일을 입력하세요");
+        var arr1 = document.getElementsByClassName('pp');
+        var arr2 =  Array();
+
+        for (let i = 0; i < arr1.length; i++) {
+          arr2[i] = arr1[i].innerHTML;
+        }
+
+        var index = arr2.indexOf(var1);
+
+        if(index >= 0) {
+          document.getElementById('d3').innerHTML = index+1 + "번째 위치에 과일이 있습니다.";
+        }else {
+          document.getElementById('d3').innerHTML = index + "해당 과일이 없습니다.";       
+        }
+      }
+    </script>
+   
+</body>
+</html>

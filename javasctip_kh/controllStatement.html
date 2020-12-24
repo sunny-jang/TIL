@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS TEST</title>
+</head>
+<body>
+    <h1>JAVA SCTIPT TEST</h1>
+    <hr>
+
+    <script>
+      // 제어문
+      document.write("---- 제어문 ---- <br>");
+      var num = prompt("숫자 입력 : ");
+      if(num > 0) {
+        document.write("0보다 큰 수 입력 <br>");
+      }else if(num < 0) {
+        document.write("0보다 작은 수 입력 <br>");
+      }else {
+        document.write("0 과 같은 수 입력 <br>");
+      }
+
+      // swtich문
+      switch(Number(num)) {
+      case 1 : document.write("1 입력 <br>"); break;
+      case 2 : document.write("2 입력 <br>"); break;
+      case 3 : document.write("3 입력 <br>"); break;
+      default : document.write("기타 입력 <br>");
+      }
+
+      //for 문
+      for (let i = 0; i < num; i++) {
+        document.write(i + 1 + "번째 반복<br>");
+      }
+
+      //while 문
+      while(num > 0) {
+        document.write(num + "번째 반복<br>");
+        num --;
+      }
+      
+    </script>
+    
+  
+</body>
+</html>

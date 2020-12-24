@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS TEST</title>
+</head>
+<body>
+    <h1>JAVA SCTIPT TEST</h1>
+    <hr>
+    <div id="d1">
+      <h3 id="dh1" class="d1class">div1 영역</h3>
+      <p id="dp1" name ="pp" class="d1class">안녕하세요</p>
+    </div>
+    <div id="d2">
+      <h3 id="dh2">div2 영역</h3>
+      <p id="dp2" name = "pp">반갑습니다.</p>
+    </div>
+
+    <script>
+      // 돔 선택
+      document.write("---- 돔 선택 ---- <br>");
+      // id 로 가져오기
+      var var1 = document.getElementById("d1");
+      document.write(var1+"<br>");
+
+      var var2 = document.getElementById("dh1");
+      document.write(var2+"<br>");
+
+      var var3 = document.getElementById("dp1");
+      document.write(var3+"<br>");
+
+      document.write(var1.innerHTML);
+
+      // 태그까지 통째로 가지고 오기
+      // alert(var1.innerHTML);
+      // alert(var2.innerHTML);
+      // alert(var3.innerHTML);
+
+      // // 택스트들만 빼서 가지고 오기
+      // alert(var1.innerHTML);
+      // alert(var2.innerHTML);
+      // alert(var3.innerHTML);
+
+      var var4 = document.getElementsByName("pp");
+      document.write(var4 + "<br>");
+      document.write(var4[0] + "<br>");
+      document.write("0번째 pp : " + var4[0].innerHTML + "<br>");
+      document.write("1번째 pp : " + var4[1].innerHTML + "<br>");
+      
+      var var5 = document.getElementsByTagName("h3");
+      document.write(var5 + "<br>");
+      document.write(var5[0] + "<br>");
+      document.write("0번째 h3 : " + var5[0].innerHTML + "<br>");
+      document.write("1번째 h3 : " + var5[1].innerHTML + "<br>");
+
+      var var6 = document.getElementsByClassName("d1class");
+      document.write(var6 + "<br>");
+      document.write(var6[0] + "<br>");
+      document.write("0번째 h3 : " + var6[0].innerHTML + "<br>");
+      document.write("1번째 h3 : " + var6[1].innerHTML + "<br>");
+    </script>
+    
+  
+</body>
+</html>

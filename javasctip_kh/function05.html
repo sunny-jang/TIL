@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 내장합수</title>
+</head>
+<body>
+  <h1>내장함수</h1>
+  <hr>
+  <h3>escape(), unescape()</h3>
+  <p>알파벳대/소문자, 숫자,  @*-_+./를 제외한 모든 문자열을 인코딩</p>
+  <script>
+    function original1() {
+      var param = document.getElementById('input1').value;
+      var url = "http://www.iei.or.kr?data="+param;
+      alert(url);
+    }
+
+    function encode1() {
+      var param = document.getElementById('input1').value;
+      var url = "http://www.iei.or.kr?data="+param;
+      alert("인코딩 값 " + escape(url));
+    }
+
+    function decode1() {
+      var param = document.getElementById('input1').value;
+      var url = "http://www.iei.or.kr?data="+param;
+      var encodeDate = escape(url);
+      alert("인코딩 값 :" + encodeDate + "\n 디코딩 값 : " + unescape(encodeDate));
+    }
+
+    
+  </script>
+
+  <input type="text" id="input1"><br>
+  <button onclick="original1();">원본</button>
+  <button onclick="encode1();">인코딩</button>
+  <button onclick="decode1();">디코딩</button>
+  <hr>
+  <h3>encodeURI(), decodeURI()</h3>
+  <p>
+    인터넷 주소에 사용되는 문자열 인코딩<br>
+    :;/=?& 는 변환 안함 
+  </p>
+
+  <script>
+    function original2() {
+      var param = document.getElementById('input2').value;
+      var url = "http://www.iei.or.kr?data="+param;
+      alert(url);
+    }
+
+    function encode2() {
+      var param = document.getElementById('input2').value;
+      var url = "http://www.iei.or.kr?data="+param;
+      alert("인코딩 값 " + encodeURI(url));
+    }
+
+    function decode2() {
+      var param = document.getElementById('input2').value;
+      var url = "http://www.iei.or.kr?data="+param;
+      var encodeDate = encodeURI(url);
+      alert("인코딩 값 :" + encodeDate + "\n 디코딩 값 : " + decodeURI(encodeDate));
+    }
+
+    
+  </script>
+
+  <input type="text" id="input2"><br>
+  <button onclick="original2();">원본</button>
+  <button onclick="encode2();">인코딩</button>
+  <button onclick="decode2();">디코딩</button>
+
+  <hr>
+  <h3>eval()</h3>
+  <p>문자열을 자바스크립트 코드로 변환해서 실행하는 함수</p>
+  <script>
+    var num1= 10;
+    var num2=20;
+    var str = "var num1 = 20;"
+    str += "var num2 = 30;";
+    str +="alert('두 수의 합은 '+(num1+ num2) +' 입니다.');"
+
+    function printCode() {
+      alert(str);      
+    }
+
+    function execute() {
+      eval(str);
+    }
+  </script>
+  <button onclick="printCode()">코드 출력</button>
+  <button onclick="execute()">코드 실행</button>
+  
+  <hr>
+  <h3>
+    isFinite()
+  </h3>
+  <p>number형 데이터가 맞는지 확인하는 함수 <br>
+   맞으면 true,  아니면 false 반환
+  단, 아무것도 얿ㅅ을 경우에도 true를 반환</p>
+  
+  <h3>isNaN()</h3>
+  <p>number가 NaN(Not a Number)인지 확인<br>
+  숫자가 아니면 true, 숫자면 false를 반환 <br>
+  isFinite()의 반대 기능
+  </p>
+  <p>대부분의 프로그래밍 언어는 0으로 숫자를 나누면 자동으로 오류가 
+    발생하고 프로그램이 종료됨 <br>
+    하지만 자바스크립트는 0으로 숫자를 나누면 infinity라는 값이 들어감  <br> 자바스크립트가 표현할 수 없는 숫자는 NaN으로 표시됨
+  </p>
+
+  <script>
+    function test01() {
+      var num1 = 10/0;
+      var num2 = 10/'a';
+      alert("num1 : " + num1 + "/ num2 : "+ num2);
+    }
+
+    function test02(){
+      var num1 = prompt("첫번째 숫자 입력 : ");
+      var num2 = prompt("두번째 숫자 입력 : ");
+      if(num1 == NaN || num2 == NaN) {
+        alert("숫자를 입력해야 합니다.");
+      } else {
+        var num3 = num1 / num2;
+        if(num3 == Infinity) {
+          alert("0으로 나눌 수 없습니다.");
+        } else {
+          alert("결과는 : " + num3);
+        }
+      }
+    }
+    
+  </script>
+
+  <button onclick="test01();">버튼</button>
+  <button onclick="test02();">버튼</button>
+</body>
+</html>

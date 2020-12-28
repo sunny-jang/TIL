@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS TEST</title>
+</head>
+<body>
+  <h1>함수 (Function)</h1>
+  <hr>
+  <h3>선언적 함수</h3>
+  <p>
+    function 키워드에 함수명을 작성하여 사용하는 방법 <br><br>
+    function 함수명 ( [매개변수] ) {<br>
+      처리 로직; <br>
+      [return 값;] <br>
+    }
+  </p>
+
+  <script>
+    function test1() {
+      alert("test1 함수 호출");
+    }
+  </script>
+
+  <button onclick="test()">
+    버튼
+  </button>
+
+  <hr>
+
+  <h3>익명 함수</h3>
+  <p>
+    function 키워드에 함수명을 작성하지 않고 변수에 담아서 사용하는 방법 <br><br>
+    var 변수명 = function ( [매개변수] ) {<br>
+      처리 로직; <br>
+      [return 값;] <br>
+    }
+  </p>
+  
+  <script>
+    // 선언적 함수는 언제든지 해당 함수를 호출할 수 있음
+    // 함수 정의부 전에도 호출 가능
+    // test2(); // 호출가능
+
+    // 익명 함수는 해당 함수가 선언된 이후에만 사용 가능
+    // 함수 정의부 이후에만 호출 가능
+      // test3(); // 호출 불가능
+
+    function test2() {
+      alert("선언적 함수");
+    }
+
+    var test3 = function (){
+      alert("익명 함수");
+    }
+  </script>
+
+  <button onclick="test2()"> 선언적 함수</button>
+  <button onclick="test3()"> 익명 함수</button>
+
+  <hr>
+
+  <h3>바로실행함수</h3>
+  <p>
+    function 에 함수명을 작성하지 않고 작성 <br><br>
+    (function(){<br>
+      처리 로직;<br>
+      // 리턴 값이 없음<br>
+    })();<br>
+  </p>
+  <script>
+    (function() {
+      alert("스스로 호출하는 함수");
+    })();
+  </script>
+</body>
+</html>

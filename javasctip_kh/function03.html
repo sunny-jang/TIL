@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 함수</title>
+</head>
+<body>
+  <h1>함수 (Function)</h1>
+  <hr>
+  <h3>매개변수도 없고, 인자값도 없는 함수</h3>
+  <script>
+    function test1() {
+      alert("test1 함수 호출");
+    }
+  </script>
+  <button onclick="test1()">버튼</button>
+  <hr>
+  <h3>매개변수도 있고, 인자값도 있는 함수</h3>
+  <script>
+    function test2(var1, var2) {
+      alert(var1 + " / " + var2);
+    }
+  </script>
+  <button onclick="test2(10,20)">버튼</button>
+  <button onclick="test2('홍길동','김길동')">버튼</button>
+
+  <hr>
+  <h3>매개변수는 있지만, 인자값이 없는 함수</h3>
+  <script>
+    function test3(data) {
+      alert(data);
+    }
+  </script>
+  <button onclick="test3()">버튼</button>
+
+  <hr>
+  <h3>매개변수는 있지만, 인자값이 부족한 함수</h3>
+  <script>
+    function test4(data1, data2) {
+      alert(data1 + " / " + data2);
+    }
+  </script>
+  <button onclick="test4('홍길동')">버튼</button>
+
+  <hr>
+  <h3>매개변수는 있지만, 인자값이 많은 함수</h3>
+  <script>
+    function test5(data) {
+      alert(data);
+    }
+  </script>
+  <button onclick="test5('홍길동', '김길동')">버튼</button>
+
+
+  <hr>
+  <h3>매개변수에 디폴트값 지정</h3>
+  <script>
+   function test6(data1, data2 = '없음') {
+      alert(data1 + " / " + data2);
+    }
+  </script>
+  <button onclick="test6('홍길동')">버튼</button>
+  <button onclick="test6('홍길동', '김길동')">버튼</button>
+
+  <hr>
+  <h3>가변인자 함수</h3>
+  <p>
+    함수의 매개변수를 따로 지정하지 않은 경우 <br>
+    자바스크립트의 함수들은 자동으로 arguments 라는 배열을 사용하여 데이터를 저장<br>
+    매개변수가 없어도 별도의 arguments 배열을 이용하여 처리 가능
+  </p>
+  <script>
+   function test7() {
+      if(arguments.length == 0) {
+        alert("test7 함수가 호출되었습니다.");
+      } else if(arguments.length == 1){
+        alert(arguments[0]);
+      } else if(arguments.length == 2){
+        alert(arguments[0]+ " / " + arguments[1]);
+      }
+    }
+  </script>
+  <button onclick="test7()">버튼</button>
+  <button onclick="test7('홍길동')">버튼</button>
+  <button onclick="test7('홍길동', '김길동')">버튼</button>
+
+  <hr>
+  <h3>함수의 리턴값 처리</h3>
+  
+  <script>
+    function test8() {
+      var result = test9();
+      alert(result);
+    }
+
+    function test9() {
+      return "홍길동";
+    }
+  </script>
+  <button onclick="test8()">버튼</button>
+
+  <hr>
+  <h3>form 태그에서 리턴값을 이용한 처리</h3>
+
+  <script>
+    function check(){
+      var id = document.getElementById("userId");
+      var pw = document.getElementById("userPw");
+      if(id.value == "") {
+        alert("ID는 비워둘 수 없습니다.");
+        id.focus();
+        return false;
+      }else if(pw.value == '') {
+        alert("pw는 비워둘 수 없습니다.");
+        pw.focus();
+        return false ;
+      }
+
+      return true;
+    }
+  </script>
+  <form action="function01.html" method="GET" onsubmit="return check()">
+    ID : <input type="email" id="userId"><br>
+    PW : <input type="password" id="userPw"><br>
+    <input type="submit" value="로그인"><br>
+  </form>
+  
+  <hr>
+  <h3>함수를 매개변수로 전달</h3>
+  <script>
+    function test10(){
+      alert("test10 실행");
+    }
+
+    function test11(otherFunction) {
+      alert("test11 실행");
+
+      otherFunction();
+    }
+
+  </script>
+  <button onclick="test11(test10())">버튼</button>
+  <button onclick="test11(test10)">버튼</button>
+</body>
+</html>

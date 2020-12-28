@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>함수 연습</title>
+  <style>
+    fieldset {
+      width: 400px;
+      text-align: center;
+      background-color:#eee;
+    }
+
+    div.box {
+      width: 500px;
+      height: 100px;
+      margin: 10px;
+      padding: 10px;
+      background-color: bisque;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>함수 연습</h1>
+  <hr>
+  <fieldset>
+    <legend>검색할 항목을 선택하세요</legend>
+    <input type="radio" name = "category" value="title" id="title" onclick="showDiv(this)">
+    <label for="title">제목</label>
+    <input type="radio" name = "category" value="date" id="date" onclick="showDiv(this)">
+    <label for="date">날짜</label>
+    <input type="radio" name = "category" value="writer" id="writer"onclick="showDiv(this)">
+    <label for="writer">글쓴이</label>
+  </fieldset>
+  <hr>
+  <div id="titlebox" class="box">
+    <form action="#" method="post">
+      <label for="">검색할 제목을 입력하세요 : </label>
+      <input type="search" name="title" size="50"><br>
+      <input type="submit" value="검색">
+    </form>
+  </div>
+
+  <div id="datebox" class="box">
+    <form action="#" method="post">
+      <label for="">검색할 날짜를 선택하세요 : </label><br>
+      <input type="date" name="start" onclick="showDiv(this)"> - 
+      <input type="date" name="end" onclick="showDiv(this)"><br>
+      <input type="submit" value="검색" onclick="showDiv(this)">
+    </form>
+  </div>
+
+  <div id="writerbox" class="box">
+    <form action="#" method="post">
+      <label for="">검색할 작성자 아이디를 입력하세요 : </label>
+      <input type="search" name="writer" size="25"><br>
+      <input type="submit" value="검색">
+    </form>
+  </div>
+  
+
+  <script>
+    // 제목 체크 시 titlebox만 보여지게,
+    // 날짜 체크 시 titlebox만 보여지게,
+    // 글쓴이 체크 시 titlebox만 보여지게,
+    function showDiv(e) {
+      // if(e.checked == true && e.value == "title") {
+      //   document.getElementById('titlebox').style.display ="block";
+      // }else if(e.checked == true && e.value == "date") {
+      //   document.getElementById('datebox').style.display ="block";
+      // }else if(e.checked == true && e.value == "writer") {
+      //   document.getElementById('writerbox').style.display ="block";
+      // }
+
+      var box = document.getElementsByClassName('box');
+        for (let i = 0; i < box.length; i++) {
+          box[i].style.display = "none";
+        }
+
+        document.getElementById(e.value + 'box').style.display = "block";
+    }
+
+   
+  </script>
+</body>
+</html>

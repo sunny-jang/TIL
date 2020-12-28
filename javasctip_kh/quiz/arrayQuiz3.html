@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1> 배열 실습 문제 3</h1>
+    <br><br>
+   문제5. 다음 보기의 그림을 클릭하면 그림이 사라지고 그림을 모두 클릭하면 클릭한 순서대로 그림이 나올수 있도록 만들어라.<br>
+    (힌트 : 태그 자체를 가져올때에는 outerHTML을 사용하면 됨)<br>
+
+    <fieldset>
+        <style>
+            .divss {
+                float: left;
+            }
+        </style>
+        <legend>보기</legend>
+        <div id="div5">
+            <div style="border:1px solid black; height:100px; width:100px; background-color:red;" class="divss" onclick="clickDiv('red')" id="red" ;></div>
+            <div style="border:1px solid black; height:100px; width:100px; background-color:blue;" class="divss" onclick="clickDiv('blue')" id="blue" ;></div>
+            <div style="border:1px solid black; height:100px; width:100px; background-color:green;" class="divss" onclick="clickDiv('green')" id="green" ;></div>
+            <div style="border:1px solid black; height:100px; width:100px; background-color:pink;" class="divss" onclick="clickDiv('pink')" id="pink" ;></div>
+            <div style="border:1px solid black; height:100px; width:100px; background-color:yellow;" class="divss" onclick="clickDiv('yellow')" id="yellow" ;></div>
+        </div>
+
+    </fieldset><br>
+  <script>
+    var clickArr = new Array(5);
+    // 클릭한 수 저장
+    var count = 0;
+    //클릭할 때마다 실행 될 함수
+    function clickDiv(color){
+      // 입력받은 color와 같은 id의 요소를 가져와 배열에 저장 
+      clickArr[count] = document.getElementById(color);
+      // 가지고 온 div 를 안보이도록 설정
+      clickArr[count].style.display = "none";
+      // 카운트 올려줌
+      count++;
+      // 모든 요소들이 클릭 되었을 때
+      if (count >= 5) {
+        // 색상을 가지고 있는 부모 요소를
+        var div5 = document.getElementById("div5");
+        // 비워줌
+        div5.innerHTML = "";
+
+        //이후에 클릭했던 순서대로 나타내줌
+        for (let i = 0; i < clickArr.length; i++) {
+          clickArr[i].style.display = "block";
+          div5.innerHTML += clickArr[i].outerHTML;
+        }
+
+        // 다시 클릭하면 다시 없어지게 초기화
+        count = 0;
+        clickArr = new Array(5);
+      }
+    }
+  </script>
+</body>
+</html>

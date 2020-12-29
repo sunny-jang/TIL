@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>객체</title>
+  <style>
+    .area-big {
+      height: 350px;
+      background-color: lightgray;
+      border: 1px solid black;
+    }
+
+    .area {
+      height: 150px;
+      background-color: lightgray;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>내장 객체</h1>
+  <hr>
+  <h3>Object 객체</h3>
+
+  <script>
+    var obj1 = {};
+    var obj2 = {name: '홍길동',
+      toString : function() { //그냥 콘솔에 찍거나 불러오면 toString으로 자동 출력이 됨
+        return "name : " + this.name;
+      }
+    };
+    var obj3 = new Object();
+
+    console.log(obj1);
+    console.log(obj2);
+    console.log(obj3);
+
+    document.write(obj2.toString() + "<br>");
+    document.write(obj2);
+  </script>
+
+  <hr>
+  <h3>String객체의 HTML 관련 메소드</h3>
+  <button onclick="test1();">실행확인</button>
+  <div id="area1" class="area-big"></div>
+  <script>
+    function test1() {
+      var str = "javascript";
+      var area1 =document.getElementById('area1');
+
+      area1.innerHTML += "기본값 : " +str+ "<br>";
+      area1.innerHTML += "anchor() : "+ str.anchor() + "<br>";
+      area1.innerHTML += "big() : "+ str.big() + "<br>";
+      area1.innerHTML += "bold() : "+ str.bold() + "<br>";
+      area1.innerHTML += "fontcolor('red') : "+ str.fontcolor('red') + "<br>";
+      area1.innerHTML += "fontsize(20) : "+ str.fontsize(20) + "<br>";
+      area1.innerHTML += "italics() : "+ str.italics() + "<br>";
+      area1.innerHTML += "link() : "+ str.link() + "<br>";
+      area1.innerHTML += "small() : "+ str.small() + "<br>";
+      area1.innerHTML += "strike() : "+ str.strike() + "<br>";
+      area1.innerHTML += "sub() : "+ str.sub() + "<br>";
+      area1.innerHTML += "sup() : "+ str.sup() + "<br>";
+    }
+  </script>
+
+  <hr>
+  <h3>Number 객체</h3>
+  <button onclick="test2()">실행 확인</button>
+  <div id="area2" class="area-big"></div>
+  <script>
+    function test2() {
+      var num1 = 123.45567;
+      var num2 = 123;
+      var area2 = document.getElementById('area2');
+
+      area2.innerHTML += "num1의 기본값 : " + num1 + "<br>";
+      area2.innerHTML += "num2의 기본값 : " + num2 + "<br>";
+      area2.innerHTML += "num1.toExponential() : " + num1.toExponential() + "<br>";
+      area2.innerHTML += "num2.toExponential() : " + num2.toExponential() + "<br>";
+      area2.innerHTML += "num2.toFixed() : " + num2.toFixed() + "<br>";
+      area2.innerHTML += "num1.toFixed() : " + num1.toFixed() + "<br>";
+      area2.innerHTML += "num2.toFixed(2) : " + num2.toFixed(2) + "<br>";
+      area2.innerHTML += "num1.toFixed(2) : " + num1.toFixed(2) + "<br>";
+      area2.innerHTML += "num1.toPrecision() : " + num1.toPrecision() + "<br>";
+      area2.innerHTML += "num2.toPrecision() : " + num2.toPrecision() + "<br>";
+      area2.innerHTML += "Number.MAX_VALUE : " + Number.MAX_VALUE + "<br>";
+      area2.innerHTML += "Number.MIN_VALUE : " + Number.MIN_VALUE + "<br>";
+      area2.innerHTML += "Number.NaN : " + Number.NaN + "<br>";
+      area2.innerHTML += "Number.POSITIVE_INFINITY : " + Number.POSITIVE_INFINITY + "<br>";
+      area2.innerHTML += "Number.NEGATIVE_INFINITY : " + Number.NEGATIVE_INFINITY + "<br>";
+
+    }
+  </script>
+
+  <hr>
+  <h3>Date 객체</h3>
+  <button onclick="test3()">실행 확인</button>
+  <div id="area3" class="area"></div>
+  <script>
+    function test3() {
+      var area3 = document.getElementById('area3');
+
+      var date1 = new Date();
+      var date2 = new Date('Januery 15');
+      var date3 = new Date('Januery 15, 2020');
+      var date4 = new Date('Januery 15, 2020 17:30:23');
+      var date5 = new Date(1995,4,30,7,35);
+      // new Date(년, 월 [,일, 시, 분 ,초, 밀리초])
+        // 월은 0부터 시작
+        // 년도 : 0~99 두자리로 적으면 1900년도로 인식
+
+      area3.innerHTML += "Date() : " + date1 + "<br>";
+      area3.innerHTML += "Date('Januery 15') : " + date2 + "<br>";
+      area3.innerHTML += "Date('Januery 15, 2020') : " + date3 + "<br>";
+      area3.innerHTML += "Date('Januery 15, 2020 17:30:23') : " + date4 + "<br>";
+      area3.innerHTML += "Date('1995,4,30,7,35') : " + date5 + "<br>";
+    }
+  </script>
+
+  <hr>
+  <h3>Date 객체의 메소드</h3>
+  <button onclick="test4();">실행 확인</button>
+  <div id="area4" class="area-big"></div>
+
+  <script>
+    function test4() {
+      var date = new Date();
+      var area4 = document.getElementById('area4');
+      area4.innerHTML += "getFullYear() : "+ date.getFullYear() +"<br>";
+      area4.innerHTML += "getMonth() : "+ date.getMonth() +"<br>";
+      area4.innerHTML += "getDate() : "+ date.getDate() +"<br>";
+      area4.innerHTML += "getHours() : "+ date.getHours() +"<br>";
+      area4.innerHTML += "getMinutes() : "+ date.getMinutes() +"<br>";
+      area4.innerHTML += "getSeconds() : "+ date.getSeconds() +"<br>";
+      area4.innerHTML += "getMilliseconds() : "+ date.getMilliseconds() +"<br>";
+      // 타임 스탬프 : 1970년 1월 1일 자정부터 현재까지의 시간을 밀리초 단위로 환산
+      area4.innerHTML += "getTime() : "+ date.getTime() +"<br>";
+
+      // 날짜 사이의 간격 구하기
+      var start = new Date(2020,9,20);
+      var now = new Date();
+      var interval = now.getTime() - start.getTime();
+
+      // 밀리초를 일 수로 계산
+      interval = Math.floor(interval / (1000 * 60 * 60 * 24));
+      area4.innerHTML += "개강일부터 현재까지 일수 : " + interval + "<br>";
+
+    }
+  </script>
+</body>
+</html>

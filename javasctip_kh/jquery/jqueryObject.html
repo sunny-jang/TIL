@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>객체관리</title>
+  <script src="resource/jquery-3.5.1.js"></script>
+</head>
+<body>
+  <H3>extend() 메소드</H3>
+
+  <script>
+    $(function(){
+      var obj1 = {name:'홍길동',  age:'20'};
+      var obj2 = {name:'김길동',  hobby:['dd','ff']};
+      console.log(obj1);
+      console.log(obj2);
+
+      var str = obj1.name + ' / ' + obj1.age;
+
+      $.extend(obj1,{job: 
+      '학생'});
+      console.log(obj1);
+
+      var obj3 = $.extend(obj1, obj2);
+      console.log(obj3); 
+
+    })
+  </script>
+
+  
+</body>
+</html>

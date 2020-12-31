@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JQuery 개요</title>
+  <script src="resource/jquery-3.5.1.js"></script>
+</head>
+<body>
+  <h1>Jquery 개요</h1>
+  <p id="p1">
+    경량 javascript 라이브러리 <br>
+    복잡한 javascript 코드를 손쉽게 구현하기 위해 개발됨
+  </p>
+  <h3>JQeury 연결</h3>
+  <p id="p2">
+    경량 javascript 라이브러리 <br>
+    복잡한 javascript 코드를 손쉽게 구현하기 위해 개발됨
+  </p>
+  <hr>
+  <h3>JQeury 연결</h3>
+  <p id="p3">
+    경량 javascript 라이브러리 <br>
+    복잡한 javascript 코드를 손쉽게 구현하기 위해 개발됨
+  </p>
+
+  <script>
+    // javascript 코드
+    var p1 = document.getElementById('p1');
+    p1.style.backgroundColor = 'red';
+
+    //jQuery 코드
+    $('#p2').css("background-color", "pink");
+  </script>
+
+  <h3>#(document).ready()</h3>
+  <p>
+    페이지를 모두 로드한 후 ready 메소드를 실행 <br>
+    자바스크립트의 document.onload와 같은 개념의 메소드
+  </p>
+  <script>
+    // 사용법 1
+    jQuery(document).ready(function() {
+      $('#p3').css("background-color","yellow")
+    });
+
+    // 사용법 1
+    $(document).ready(function() {
+      $('#p3').css("background-color","yellow")
+    });
+
+    // 사용법 1
+   $(function() {
+      $('p').css("color","gray");
+    });
+  </script>
+</body>
+</html>

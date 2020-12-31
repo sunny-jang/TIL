@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트</title>
+     <style>
+    .area-big {
+        height: 800px;
+        background-color: lightgray;
+        border: 1px solid black;
+    }
+    .area {
+        height: 300px;
+        background-color: lightgray;
+        border: 1px solid black;
+    }
+</style>
+</head>
+<body>
+    <hr>
+        <!-- <h3>표준 이벤트 모델</h3>
+        <button>red</button>
+        <button>orange</button>
+        <button>blue</button>
+        <div id="area6" class="area"></div>
+        <script>
+        window.onload = function(){
+            var btn = document.getElementsByTagName('button');
+            area6 = document.getElementById('area6');
+            for(i=0;i<btn.length;i++) {
+            btn[i].addEventListener('click',     function(){
+                //앞 함수랑 별개
+                area6.style.backgroundColor = btn[i].innerText;
+            }) // 자신의 html 요소에 접근하는데 this 안 써서 작동 안 함
+            }
+        }
+        </script> -->
+        <h3>표준 이벤트 모델</h3>
+        <!-- 인라인 모델은 버튼 개수만큼 함수 작성해야 해서 번거로움 -->
+        <button>red</button>
+        <button>orange</button>
+        <button>blue</button>
+        <div id="area6" class="area"></div>
+
+        <script>
+        window.onload = function(){
+            
+            btn = document.getElementsByTagName('button');
+            for(i=0;i<btn.length;i++) {
+              btn[i].addEventListener('click', function(){
+                  area6 = document.getElementById('area6');
+                  area6.style.backgroundColor = this.innerText;
+              })
+            }
+        }
+        </script>
+
+
+        <!-- getElementsByClassName -->
+        <!-- <button class="btns">red</button>
+        <button class="btns">orange</button>
+        <button class="btns">blue</button>
+        <div id="area6" class="area"></div>
+
+        <script>
+        window.onload = function(){
+            
+            btn = document.getElementsByClassName('btns');
+            for(i=0;i<btn.length;i++) {
+            btn[i].addEventListener('click', function(){
+                area6 = document.getElementById('area6');
+                area6.style.backgroundColor = this.innerText;
+            })
+            }
+        }
+        </script> -->
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>정규식</title>
+  <style>
+    .area-big {
+      min-height: 350px;
+      background-color: lightgray;
+      border: 1px solid black;
+    }
+
+    .area {
+      min-height: 150px;
+      background-color: lightgray;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <label for="">입력 : </label>
+  <input type="text" id="str">
+  <button onclick="check()">유효성 검사</button>
+  <div id="area1" class="area"></div>
+  <script>
+    function check() {
+      var str = document.getElementById('str').value;
+      var area1 = document.getElementById('area1');
+
+      // ~만 있어야 할때 
+        // /^(정규식)$/
+        
+      // ~하고 ~ 하고 ~ 하고 포함 (&같은 역할)
+      // /(?=.*정규식)(?=.*정규식)(?=.*정규식)/
+      
+
+      // 정규 표현식 작성
+      // var regExp = /정규표현식/
+      // 1. 숫자만 입력해야 할 때
+      var regExp = /^\d+$/g;
+      // 2. 영어 대/소문자만 입력해야 할 때
+      var regExp = /^[a-zA-Z]+$/g;
+      // 3. 영어 대/소문자와 숫자만 입력해야 할 때
+      var regExp = /^[a-zA-Z\d]+$/g;
+      // 4. 한글만 입력해야 할 때
+      var regExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/g;
+      // 5. 한글 또는 숫자만 입력해야 할 때
+      var regExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\d]+$/g;
+      // 6. 영문자 + 숫자를 포함하는 값을 입력해야 할 때
+      var regExp = /(?=.*[a-zA-Z])(?=.*[0-9])/g;
+      // 7. 알파벳으로 최소 3글자, 최대 5글자만 입력해야 할 때
+      var regExp = /^[a-zA-Z]{3,5}$/g;
+      // 8. 알파벳+숫자 포함하여 3글자~5글자만 입력해야할 때
+      var regExp = /(?=.*[a-zA-Z])(?=.*[0-9]){3,5}/g;
+      // 9. 알파벡+숫자+특수기호 하나 이상 포함해야 할 때
+      var regExp = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W])/g;
+      var regExp = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W])/g;
+
+      area1.innerHTML += "입력 데이터 : " +str + "<br>";
+      area1.innerHTML += "정규 표현식 : " +regExp + "<br>";
+
+      if(regExp.test(str)) {
+        area1.innerHTML += "성공";
+      }else {
+        area1.innerHTML += "정규표현식에 어긋납니다."
+      }
+    }
+  </script>
+</body>
+</html>

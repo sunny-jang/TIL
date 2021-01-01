@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>정규식</title>
+  <style>
+    .area-big {
+      min-height: 350px;
+      background-color: lightgray;
+      border: 1px solid black;
+    }
+
+    .area {
+      min-height: 150px;
+      background-color: lightgray;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>정규식</h1>
+  <hr>
+  <h3>앵커문자</h3>
+  <p>문자열의 앞과 뒤를 구부해주는 정규표현식 기호</p>
+  <button onclick="test2()">실행확인</button>
+  <div id="area2" class="area"></div>
+
+  <script>
+    function test2(params) {
+      var regEx1 = /^j/gim;
+      var regEx2 = /a$/gim;
+
+      var str1 = "Java\nJavaScript\nJquery\nAjax";
+      var str2 = "Java\nJavaScript\nJquery\nAjax";
+
+      var area2 = document.getElementById('area2');
+
+      area2.innerHTML += "^j :" + str1.replace(regEx1,'1') + "<br>";
+      area2.innerHTML += "a$ :" + str2.replace(regEx2,'2') + "<br>";
+    }
+  </script>
+
+
+<hr>
+  <h3>메타문자</h3>
+  <p>자바 스크립트 정규 표현식 객체가 갖는 가장 유용한 기능</p>
+  <button onclick="test3()">실행확인</button>
+  <div id="area3" class="area"></div>
+
+  <script>
+    function test3() {
+     var regEx1 = /[aj]/ig; // a 또는 j 문자 찾기
+     var regEx2 = /[^aj]/ig; // a 또는 j가 아닌 문자 찾기
+     var regEx3 = /[a-z]/ig; // a 부터 z사이에 있는 문자 찾기 (알파벳 소문자)
+     var regEx4 = /[A-Z]/ig;// A 부터 Z사이에 있는 문자 찾기 (알파벳 대문자)
+     var regEx5 = /[0-9]/ig; // 0~9 사이에 있는 문자 찾기 (숫자)
+
+     var str = "JavaScript Jquery Ajax Oracle Java123";
+
+     var area3 = document.getElementById('area3');
+     
+     area3.innerHTML += "원본문자열 : " + str + "<br>";
+     area3.innerHTML += "[aj] : " + str.replace(regEx1, '#') + "<br>";
+     area3.innerHTML += "[^aj] : " + str.replace(regEx2, '#') + "<br>";
+     area3.innerHTML += "[a-z] : " + str.replace(regEx3, '#') + "<br>";
+     area3.innerHTML += "[A-Z] : " + str.replace(regEx4, '#') + "<br>";
+     area3.innerHTML += "[0-9] : " + str.replace(regEx5, '#') + "<br>";
+    }
+  </script>
+
+  <hr>
+  <h3>메타문자를 이용한 주민번호 확인</h3>
+  <p>주민번호 입력 : </p>
+  <input type="text" id="pno">
+  <button onclick="test4()">실행확인</button>
+  <div id="area4" class="area"></div>
+  <script>
+    function test4(params) {
+      var regExp1 = /......-......./;
+      var pno = document.getElementById('pno').value;
+
+      var area4 = document.getElementById('area4');
+
+      area4.innerHTML += "입력된 문자열 : " + pno;
+      if(regExp1.test(pno)) {
+        area4.innerHTML += "주민번호 형식에 맞게 잘 입력됨<br>";
+      }else {
+        area4.innerHTML += "형식에 맞지 않음<br>"
+      }
+    }
+  </script>
+
+  <hr>
+  <h3>추가 메타 문자</h3>
+  <p>
+    \d : 숫자 <br>
+    \w : 아무 단어 (숫자 포함) <br>
+    \s : 공백 문자 (탭, 띄어쓰기, 줄바꿈) <br>
+    \D : 숫자 아님 <br>
+    \W : 아무 단어 아님 <br>
+    \S : 공백 문자 아님 <br>
+    () : 그룹화
+    ?= : 결가에 포함하지 않고 기본 표현식 뒤의 그룹과 일치(그룹의 패턴을 차례대로 일치하는지 검사)
+    . : 줄바꿈을 제외한 모든 문자
+    * : 0개 이상의 이전 토큰과 일치
+    
+  </p>
+  <input type="text" id="pno2">
+  <button onclick="test5()">실행확인</button>
+  <div id="area5" class="area"></div>
+  <script>
+    function test5(params) {
+      var regExp1 = /\d\d\d\d\d\d-\d\d\d\d\d\d\d/;
+      var pno = document.getElementById('pno2').value;
+
+      var area5 = document.getElementById('area5');
+
+      area5.innerHTML += "입력된 문자열 : " + pno;
+      if(regExp1.test(pno)) {
+        area5.innerHTML += "주민번호 형식에 맞게 잘 입력됨<br>";
+      }else {
+        area5.innerHTML += "형식에 맞지 않음<br>"
+      }
+    }
+  </script>
+
+<hr>
+<h3>수량 문자</h3>
+<p>
+  a+ : a가 적어도 1개 이상 <br>
+  a* : a가 0개 또는 여러개 <br>
+  a? : a가 0개 또는 한개 <br>
+  a{5} : a가 5개<br>
+  a{2,5} : a가 2개, 3개, 4개 다 찾겠다<br>
+  a{2, } : a가 2개두개 이상<br>
+  a{ ,2} : a가 2개두개 이하<br>
+</p>
+<input type="text" id="pno3">
+<button onclick="test6()">실행확인</button>
+<div id="area6" class="area"></div>
+<script>
+  function test6(params) {
+    var regExp1 = /\d{6}-\d{7}/;
+    var pno = document.getElementById('pno3').value;
+
+    var area6 = document.getElementById('area6');
+
+    area6.innerHTML += "입력된 문자열 : " + pno;
+    if(regExp1.test(pno)) {
+      area6.innerHTML += "주민번호 형식에 맞게 잘 입력됨<br>";
+    }else {
+      area6.innerHTML += "형식에 맞지 않음<br>"
+    }
+  }
+</script>
+</body>
+</html>

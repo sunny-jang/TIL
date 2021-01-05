@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>객체</title>
+  <style>
+    .area-big {
+      height: 350px;
+      background-color: lightgray;
+      border: 1px solid black;
+    }
+
+    .area {
+      height: 150px;
+      background-color: lightgray;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+    <h1>객체</h1>
+    <hr>
+    <h3>객체 배열</h3>
+    <button onclick="test1()">실행 확인</button>
+    <div id="area1" class="area"></div>
+    <script>
+      // 객체 3개 생성
+      function test1() {
+        var student1 = {
+          name: '홍길동',
+          kor: 60,
+          eng: 50,
+          math: 50
+        };
+
+        var student2 = {
+          name: '춘향이',
+          kor: 60,
+          eng: 20,
+          math: 80
+        };
+
+        var student3 = {
+          name: '향단이',
+          kor: 10,
+          eng: 30,
+          math: 20
+        };
+
+        // 담아줄 배열을 만듬
+      var students = [];
+
+      // 배열에 삽입
+      students.push(student1);
+      students.push(student2);
+      students.push(student3);
+
+      // 각 객체에 메소드 추가해줌
+      for (let i = 0; i < students.length; i++) {
+        students[i].getSum = function () {
+          return this.kor + this.eng + this.math;
+        }
+
+        students[i].getAvg = function () {
+          return this.getSum()/3
+        }
+      }
+
+      console.log(students);
+
+      var area1 = document.getElementById('area1');
+
+      // 배열 내 객체 값 화면에 출력
+      for(var i in students){
+        with(students[i]) {
+          area1.innerHTML += "이름 : " + name + 
+          ", 국어 : " + kor +
+          ", 영어 : " + eng + 
+          ", 수학 : " + math + 
+          ", 총점 : " + getSum() +
+          ", 평균 : " + getAvg().toFixed(1) + "<br>";
+        }
+      }
+
+    }
+  </script>
+
+
+  <hr>
+  <h3>함수를 이용하여 객체 생성</h3>
+  <fieldset>
+    <legend>회원 정보 입력</legend>
+    <label for="name">이름 : </label>
+    <input type="text" id="name"><br>
+    <label for="age">나이 : </label>
+    <input type="text" id="age"><br>
+    <label for="tel">전화번호 : </label>
+    <input type="text" id="tel"><br>
+    <button onclick="insert()">데이터 입력</button>
+    <button onclick="print()">데이터 출력</button>
+  </fieldset>
+  <div id="area2" class="area"></div>
+  <script>
+    var memberArr = new Array();
+    function insert() {
+      // 입력칸 input 요소 가져오기
+      var name = document.getElementById('name');
+      var age = document.getElementById('age');
+      var tel = document.getElementById('tel');
+
+      // //각 요소에 입력된 값을 이용해 객체 생성
+      // var member = {
+      //   name: name.value,
+      //   age: age.value,
+      //   tel: tel.value,
+      // };
+
+      // // 생성된 객체를 배열에 저장
+      // memberArr.push(member);
+
+      memberArr.push(createMember(name.value, age.value, tel.value));
+
+      // // 콘솔에 출력
+      console.log(memberArr);
+
+
+      // 데이터 입력 후 입력칸 비우기
+      name.value = "";
+      age.value = "";
+      tel.value = "";
+    }
+
+    // 객체 생성 함수
+    function createMember(name, age, tel) {
+      var member = {name : name, age: age, tel: tel};
+      return member;
+    }
+
+    function print() {
+      var area2 = document.getElementById('area2');
+      for (let i = 0; i < memberArr.length; i++) {
+        with(memberArr[i]){
+          area2.innerHTML += "이름 : " + name + ", 나이 : "+ name + ", 전화번호 : " + tel + "<br>";
+        }
+      }
+    }
+  </script>
+</body>
+</html>

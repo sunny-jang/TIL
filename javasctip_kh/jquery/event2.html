@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이벤트</title>
+  <script src="resource/jquery-3.5.1.js"></script>
+  <style>
+    .outer{
+      width: 200px;
+      height: 200px;
+      background-color: orange;
+      padding: 50px;
+    }
+
+    .inner{
+      width: 100%;
+      height: 100%;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>이벤트  연결 메소드</h1>
+  <hr>
+  <h3>mouseenter(), mouseover()</h3>
+  <button id="test1">실행 확인</button>
+  <div class="outer">
+    <div class="inner"></div>
+  </div>
+
+  <script>
+    $(function () {
+      $('.outer').mouseover(function () {
+        console.log("OVER!~!");
+      });
+
+      $('.outer').mouseenter(function () {
+        console.log("ENTER!~!");
+      });
+    })
+  </script>
+
+  <hr>
+  <h3>hover() 메소드</h3>
+  <p>mouseover와  mouseleave를 동시에 사용하는 효과</p>
+  <h1 id="test2">hover테스트</h1>
+  <script>
+    $('#test2').hover(function() {
+      $(this).css({'background-color':'black','color':'white'});
+    }, function() {
+      $(this).css({'background-color':'white','color':'black'});
+    })
+  </script>
+</body>
+</html>

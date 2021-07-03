@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>class</title>
+</head>
+<body>
+  <script>
+    function makePerson(first, last) {
+      return {
+        first: first,
+        last: last
+      }
+    }
+
+    function personFullName(person) {
+      return person.first + ' ' + person.last;
+    }
+
+    function personFullNameReversed(person) {
+      return person.last + ' ' + person.first;
+    }
+
+    var s = makePerson("Simon", "Willson");
+    console.log(personFullName(s));
+    console.log(personFullNameReversed(s));
+
+
+    //Good Example
+
+    function makePerson(first, last) {
+      return {
+        first: first,
+        last: last,
+        fullName: function() {
+          return this.first + ' ' + this.last;
+        },
+        fullNameReversed: function() {
+          return this.last + ' ' + this.first;
+        }
+      }
+    }
+
+    var s = makePerson("Eunseon","Jang");
+    console.log(s.fullName());
+    console.log(s.fullNameReversed());
+
+    function Person(first, last) {
+      this.first = first;
+      this.last = last;
+      this.fullName = function() {
+        return this.first + ' ' + this.last;
+      }
+      this.fullNameReversed = function() {
+        return this.last + ' ' + this.first;
+      }
+    }
+
+    var ss = new Person('Simon', 'Willson');
+    console.log(ss.fullName);
+    console.log(ss.fullNameReversed);
+
+    function personFullName() {
+      return this.first + ' ' +  this.last;
+    }
+
+    function personFullNameReversed() {
+      return this.last + ' ' + this.first;
+    }
+
+    function Person(first, last) {
+      this.first = first;
+      this.last = last;
+      this.fullName = personFullName;
+      this.fullNameReversed = personFullNameReversed;
+    }
+
+    // 프로토타입 사용으로 개선
+
+    function Person (first, last) {
+      this.first = first;
+      this.last = last;
+    }
+
+    Person.prototype.fullName = function() {
+      return this.first + ' ' + this.last;
+    }
+
+    Person.prototype.fullNameReversed = function() {
+      return this.last + ' ' + this.first;
+    }
+
+    var s2 = new Person("aa", "bb");
+
+    //s2.firstNameCaps();
+    Person.prototype.firstNameCaps = function() {
+      return this.first.toUpperCase();
+    }
+
+    console.log(s2.firstNameCaps());
+
+    var str = "Sunny";
+
+    // 빌트인 객체에 프로토타입 추가
+    String.prototype.reversed = function() {
+      var r = "";
+      for(var i = this.length -1; i>=0; i--) {
+        r+= this[i];
+      }
+
+      return r;
+    }
+
+    console.log(str.reversed());
+    console.log("Adffdaaa".reversed());
+
+    // toString 커스텀 메서드 추가
+    Person.prototype.toString = function() {
+      return '<Person: ' + this.fullName() + '>'
+    }
+
+    console.log(s2.toString());
+
+
+    //////////////////////////////////////////////////////////
+    // apply() 적용되는 원리 
+
+    function trivalNew(constructor, ...args) {
+      var o = { } // 빈 객체를 생성
+      constructor.apply(o, args);
+      return o;
+    }
+
+   // 이렇게 호출하는 것은
+   var bill = trivalNew(Person, 'Wiliam', 'Orange');
+   
+   // 이렇게 호출하는 것과 동일하다
+   var bill = new Person('Wiliam', 'Orange')
+
+
+   ///////////////////////////////////////////////////
+   // call
+    function lastNameCaps() {
+      return this.last.toUpperCase();
+    }
+
+    var s = new Person('Simon', 'Willison');
+    lastNameCaps.call(s);
+    // 위 구문은 다음과 같다
+    s.lastNameCaps = lastNameCaps;
+    console.log(s.lastNameCaps());
+
+    ///////////////////////////////////////////////
+    //내장함수
+    function partentFunc() {
+      var a = 1;
+
+      function nestedFunc() {
+        var b = 4; //parentFuc은 사용할 수 없는 변수
+        return a+b
+      }
+
+      return nestedFunc(); // 5
+
+    }
+  </script>
+</body>
+</html>
